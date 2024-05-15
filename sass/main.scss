@@ -1,0 +1,643 @@
+@import './colors';
+@import './components';
+@import './mixins';
+
+
+
+*,
+*::after,
+*::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+// header   font-family: "Playfair Display", serif;
+//reszta  font-family: "Oswald", sans-serif;
+
+
+//* LOGIN *//
+
+body {
+    &__login {
+        position: relative;
+        font-family: "Oswald", sans-serif;
+
+    }
+
+
+
+}
+
+
+
+
+.header-login {
+    position: absolute;
+    top: 90px;
+    left: 50px;
+    font-family: "Playfair Display", serif;
+    text-transform: uppercase;
+    color: $white_color;
+    z-index: 100;
+}
+
+
+.login {
+
+
+
+
+    &__container {
+        position: relative;
+        color: $white_color;
+    }
+
+
+    &__img {
+        width: 100vw;
+        height: 100vh;
+        background-image: url(../img/login_bcg_big.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+
+    }
+
+    &__shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba($color: $dark_color, $alpha: .6);
+        z-index: 0;
+    }
+
+    &__sections {
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    &__header {
+        width: 35%;
+        z-index: 2;
+
+        &--text {
+            font-weight: lighter;
+            font-size: 24px;
+        }
+
+        &--title {
+            font-family: "Playfair Display", serif;
+            font-size: 55px;
+            margin-bottom: 25px;
+        }
+    }
+
+
+
+
+    &__choose {
+        position: relative;
+        height: 650px;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        border: 1px solid #fefefe;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #ffffff;
+        z-index: 2;
+        transition: background-color .3s;
+
+        &:hover {
+            background-color: rgb($dark_color, $alpha: .6);
+        }
+
+        &--title {
+            font-family: "Playfair Display", serif;
+            text-transform: uppercase;
+            text-align: center;
+            font-size: 50px;
+        }
+
+    }
+
+    &__btns {
+        display: flex;
+        justify-content: space-around;
+
+        &--arrow {
+            position: absolute;
+            left: 47%;
+            top: 50%;
+            font-size: 60px;
+
+        }
+    }
+
+    &__btn {
+        width: 200px;
+        height: 60px;
+        padding: 5px 0;
+        font-size: 22px;
+        font-weight: bold;
+
+        background-color: transparent;
+        color: $white_color;
+        border: 1px solid $white_color;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 0 0;
+
+        &--signin {
+            transition: border .3s, box-shadow .3s;
+
+            &:hover {
+                border: 1px solid $white_color;
+                box-shadow: 0 0 20px $white_color;
+
+            }
+        }
+
+        &--signup {
+            transition: border .3s, box-shadow .3s;
+
+            &:hover {
+                border: 1px solid whitesmoke;
+                box-shadow: 0 0 20px whitesmoke;
+
+            }
+        }
+
+
+
+
+    }
+
+
+}
+
+// Okno Logowania
+
+.signin {
+
+    &__container {
+        z-index: 9999;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        background-color: rgba($color: $dark_color, $alpha: .9);
+        color: $white_color;
+        width: 700px;
+        height: 300px;
+        border: 1px solid $white_color;
+        border-radius: 8px;
+        box-shadow: 0 0 50px $white_color;
+    }
+
+    &__close-btn {
+        font-size: 20px;
+        font-weight: bold;
+        color: $white_color;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        transition: transform .3s;
+
+        &:hover {
+            transform: scale(0.9);
+        }
+    }
+
+
+
+    &__title {
+        font-family: "Playfair Display", serif;
+        text-align: center;
+        padding: 10px;
+        text-transform: uppercase;
+    }
+
+
+
+    &__input {
+        color: $white_color;
+        padding: 10px;
+        background-color: transparent;
+        border: 1px solid $white_color;
+        border-radius: 8px;
+
+        &--login {
+            margin-right: 50px;
+        }
+    }
+
+
+    &__alert {
+        color: $alert_color;
+
+    }
+
+    &__btn {
+        color: $white_color;
+        width: 250px;
+        font-size: 20px;
+        padding: 5px;
+        border: 1px solid $white_color;
+        border-radius: 8px;
+        background-color: transparent;
+        cursor: pointer;
+        transition: box-shadow .3s;
+
+
+        &:hover {
+            box-shadow: 0 0 10px $white_color;
+        }
+
+
+
+    }
+
+
+
+}
+
+
+// Okno rejestracji
+
+
+.signup {
+
+    &__container {
+        z-index: 9999;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        background-color: rgba($color: black, $alpha: .9);
+        color: $white_color;
+        width: 900px;
+        height: 95vh;
+        border: 1px solid $white_color;
+        border-radius: 8px;
+        box-shadow: 0 0 50px $white_color;
+    }
+
+    &__show {
+        &-btn {
+            color: $grey_color;
+            position: fixed;
+            top: 322px;
+            right: 7%;
+            cursor: pointer;
+        }
+    }
+
+    &__close-btn {
+        font-size: 20px;
+        font-weight: bold;
+        color: $white_color;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        transition: transform .3s;
+
+        &:hover {
+            transform: scale(0.9);
+        }
+    }
+
+    &__form {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        height: 50%;
+    }
+
+
+
+
+    &__title {
+        font-family: "Playfair Display", serif;
+        text-align: center;
+        padding: 10px;
+        text-transform: uppercase;
+    }
+
+
+
+    &__input {
+        color: $white_color;
+        padding: 10px;
+        width: 700px;
+        background-color: transparent;
+        border: 1px solid $white_color;
+        border-radius: 6px;
+
+    }
+
+
+    &__alert {
+        color: $alert_color;
+
+    }
+
+    &__btn {
+        color: $white_color;
+        width: 250px;
+        font-size: 20px;
+        padding: 5px;
+        border: 1px solid $white_color;
+        border-radius: 8px;
+        background-color: transparent;
+        cursor: pointer;
+        box-shadow: 0;
+        transition: box-shadow .3s;
+
+
+        &:hover {
+            box-shadow: 0 0 10px $white_color;
+        }
+
+    }
+
+    &__text {
+        font-size: 21px;
+        font-weight: lighter;
+    }
+
+
+    &__list {
+        list-style: none;
+
+        span {
+            font-weight: bold;
+        }
+
+        &--element {
+            font-size: 17px;
+            font-weight: lighter;
+        }
+    }
+
+
+
+}
+
+.show-pass {
+    color: $white_color;
+}
+
+
+
+////////////////////////////////////////////////////////
+/// 
+/// MAIN ///
+/// 
+
+
+.active {
+    background-image: $item_hover_color;
+}
+
+.body {
+    &__main {
+        color: $text_panel_color;
+        background-color: $dark_background;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+    }
+}
+
+.main {
+    &__container {
+        width: 99vw;
+        height: 96vh;
+        border: 1px solid $border_color;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    &__panel {
+        background-image: $panel_background;
+        height: 87%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        border: none;
+    }
+
+
+
+    &__title {
+        text-align: center;
+        padding-left: 40px;
+        font-size: 40px;
+        margin-bottom: 30px;
+
+    }
+
+    &__text {
+        font-weight: lighter;
+        font-size: 20px;
+        padding: 15px;
+    }
+}
+
+
+.nav {
+
+    &__panel {
+        width: 100%;
+        background-color: $nav_background;
+
+
+
+    }
+
+    &__items {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        padding: 10px;
+    }
+
+    &__item {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background-image: none;
+
+        &:hover {
+            background-image: $item_hover_color;
+
+        }
+
+        &--link {
+
+            font-size: 18px;
+            display: block;
+            color: $white_color;
+            text-decoration: none;
+            border: 1px solid $white_color;
+            border-radius: 8px;
+            text-transform: uppercase;
+            padding: 20px;
+        }
+
+        &--logout{
+            color: $white_color;
+            font-size: 25px;
+            padding: 20px;
+            display: block;
+            transition: color .3s, transform .3s;
+
+            &:hover{
+           
+                transform: scale(.92);
+            }
+        }
+
+        &--clock {
+            border: none;
+            color: $white_color;
+            font-size: 30px;
+
+        }
+    }
+}
+
+
+
+
+
+
+////////////////////////////////////////////////////////
+/// 
+/// EDUCATION ///
+/// 
+/// 
+/// 
+/// 
+/// 
+/// 
+/// 
+
+.body {
+    &__education {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $dark_background;
+
+    }
+}
+
+.education {
+    &__container {
+        width: 98vw;
+        height: 96vh;
+        color: $text_panel_color;
+        border: 1px solid $border_color;
+        background-image: $panel_background;
+        border-radius: 15px;
+        overflow: hidden;
+
+
+    }
+}
+
+.acordeon {
+    padding: 5px 10px;
+    max-height: 86vh;
+    overflow-y: auto;
+
+    &__title {
+        font-family: "Playfair Display", serif;
+        color: $white_color;
+        padding: 5px;
+        text-transform: uppercase;
+        margin: 20px 0;
+    }
+
+    &__btn {
+
+        font-family: "Playfair Display", serif;
+        z-index: 5;
+        font-size: 20px;
+        text-align: center;
+        color: $white_color;
+        width: 100%;
+        background-color: transparent;
+        border: 1px solid $border_color;
+        border-radius: 8px;
+        margin: 5px 0;
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-image: $item_hover_color;
+        }
+
+    }
+
+    &__info {
+
+        padding: 5px;
+        font-size: 17px;
+        display: none;
+
+
+
+        &--show {
+            animation: textAnimation .5s linear;
+            display: block;
+            border: 1px solid $border_color;
+            border-radius: 8px;
+            border-top: none;
+
+        }
+    }
+}
+
+@keyframes textAnimation {
+    from {
+
+        transform: translateY(-30%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+
+}

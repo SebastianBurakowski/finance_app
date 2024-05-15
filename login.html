@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/App_Favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/35828e693f.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Praca Inżynierska - Sebastian Burakowski</title>
+</head>
+
+<body class="body__login">
+    <div class="wrapper">
+    <header class="header-login">
+        <h1>Praca Inżynierska - Sebastian Burakowski</h1>
+    </header>
+
+
+
+    <section class="login__container">
+
+        <div class="login__img">
+            <div class="login__shadow"></div>
+            <section class="login__sections">
+                <div class="login__header">
+                    <h1 class=" login__header--title">Zacznij od oszczedzania i zadbaj o swoją
+                        przyszłość</h1>
+                    <p class="login__header--text">Mądre zarządzanie finansami to klucz do
+                        spokoju umysłu i sukcesu.</p>
+                </div>
+                <div class="login__choose">
+                    <h1 class="login__choose--title"> Zaloguj się lub załóż nowe konto</h1>
+                    <div class="login__btns">
+                        <i class="fa-sharp fa-solid fa-arrow-down fa-beat-fade login__btns--arrow"></i>
+                        <button class="login__btn login__btn--signin">Zaloguj się</button>
+                        <button class="login__btn login__btn--signup">Zarejestruj się</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </section>
+
+    <div class="signin__container ">
+                <i class="fa-solid fa-x signin__close-btn close-btn"></i>
+            <h1 class="signin__title">Zaloguj się</h1>
+            <form action="">
+                <input class="signin__input signin__input--login" type="email" id="login-mail"   placeholder="E-mail">
+                <input class="signin__input signin__input--password" type="password" id="login-password" placeholder="Hasło">
+            </form>
+            <button class="signin__btn">Zatwierdź</button>
+            <p class="signin__alert">Podany użytkownik nie istnieje </p>
+        </div>
+
+
+
+    <div class="signup__container">
+        <i class="fa-solid fa-x signup__close-btn close-btn"></i>
+        <h1 class="signup__title">Zarejestruj Się</h1>
+        <i class="fa-solid fa-eye signup__show-btn "></i>
+        <form action="" class="signup__form">
+            <input class="signup__input signup__input--login" type="email" id="e-mail" placeholder="E-mail">
+            <input class="signup__input signup__input--name" type="text" id="name" placeholder="Imię">
+            <input class="signup__input signup__input--surname" type="text" id="surname" placeholder="Nazwisko">
+            <input class="signup__input signup__input--password" type="password" id="password1" placeholder="Hasło">
+            <input class="signup__input signup__input--passwordrepeat" type="password" id="password2" placeholder="Powtórz Hasło">
+            <button type="submit" class="signup__btn">Zatwierdź</button>
+            <p class="signup__alert"></p>
+        </form>
+       
+        <p class="signup__text">Hasło musi zawierać : </p>
+
+        <ul class="signup__list">
+            <li class="signup__list--element"> <span>Długość : </span>Hasło powinno mieć co najmniej 8 znaków</li>
+            <li class="signup__list--element"> <span>Znaki specjalne : </span>Powinno zawierać przynajmniej jeden znak
+                specjalny, tak jak np. !@#$%^&*().</li>
+            <li class="signup__list--element"> <span>Wielkie i małe litery : </span>Powinno zawierać zarówno wielkie,
+                jak i małe litery.</li>
+            <li class="signup__list--element"> <span>Cyfry : </span>Powinno zawierać przynajmniej jedną cyfrę.</li>
+        </ul>
+
+
+
+    </div>
+
+
+</div>
+    <script src="script_login.js"></script>
+</body>
+
+</html>
