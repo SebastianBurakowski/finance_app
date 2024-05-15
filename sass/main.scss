@@ -513,15 +513,15 @@ body {
             padding: 20px;
         }
 
-        &--logout{
+        &--logout {
             color: $white_color;
             font-size: 25px;
             padding: 20px;
             display: block;
             transition: color .3s, transform .3s;
 
-            &:hover{
-           
+            &:hover {
+
                 transform: scale(.92);
             }
         }
@@ -640,4 +640,103 @@ body {
         transform: translateY(0);
     }
 
+}
+
+
+
+
+//// CURRENCY CALCULATOR ////
+/// 
+///
+
+
+.currency {
+    &__container {
+        width: 98vw;
+        height: 96vh;
+        color: $text_panel_color;
+        border: 1px solid $border_color;
+        background-image: $panel_background;
+        border-radius: 15px;
+        overflow: hidden;
+
+    }
+
+    &__info {
+
+
+        padding: 20px;
+    }
+
+    &__title {
+        color: $white_color;
+        font-family: "Playfair Display", serif;
+        text-transform: uppercase;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    &__text {
+        font-size: 18px;
+    }
+
+    &__app {
+
+        width: 100%;
+        height: 60%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    &__section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__amount {
+        color: $white_color;
+        margin-bottom: 30px;
+        width: 35%;
+        font-size: 60px;
+        background-color: transparent;
+        border: none;
+        text-align: center;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__select {
+        color: $dark_color;
+        padding: 10px;
+        font-size: 22px;
+        cursor: pointer;
+        background-image: $item_hover_color;
+        outline: none;
+
+    }
+
+    &__btn {
+        align-self: flex-end;
+        margin: 5px;
+        width: 300px;
+        padding: 5px 10px;
+        background-image: $item_hover_color;
+        font-size: 35px;
+        border: none;
+        border-radius: 25px;
+        color: $dark_color;
+        cursor: pointer;
+
+    }
+
+    &__rate {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 20px;
+    }
 }

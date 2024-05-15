@@ -21,37 +21,70 @@
 
 <body class="body__main">
 
-    <main class="main__container">
+    <main class="currency__container">
 
-            <section class="nav__panel">
-                <ul class="nav__items">
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="transactions.html">Transakcje</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="raports.html">Raporty</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="creditworthines.html">Zdolność kredytowa</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="calendar.html">Kalendarz</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="statistics.html">Statystyki</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="educations.html">Edukacja</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link active" href="currency_calculator.html">Kalkulator walut</a>
-                    </li>
+        <section class="nav__panel">
+            <ul class="nav__items">
+                <li class="nav__item">
+                    <a class="nav__item--link" href="transactions.html">Transakcje</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="raports.html">Raporty</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="creditworthines.html">Zdolność kredytowa</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="calendar.html">Kalendarz</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="statistics.html">Statystyki</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="educations.html">Edukacja</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link active" href="currency_calculator.html">Kalkulator walut</a>
+                </li>
                 <li class="">
                     <a class="nav__item--logout" href="login.html"><i class="fa-solid fa-power-off"></i></a>
                 </li>
-                </ul>
-            
-            </section>
+            </ul>
+
+        </section>
+        <div class="currency__info">
+            <h1 class="currency__title">Kalkulator Walut</h1>
+            <p class="currency__text">Kalkulator walut to narzędzie umożliwiające szybką i łatwą konwersję kwoty
+                pieniężnej z jednej waluty na inną.</p>
+        </div>
+        <div class="currency__app">
+
+            <div class="currency__section currency__section--left">
+                <input type="number" class="currency__amount currency__amount--one" value="1">
+                <select class="currency__select" id="currency-one">
+                    <option value="PLN" selected>PLN</option>
+                    <option value="USD">USD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="CHF">CHF</option>
+                </select>
+            </div>
+            <button class="currency__btn">
+                <i class="fa-solid fa-retweet"></i>
+            </button>
+            <div class="currency__section currency__section--right">
+                <input type="number" class="currency__amount currency__amount--two" disabled>
+                <select class="currency__select" id="currency-two">
+                    <option class value="PLN">PLN</option>
+                    <option value="USD" selected>USD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="CHF">CHF</option>
+                </select>
+            </div>
+
+        </div>
+        <p class="currency__rate"></p>
 
 
 
@@ -59,13 +92,7 @@
 
 
     </main>
-
-
-
-
-
-
-    <script src="script.js"></script>
+    <script src="script_currency.js"></script>
 </body>
 
 </html>

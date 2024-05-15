@@ -568,3 +568,91 @@ body__login {
             transform: translateY(0);
   }
 }
+.currency__container {
+  width: 98vw;
+  height: 96vh;
+  color: rgb(185, 179, 179);
+  border: 1px solid #4b5769;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(55, 64, 76)), to(rgb(30, 35, 42)));
+  background-image: linear-gradient(180deg, rgb(55, 64, 76) 0%, rgb(30, 35, 42));
+  border-radius: 15px;
+  overflow: hidden;
+}
+.currency__info {
+  padding: 20px;
+}
+.currency__title {
+  color: rgb(245, 245, 245);
+  font-family: "Playfair Display", serif;
+  text-transform: uppercase;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+.currency__text {
+  font-size: 18px;
+}
+.currency__app {
+  width: 100%;
+  height: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.currency__section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.currency__amount {
+  color: rgb(245, 245, 245);
+  margin-bottom: 30px;
+  width: 35%;
+  font-size: 60px;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+.currency__amount:focus {
+  outline: none;
+}
+.currency__select {
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  background-image: linear-gradient(160deg, rgba(0, 51, 255, 0.25) 0%, rgba(255, 0, 0, 0.25));
+  outline: none;
+}
+.currency__btn {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin: 5px;
+  width: 300px;
+  padding: 5px 10px;
+  background-image: linear-gradient(160deg, rgba(0, 51, 255, 0.25) 0%, rgba(255, 0, 0, 0.25));
+  font-size: 35px;
+  border: none;
+  border-radius: 25px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+.currency__rate {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
