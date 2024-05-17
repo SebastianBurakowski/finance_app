@@ -19,9 +19,9 @@
     <title>Praca Inżynierska - Sebastian Burakowski</title>
 </head>
 
-<body class="body__main">
+<body class="body__transactions">
 
-    <main class="main__container">
+    <main class="transactions__container">
 
         <section class="nav__panel">
             <ul class="nav__items">
@@ -54,6 +54,82 @@
         </section>
 
 
+        <h1 class="transactions__title">Transkacje</h1>
+        <p class="transactions__text"> Sekcja transkacje umożliwia dodawanie, przeglądnie oraz analizowanie
+            swojego
+            budżetu.</p>
+        <section class="transactions">
+
+
+            
+            <section class="transactions__app">
+
+                <div class="transactions__list">
+
+                    <div class="transactions__income">
+                        <h1 class="transactions__income--title">Przychody:</h1>
+                        <input type="text" class="transactions__search" placeholder="Wyszukaj transakcje">
+
+                        <div class="transaction" id="0">
+                            <p class="transaction__name transaction__name--income"><i
+                                    class="fas fa-money-bill-wave"></i>
+                                Wypłata</p>
+                            <p class="transaction__amount transaction__amount--income">2000zł <button
+                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
+                        </div>
+                        <div class="transaction" id="0">
+                            <p class="transaction__name transaction__name--income"><i
+                                    class="fas fa-money-bill-wave"></i>
+                                Wypłata</p>
+                            <p class="transaction__amount transaction__amount--income">2000zł <button
+                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
+                        </div>
+                    </div>
+
+                    <div class="transactions__expenses">
+                        <h1 class="transactions__expenses--title">Wydatki:</h1>
+                        <input type="text" class="transactions__search" placeholder="Wyszukaj transakcje">
+
+                        <div class="transaction" id="1">
+                            <p class="transaction__name transaction__name--expenses"><i
+                                    class="fas fa-cart-arrow-down"></i>
+                                Zakupy</p>
+                            <p class="transaction__amount transaction__amount--expenses">-400zł <button
+                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
+                        </div>
+                        <div class="transaction" id="1">
+                            <p class="transaction__name transaction__name--expenses"><i
+                                    class="fas fa-cart-arrow-down"></i>
+                                Zakupy</p>
+                            <p class="transaction__amount transaction__amount--expenses">-400zł <button
+                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+
+            <section class="options">
+                <div>
+                    <h2 class="title">Dostępne środki:</h2>
+                    <p class="available-money">0zł</p>
+                </div>
+                <div class="controls">
+                    <button class="add-transaction"><i class="fas fa-plus"></i> Dodaj transakcję</button>
+                    <button class="delete-all"><i class="far fa-trash-alt"></i> Usuń wszystko</button>
+                </div>
+
+
+
+            </section>
+        </section>
+
+
+
+
+
 
 
 
@@ -65,7 +141,7 @@
 
 
 
-    <script src="script.js"></script>
+    <script src="script_transactions.js"></script>
 </body>
 
 </html>

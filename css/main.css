@@ -653,3 +653,138 @@ body__login {
   text-align: center;
   margin-top: 20px;
 }
+
+.body__transactions {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #181d23;
+}
+
+.transactions {
+  border: 1px solid red;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+.transactions__container {
+  width: 98vw;
+  height: 96vh;
+  color: rgb(185, 179, 179);
+  border: 1px solid #4b5769;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(55, 64, 76)), to(rgb(30, 35, 42)));
+  background-image: linear-gradient(180deg, rgb(55, 64, 76) 0%, rgb(30, 35, 42));
+  border-radius: 15px;
+  overflow: hidden;
+}
+.transactions__title {
+  color: rgb(245, 245, 245);
+  font-family: "Playfair Display", serif;
+  text-transform: uppercase;
+  font-size: 32px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.transactions__text {
+  font-size: 18px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(245, 245, 245);
+}
+.transactions__app {
+  width: 50%;
+}
+.transactions__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.transactions__search {
+  font-size: 16px;
+  color: rgb(245, 245, 245);
+  background-color: transparent;
+  border: 1px solid rgb(245, 245, 245);
+  border-radius: 8px;
+  padding: 3px;
+  margin: 8px 0;
+  margin-bottom: 20px;
+}
+.transactions__income--title {
+  padding: 10px 0;
+}
+.transactions__expenses--title {
+  padding: 10px 0;
+}
+
+.transaction {
+  padding: 10px 0;
+}
+.transaction__name {
+  font-size: 20px;
+  padding: 10px 0;
+}
+.transaction__amount {
+  font-size: 18px;
+  color: rgb(245, 245, 245);
+  font-weight: bold;
+}
+.transaction__amount--income {
+  color: rgb(14, 253, 14);
+}
+.transaction__amount--expenses {
+  color: rgb(217, 0, 0);
+}
+.transaction__delete {
+  font-size: 12px;
+  color: rgb(245, 245, 245);
+  margin-left: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+.transaction__delete:hover {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+
+.options {
+  width: 50%;
+  border: 1px solid purple;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
