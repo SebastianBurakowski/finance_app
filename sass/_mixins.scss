@@ -1,2 +1,21 @@
+@mixin flexSpaceAround {
+    display: flex;
+    justify-content: space-around;
+}
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
+@mixin borderWhite8px {
+    border: 1px solid $white_color;
+    border-radius: 8px;
+}
+
+@mixin maxWidhtHeight {
+    width: 100vw;
+    height: 100vh;
+}

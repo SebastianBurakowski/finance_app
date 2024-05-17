@@ -55,8 +55,7 @@ body {
 
 
     &__img {
-        width: 100vw;
-        height: 100vh;
+        @include maxWidhtHeight;
         background-image: url(../img/login_bcg_big.jpg);
         background-position: center;
         background-size: cover;
@@ -69,8 +68,7 @@ body {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        @include maxWidhtHeight;
         background-color: rgba($color: $dark_color, $alpha: .6);
         z-index: 0;
     }
@@ -106,9 +104,8 @@ body {
         position: relative;
         height: 650px;
         width: 40%;
-        display: flex;
+        @include flexSpaceAround;
         flex-direction: column;
-        justify-content: space-around;
         border: 1px solid #fefefe;
         border-radius: 10px;
         box-shadow: 0 0 20px #ffffff;
@@ -129,8 +126,7 @@ body {
     }
 
     &__btns {
-        display: flex;
-        justify-content: space-around;
+        @include flexSpaceAround;
 
         &--arrow {
             position: absolute;
@@ -150,8 +146,7 @@ body {
 
         background-color: transparent;
         color: $white_color;
-        border: 1px solid $white_color;
-        border-radius: 8px;
+        @include borderWhite8px;
         cursor: pointer;
         box-shadow: 0 0 0;
 
@@ -201,8 +196,7 @@ body {
         color: $white_color;
         width: 700px;
         height: 300px;
-        border: 1px solid $white_color;
-        border-radius: 8px;
+        @include borderWhite8px;
         box-shadow: 0 0 50px $white_color;
     }
 
@@ -236,8 +230,7 @@ body {
         color: $white_color;
         padding: 10px;
         background-color: transparent;
-        border: 1px solid $white_color;
-        border-radius: 8px;
+        @include borderWhite8px;
 
         &--login {
             margin-right: 50px;
@@ -255,8 +248,7 @@ body {
         width: 250px;
         font-size: 20px;
         padding: 5px;
-        border: 1px solid $white_color;
-        border-radius: 8px;
+        @include borderWhite8px;
         background-color: transparent;
         cursor: pointer;
         transition: box-shadow .3s;
@@ -294,8 +286,7 @@ body {
         color: $white_color;
         width: 900px;
         height: 95vh;
-        border: 1px solid $white_color;
-        border-radius: 8px;
+        @include borderWhite8px;
         box-shadow: 0 0 50px $white_color;
     }
 
@@ -325,8 +316,7 @@ body {
     }
 
     &__form {
-        display: flex;
-        justify-content: space-around;
+        @include flexSpaceAround;
         align-items: center;
         flex-direction: column;
         height: 50%;
@@ -349,8 +339,7 @@ body {
         padding: 10px;
         width: 700px;
         background-color: transparent;
-        border: 1px solid $white_color;
-        border-radius: 6px;
+        @include borderWhite8px;
 
     }
 
@@ -365,8 +354,7 @@ body {
         width: 250px;
         font-size: 20px;
         padding: 5px;
-        border: 1px solid $white_color;
-        border-radius: 8px;
+        @include borderWhite8px;
         background-color: transparent;
         cursor: pointer;
         box-shadow: 0;
@@ -422,11 +410,8 @@ body {
     &__main {
         color: $text_panel_color;
         background-color: $dark_background;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include maxWidhtHeight;
+        @include flexCenter;
 
 
     }
@@ -444,8 +429,7 @@ body {
     &__panel {
         background-image: $panel_background;
         height: 87%;
-        display: flex;
-        justify-content: space-around;
+        @include flexSpaceAround;
         align-items: center;
         flex-direction: column;
         border: none;
@@ -490,9 +474,7 @@ body {
 
     &__item {
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flexCenter;
         cursor: pointer;
         background-image: none;
 
@@ -507,8 +489,7 @@ body {
             display: block;
             color: $white_color;
             text-decoration: none;
-            border: 1px solid $white_color;
-            border-radius: 8px;
+            @include borderWhite8px;
             text-transform: uppercase;
             padding: 20px;
         }
@@ -553,11 +534,8 @@ body {
 
 .body {
     &__education {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include maxWidhtHeight;
+        @include flexCenter;
         background-color: $dark_background;
 
     }
@@ -613,7 +591,7 @@ body {
 
     &__info {
 
-        padding: 5px;
+        padding: 10px;
         font-size: 17px;
         display: none;
 
@@ -684,15 +662,12 @@ body {
 
         width: 100%;
         height: 60%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
+        @include flexSpaceAround;
+
     }
 
     &__section {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flexCenter;
         flex-direction: column;
     }
 
