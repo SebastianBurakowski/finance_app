@@ -736,11 +736,11 @@ body {
 .transactions {
     border: 1px solid red;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: flex-start;
     width: 100%;
     padding: 20px;
-
+    overflow-y: scroll;
+    max-height: 70vh;
 
 
     &__container {
@@ -775,10 +775,10 @@ body {
 
     }
 
-    &__list{
+    &__list {
         display: flex;
         justify-content: space-evenly;
-        align-items: center;
+        align-items: flex-start;
 
 
     }
@@ -797,12 +797,14 @@ body {
 
     &__income {
         &--title {
+            font-size: 30px;
             padding: 10px 0;
         }
     }
 
     &__expenses {
         &--title {
+            font-size: 30px;
             padding: 10px 0;
         }
     }
@@ -848,11 +850,80 @@ body {
     }
 }
 
-.options{
+.options {
     width: 50%;
-    border: 1px solid purple;
+    height: 65vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    flex-direction:column;
+    flex-direction: column;
+
+    &__container {
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__info {
+
+        font-size: 28px;
+        text-transform: uppercase;
+        height: 40%;
+        margin-top: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &--money {
+            color: $white_color;
+            font-size: 45px;
+            font-weight: bold;
+        }
+
+        &--title {
+            font-family: "Playfair Display", serif;
+        }
+    }
+
+    &__btns {
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 47vw;
+
+        padding: 20px 0;
+    }
+
+    &__btn {
+        color: $white_color;
+        font-size: 18px;
+        padding: 20px 40px;
+        margin-right: 10px;
+        background-color: transparent;
+        border: 1px solid $border_color;
+        border-radius: 8px;
+        cursor: pointer;
+        background-image: none;
+        transition: background-image 2s;
+
+        i {
+            margin-right: 10px;
+        }
+
+        a {
+            color: $white_color;
+            text-decoration: none;
+        }
+
+        &:hover {
+            background-image: $item_hover_color;
+        }
+    }
+
+
 }
