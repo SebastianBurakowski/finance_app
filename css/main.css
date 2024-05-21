@@ -670,7 +670,6 @@ body__login {
 }
 
 .transactions {
-  border: 1px solid red;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -869,4 +868,122 @@ body__login {
 }
 .options__btn:hover {
   background-image: linear-gradient(160deg, rgba(0, 51, 255, 0.25) 0%, rgba(255, 0, 0, 0.25));
+}
+
+.add-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(55, 64, 76)), to(rgb(30, 35, 42)));
+  background-image: linear-gradient(180deg, rgb(55, 64, 76) 0%, rgb(30, 35, 42));
+}
+.add-panel__title {
+  color: rgb(245, 245, 245);
+  font-family: "Playfair Display", serif;
+  text-transform: uppercase;
+  font-size: 45px;
+  padding-top: 20px;
+  margin-bottom: 40px;
+}
+.add-panel__label {
+  font-family: "Playfair Display", serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+.add-panel__label:nth-child(4) {
+  margin-bottom: 0;
+}
+.add-panel p {
+  margin-bottom: 15px;
+  font-weight: lighter;
+  font-style: italic;
+}
+.add-panel__input, .add-panel__select {
+  font-size: 16px;
+  font-weight: lighter;
+  color: rgb(245, 245, 245);
+  padding: 10px 5px;
+  margin-bottom: 3px;
+  width: 40%;
+  background-color: #4b5769;
+  border: 1px solid rgb(245, 245, 245);
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+.add-panel__input:focus, .add-panel__select:focus {
+  background-color: rgb(93, 93, 93);
+}
+.add-panel__calendar::-webkit-calendar-picker-indicator {
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+  font-size: 30px;
+  cursor: pointer;
+  -webkit-transition: -webkit-filter 0.3s;
+  transition: -webkit-filter 0.3s;
+  transition: filter 0.3s;
+  transition: filter 0.3s, -webkit-filter 0.3s;
+}
+.add-panel__calendar::-webkit-calendar-picker-indicator:hover {
+  -webkit-filter: invert(0);
+          filter: invert(0);
+}
+.add-panel__btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 40%;
+  height: 40%;
+}
+.add-panel__btn {
+  color: rgb(245, 245, 245);
+  font-size: 22px;
+  padding: 10px 20px;
+  background-color: transparent;
+  border: none;
+  border: 1px solid #4b5769;
+  border-radius: 8px;
+  height: 50px;
+  width: 200px;
+  cursor: pointer;
+  -webkit-transition: border 0.3s;
+  transition: border 0.3s;
+}
+.add-panel__btn--add {
+  text-transform: uppercase;
+}
+.add-panel__btn--add:hover {
+  border: 1px solid rgb(14, 253, 14);
+}
+.add-panel__btn--cancel {
+  text-transform: uppercase;
+}
+.add-panel__btn--cancel:hover {
+  border: 1px solid rgb(217, 0, 0);
+}
+.add-panel__btn--category {
+  text-transform: capitalize;
+}
+.add-panel__btn--category:hover {
+  border: 1px solid rgb(245, 245, 245);
 }

@@ -734,7 +734,6 @@ body {
 }
 
 .transactions {
-    border: 1px solid red;
     display: flex;
     justify-content: flex-start;
     width: 100%;
@@ -924,6 +923,131 @@ body {
             background-image: $item_hover_color;
         }
     }
+
+
+}
+
+.add-panel {
+
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-image: $panel_background;
+
+    &__title {
+        color: $white_color;
+        font-family: "Playfair Display", serif;
+        text-transform: uppercase;
+        font-size: 45px;
+        padding-top: 20px;
+        margin-bottom: 40px;
+    }
+
+    &__label {
+        font-family: "Playfair Display", serif;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 22px;
+        margin-bottom: 15px;
+
+        &:nth-child(4) {
+            margin-bottom: 0;
+        }
+    }
+
+    p {
+        margin-bottom: 15px;
+        font-weight: lighter;
+        font-style: italic;
+    }
+
+    &__input,
+    &__select {
+        font-size: 16px;
+        font-weight: lighter;
+        color: $white_color;
+        padding: 10px 5px;
+        margin-bottom: 3px;
+        width: 40%;
+        background-color: $border_color;
+        border: 1px solid $white_color;
+        border-radius: 8px;
+        margin-bottom: 30px;
+
+
+        &:focus {
+            background-color: $grey_color;
+        }
+    }
+
+
+
+
+    &__calendar::-webkit-calendar-picker-indicator {
+        filter: invert(100%);
+        font-size: 30px;
+        cursor: pointer;
+        transition: filter .3s;
+
+        &:hover {
+            filter: invert(0);
+        }
+    }
+
+
+    &__btns {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 40%;
+        height: 40%;
+    }
+
+    &__btn {
+        color: $white_color;
+        font-size: 22px;
+        padding: 10px 20px;
+        background-color: transparent;
+        border: none;
+        border: 1px solid $border_color;
+        border-radius: 8px;
+        height: 50px;
+        width: 200px;
+        cursor: pointer;
+        transition: border .3s;
+
+        &--add {
+            text-transform: uppercase;
+
+            &:hover {
+                border: 1px solid $lime_color;
+            }
+        }
+
+        &--cancel {
+            text-transform: uppercase;
+
+            &:hover {
+                border: 1px solid $alert_color;
+            }
+        }
+
+        &--category {
+            text-transform: capitalize;
+
+            &:hover {
+                border: 1px solid $white_color;
+            }
+        }
+    }
+
 
 
 }

@@ -98,27 +98,8 @@
                             <p class="transaction__amount transaction__amount--expenses">-400zł <button
                                     class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
                         </div>
-                        <div class="transaction" id="1">
-                            <p class="transaction__name transaction__name--expenses"><i
-                                    class="fas fa-cart-arrow-down"></i>
-                                Zakupy</p>
-                            <p class="transaction__amount transaction__amount--expenses">-400zł <button
-                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
-                        </div>
-                        <div class="transaction" id="1">
-                            <p class="transaction__name transaction__name--expenses"><i
-                                    class="fas fa-cart-arrow-down"></i>
-                                Zakupy</p>
-                            <p class="transaction__amount transaction__amount--expenses">-400zł <button
-                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
-                        </div>
-                        <div class="transaction" id="1">
-                            <p class="transaction__name transaction__name--expenses"><i
-                                    class="fas fa-cart-arrow-down"></i>
-                                fiut</p>
-                            <p class="transaction__amount transaction__amount--expenses">-400zł <button
-                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
-                        </div>
+
+
 
 
 
@@ -140,10 +121,14 @@
                             transakcję</button>
                         <button class="options__btn options__btn--delete"><i class="far fa-trash-alt"></i> Usuń
                             wszystko</button>
-                        <button class="options__btn options__btn--goal"><i class="fa-solid fa-bullseye"></i> Twoje Cele</button>
-                        <button class="options__btn options__btn--budget"><i class="fa-solid fa-sack-dollar"></i> Twój Budżet</button>
-                        <button class="options__btn options__btn--calendar"><i class="fa-regular fa-calendar-days"></i><a href="calendar.html">Kalendarz</a></button>
-                        <button class="options__btn options__btn--fee"><i class="fa-solid fa-comments-dollar"></i> Stałe opłaty</button>
+                        <button class="options__btn options__btn--goal"><i class="fa-solid fa-bullseye"></i> Twoje
+                            Cele</button>
+                        <button class="options__btn options__btn--budget"><i class="fa-solid fa-sack-dollar"></i> Twój
+                            Budżet</button>
+                        <button class="options__btn options__btn--calendar"><i
+                                class="fa-regular fa-calendar-days"></i><a href="calendar.html">Kalendarz</a></button>
+                        <button class="options__btn options__btn--fee"><i class="fa-solid fa-comments-dollar"></i> Stałe
+                            opłaty</button>
                     </div>
 
                 </div>
@@ -158,12 +143,45 @@
 
 
 
+        <section class="add-panel">
+            <h1 class="add-panel__title">Dodaj transakcję</h1>
+
+            <label class="add-panel__label" for="name">Nazwa : </label>
+            <input class="add-panel__input" type="text" id="add-panel-name">
+
+            <label class="add-panel__label" for="amount">Kwota : </label>
+            <p>(jeśli jest to wydatek dodaj "-")</p>
+            <input class="add-panel__input" type="number" id="add-panel-amount">
+
+            <label class="add-panel__label" for="category">Kategoria : </label>
+            <select class="add-panel__select" id="add-panel-category">
+                <option value="none" selected disabled></option>
+                <option value="income">+ Przychód</option>
+                <option value="expense">- Wydatek</option>
+
+
+            </select>
+
+            <label class="add-panel__label" for="category">Data Transakcji : </label> <input
+                class="add-panel__input add-panel__calendar" type="date" id="add-panel-date">
+
+
+
+            <div class="add-panel__btns">
+                <button class="add-panel__btn add-panel__btn--add">Zapisz</button>
+                <button class="add-panel__btn add-panel__btn--category">Dodaj Kategorię</button>
+                <button class="add-panel__btn add-panel__btn--cancel">Anuluj</button>
+            </div>
+
+
+        </section>
+
+
 
 
 
 
     </main>
-
 
 
 
