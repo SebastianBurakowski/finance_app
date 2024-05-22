@@ -123,17 +123,18 @@
                             wszystko</button>
                         <button class="options__btn options__btn--goal"><i class="fa-solid fa-bullseye"></i> Twoje
                             Cele</button>
-                        <button class="options__btn options__btn--budget"><i class="fa-solid fa-sack-dollar"></i> Twój
-                            Budżet</button>
-                        <button class="options__btn options__btn--calendar"><i
-                                class="fa-regular fa-calendar-days"></i><a href="calendar.html">Kalendarz</a></button>
+                        <button class="options__btn options__btn--calendar"
+                            onclick="window.location.href = 'calendar.html'">
+                            <i class="fa-regular fa-calendar-days"></i>Kalendarz</button>
                         <button class="options__btn options__btn--fee"><i class="fa-solid fa-comments-dollar"></i> Stałe
-                            opłaty</button>
+                            opłaty / Budżet</button>
                     </div>
 
                 </div>
 
             </section>
+
+
 
 
 
@@ -174,6 +175,143 @@
             </div>
 
 
+        </section>
+
+
+        <section class="goals-panel">
+            <div class="goals-panel__options">
+                <h1 class="goals-panel__title">Ustaw swój cel</h1>
+
+                <label class="goals-panel__label" for="name">Nazwa Celu : </label>
+                <input class="goals-panel__input" type="text" id="goals-panel-name">
+
+                <label class="goals-panel__label" for="amount">Kwota Celu : </label>
+                <p class="goals-panel__text">(zł)</p>
+                <input class="goals-panel__input" type="number" id="goals-panel-amount">
+
+                <label class="goals-panel__label" for="category">Data Końcowa Celu : </label> <input
+                    class="goals-panel__input goals-panel__calendar" type="date" id="goals-panel-date">
+
+                <div class="goals-panel__btns">
+                    <button class="goals-panel__btn goals-panel__btn--add">dodaj</button>
+                    <button class="goals-panel__btn goals-panel__btn--cancel">Anuluj</button>
+                </div>
+            </div>
+
+
+            <div class="goals">
+                <h2 class="goals__title">Moje cele</h2>
+                <ul class="goals__list">
+                    <li class="goals__list--item" id="1">
+                        <p class="goal__info"> Audi A4 : <span class="goal__paid">100</span> zł z <span
+                                class="goal__to-pay">1000</span> zł</p>
+                        <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">65 dni</span></p>
+                        <div class="goal__btns">
+                            <button class="goal__btn goal__btn--deposit">Zasil cel</button>
+                            <button class="goal__btn goal__btn--remove">usuń cel</button>
+                        </div>
+
+                    </li>
+                    <li class="goals__list--item" id="2">
+                        <p class="goal__info"> Dom : <span class="goal__paid">1000</span> zł z <span
+                                class="goal__to-pay">300000</span> zł
+                        </p>
+                        <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">650 dni</span></p>
+                        <div class="goal__btns">
+                            <button class="goal__btn goal__btn--deposit">Zasil cel</button>
+                            <button class="goal__btn goal__btn--remove">usuń cel</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+
+            <section class="goal__deposit">
+                <div class="goal__deposit--panel">
+                    <i class="fa-solid fa-x signup__close-btn close-btn goal__deposit--close"></i>
+                    <label class="goal__deposit__label" for="amount">Kwota Zasilenia : </label>
+                    <input class="goal__deposit__input" type="number" id="goal__deposit-amount">
+                    <button class="goal__btn goal__btn--deposit goal__btn-deposti--amount">Zasil cel</button>
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <section class="finances__panel">
+            <div class="budget">
+                <div class="budget__info">
+                    <h1 class="budget__title">Ustal Swój budżet</h1>
+                    <p class="budget__text">w tej sekcji możesz ustalić swój budżet.</p>
+                    <p class="budget__text budget__text--small">Przykład : </p>
+                    <p class="budget__text budget__text--small">Ustalając budżet na Zakupy dodaj odpowiednią nazwę oraz budżet
+                        jaki chcesz
+                        przeznaczyć na zakupy.</p>
+                </div>
+                <div class="budget__panel">
+
+                    <label class="budget__panel--label" for="name">Nazwa : </label>
+                    <input class="budget__panel--input" type="text" id="budget-panel-name">
+
+                    <label class="budget__panel--label" for="amount">Kwota : </label>
+                    <input class="budget__panel--input" type="number" id="budget-panel-amount">
+                    <button class="budget__panel--btn">dodaj</button>
+                </div>
+                <ul class="budget__list">
+                    <li class="budget__list--item" id="1">
+                        <p class="budget__list--info"> <span class="budget__name">Rozrywka</span> : <span
+                                class="budget__spent">300</span> zł / <span class="budget__amount">1000</span> zł</p>
+                        <button class="goal__btn goal__btn--remove budget__btn--remove">usuń</button>
+
+                    </li>
+                    <li class="budget__list--item" id="2">
+                        <p class="budget__list--info"> <span class="budget__name">Rozrywka</span> : <span
+                                class="budget__spent">300</span> zł /
+                            <span class="budget__amount">1000</span> zł
+                        </p>
+                        <button class="goal__btn goal__btn--remove budget__btn--remove">usuń</button>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="fees">
+                <div class="fees__info">
+                    <h1 class="fees__title">Ustal Swoje stałe opłaty</h1>
+                    <p class="fees__text">w tej sekcji możesz ustalić swoje stałe opłaty takie jak rachunki, raty
+                        kredytów itp.</p>
+                    <p class="budget__text--small">Dodane opłaty będą automatycznie aktualizowane z dostępnymi środkami
+                        na koncie (jeśli dodasz np ratę kredytu w wysokości 1000zł, dostępne środki zostaną pomniejszone
+                        o tę kwotę)</p>
+                </div>
+                <div class="fees__panel">
+
+                    <label class="fees__panel--label" for="name">Nazwa : </label>
+                    <input class="fees__panel--input" type="text" id="fees-panel-name">
+
+                    <label class="fees__panel--label" for="amount">Kwota : </label>
+                    <input class="fees__panel--input" type="number" id="fees-panel-amount">
+                    <button class="fees__panel--btn">dodaj</button>
+                </div>
+
+                <ul class="fees__list">
+                    <li class="fees__list--item" id="1">
+                        <p class="fees__list--info"> <span class="fees__name">Rata za mieszkanie</span> : <span
+                                class="fees__amount">1000</span> zł</p>
+                        <button class="goal__btn goal__btn--remove fees__btn--remove">usuń</button>
+
+                    </li>
+                    <li class="fees__list--item" id="1">
+                        <p class="fees__list--info"> <span class="fees__name">sdasda</span> : <span
+                                class="fees__amount">1000</span> zł</p>
+                        <button class="goal__btn goal__btn--remove fees__btn--remove">usuń</button>
+
+                    </li>
+                </ul>
+
+            </div>
+
+            <button class="finances__btn--close">Zamknij</button>
         </section>
 
 
