@@ -1021,7 +1021,6 @@ body {
         font-size: 22px;
         padding: 10px 20px;
         background-color: transparent;
-        border: none;
         border: 1px solid $border_color;
         border-radius: 8px;
         height: 50px;
@@ -1058,16 +1057,20 @@ body {
 
 }
 
-.goals-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: none;
-    justify-content: space-around;
-    align-items: center;
-    background-image: $panel_background;
+.goals {
+    &__panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        justify-content: space-around;
+        align-items: center;
+        background-image: $panel_background;
+
+    }
+
 
     &__options {
         width: 50%;
@@ -1087,14 +1090,6 @@ body {
         margin-bottom: 40px;
     }
 
-    &__label {
-        font-family: "Playfair Display", serif;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 22px;
-        margin-bottom: 15px;
-
-    }
 
     &__text {
         margin-bottom: 15px;
@@ -1102,23 +1097,7 @@ body {
         font-style: italic;
     }
 
-    &__input {
-        font-size: 16px;
-        font-weight: lighter;
-        color: $white_color;
-        padding: 10px 5px;
-        margin-bottom: 3px;
-        width: 40%;
-        background-color: $border_color;
-        border: 1px solid $white_color;
-        border-radius: 8px;
-        margin-bottom: 30px;
 
-
-        &:focus {
-            background-color: $grey_color;
-        }
-    }
 
     &__calendar::-webkit-calendar-picker-indicator {
         filter: invert(100%);
@@ -1140,52 +1119,19 @@ body {
     }
 
     &__btn {
-        color: $white_color;
-        font-size: 22px;
-        padding: 10px 20px;
-        background-color: transparent;
-        border: 1px solid $border_color;
-        border-radius: 8px;
         height: 50px;
         width: 200px;
-        cursor: pointer;
-        transition: border .3s;
-        text-transform: uppercase;
-
-        &--add {
-
-
-            &:hover {
-                border: 1px solid $lime_color;
-            }
-        }
-
-        &--cancel {
-
-
-            &:hover {
-                border: 1px solid $alert_color;
-            }
-        }
 
     }
-}
 
-.goals {
-    width: 30%;
-    height: 80%;
-    display: none;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
+    &__active {
+        width: 30%;
+        height: 80%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
 
-    &__title {
-        color: $white_color;
-        font-family: "Playfair Display", serif;
-        text-transform: uppercase;
-        font-size: 45px;
-        padding-top: 20px;
-        margin-bottom: 40px;
     }
 
     &__list {
@@ -1201,6 +1147,7 @@ body {
         }
     }
 }
+
 
 .goal {
     &__info {
@@ -1222,36 +1169,9 @@ body {
         padding: 10px 0;
     }
 
-    &__btn {
-        font-size: 13px;
-        text-transform: uppercase;
-        padding: 5px 10px;
-        color: $white_color;
-        background-color: transparent;
-        border: 1px solid $border_color;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: border .3s;
-
-        &--deposit {
-
-
-            &:hover {
-                border: 1px solid $lime_color;
-            }
-        }
-
-        &--remove {
-
-
-            &:hover {
-                border: 1px solid $alert_color;
-            }
-        }
-    }
 }
 
-.goal__deposit {
+.deposit {
     display: none;
     position: fixed;
     top: 50%;
@@ -1264,7 +1184,8 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 20px $dark_color;
 
-    &--panel {
+    &__panel {
+        width: 100%;
         height: 100%;
         display: flex;
         justify-content: space-evenly;
@@ -1272,29 +1193,38 @@ body {
         flex-direction: column;
     }
 
-    &__label {
-        font-size: 26px;
-    }
 
     &__input {
-        color: $white_color;
-        padding: 10px 10px;
         width: 250px;
-        background-color: transparent;
-        border: 1px solid $border_color;
-        border-radius: 6px;
-
-        &:focus {
-            background-color: $border_color;
-        }
     }
 
-    &--close {
-        font-size: 14px;
+    &__btn {
+        &--close {
+            font-size: 14px;
+            position: fixed;
+            right: 15px;
+            top: 15px;
+        }
+
     }
 }
 
 .finances {
+
+    &__panel {
+        display: none;
+        overflow-y: auto;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        justify-content: space-around;
+        align-items: center;
+        background-image: $panel_background;
+
+    }
+
     &__btn {
         &--close {
             position: fixed;
@@ -1319,25 +1249,11 @@ body {
         }
     }
 
-    &__panel {
-        overflow-y: auto;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        display: none;
-        justify-content: space-around;
-        align-items: center;
-        background-image: $panel_background;
 
-    }
 }
 
 .budget {
-
     border-right: 1px solid $border_color;
-
     width: 50%;
     height: 100%;
     display: flex;
@@ -1350,58 +1266,6 @@ body {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-
-        &--input {
-            color: $white_color;
-            padding: 5px 10px;
-            width: 350px;
-            background-color: transparent;
-            border: 1px solid $border_color;
-            border-radius: 6px;
-
-            &:focus {
-                background-color: $border_color;
-            }
-        }
-
-        &--label {
-            font-size: 26px;
-            padding: 10px 0;
-        }
-
-        &--btn {
-            margin-top: 40px;
-            font-size: 18px;
-            text-transform: uppercase;
-            padding: 10px 20px;
-            color: $white_color;
-            background-color: transparent;
-            border: 1px solid $border_color;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: border .3s;
-
-            &:hover {
-                border: 1px solid $lime_color;
-            }
-
-            &--remove:hover {
-                border: 1px solid $alert_color;
-            }
-        }
-    }
-
-    &__info {
-        text-align: center;
-    }
-
-    &__title {
-
-        color: $white_color;
-        font-family: "Playfair Display", serif;
-        text-transform: uppercase;
-        font-size: 45px;
-        margin-bottom: 10px;
     }
 
     &__text {
@@ -1410,12 +1274,14 @@ body {
         text-transform: capitalize;
         font-size: 16px;
         padding: 2px 0;
+    }
 
-        &--small {
-            color: $text_panel_color;
-            font-size: 15px;
-            font-style: italic;
-        }
+    &__info {
+        text-align: center;
+    }
+
+    &__input {
+        width: 350px;
     }
 
     &__list {
@@ -1436,85 +1302,12 @@ body {
             margin-right: 50px;
         }
     }
-
-    .goal__deposit {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 400px;
-        height: 200px;
-        background-color: $dark_light_background;
-        border: 1px solid $border_color;
-        border-radius: 8px;
-        box-shadow: 0 0 20px $dark_color;
-
-        &--panel {
-            height: 100%;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        &__label {
-            font-size: 26px;
-        }
-
-        &__input {
-            color: $white_color;
-            padding: 10px 10px;
-            width: 250px;
-            background-color: transparent;
-            border: 1px solid $border_color;
-            border-radius: 6px;
-
-            &:focus {
-                background-color: $border_color;
-            }
-        }
-
-        &--close {
-            font-size: 14px;
-        }
-    }
-
 }
 
+
+// Transakcje - stałe opłaty
+
 .fees {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-
-    &__info {
-        text-align: center;
-    }
-
-    &__title {
-        color: $white_color;
-        font-family: "Playfair Display", serif;
-        text-transform: uppercase;
-        font-size: 45px;
-        margin-bottom: 10px;
-    }
-
-    &__text {
-        color: $white_color;
-        text-transform: capitalize;
-        font-size: 16px;
-        padding: 5px 0;
-
-        &--small {
-            color: $text_panel_color;
-            font-size: 15px;
-            font-style: italic;
-        }
-    }
-
     width: 50%;
     height: 100%;
     display: flex;
@@ -1522,60 +1315,33 @@ body {
     align-items: center;
     flex-direction: column;
 
+    &__info {
+
+        text-align: center;
+    }
+
+
+    &__text {
+        color: $white_color;
+        text-transform: capitalize;
+        font-size: 16px;
+        padding: 5px 0;
+
+    }
+
+
     &__panel {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-
-        &--input {
-            color: $white_color;
-            padding: 5px 10px;
-            width: 350px;
-            background-color: transparent;
-            border: 1px solid $border_color;
-            border-radius: 6px;
-
-            &:focus {
-                background-color: $border_color;
-            }
-        }
-
-        &--label {
-            font-size: 26px;
-            padding: 10px 0;
-        }
-
-        &--btn {
-            margin-top: 40px;
-            font-size: 18px;
-            text-transform: uppercase;
-            padding: 10px 20px;
-            color: $white_color;
-            background-color: transparent;
-            border: 1px solid $border_color;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: border .3s;
-
-            &:hover {
-                border: 1px solid $lime_color;
-            }
-
-            &--remove:hover {
-                border: 1px solid $alert_color;
-            }
-        }
     }
 
+                &__input {
+                    width: 350px;
+                }
 
-    &__title {
-        color: $white_color;
-        font-family: "Playfair Display", serif;
-        text-transform: uppercase;
-        font-size: 45px;
-        margin-bottom: 10px;
-    }
+
 
     &__list {
         list-style: none;
