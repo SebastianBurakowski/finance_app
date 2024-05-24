@@ -8,6 +8,10 @@ let addTransactionPanel, addNameInput, addAmountInput, addCategoryInput, addDate
 
 //Panel celów finansowych
 let addGoalPanel, goalPanelCancelBtn, goalNameInput, goalAmountInput, goalDateInput;
+//Dodawnie nowego celu
+let addToGoalBtn, removeGoalBtn
+//Okno dodawnia celu
+let depositAmountInput, depositAddBtn, depositCloseBtn
 
 
 //Panel Finansów i budżetu
@@ -37,13 +41,25 @@ const prepareDomElements = () => {
     addDateInput = document.querySelector('#add-panel-date')
     addPanelCancelBtn = document.querySelector('.add-panel__btn--cancel')
 
-
+//-----------------------------------------------------------------------//
     //Panel celów finansowych
     addGoalPanel = document.querySelector('.goals__panel')
     goalPanelCancelBtn = document.querySelector('.goals__btn--cancel')
     goalNameInput = document.querySelector('#goals-panel-name')
     goalAmountInput = document.querySelector('#goals-panel-amount')
     goalDateInput = document.querySelector('#goals-panel-date')
+
+    //Dodawnie nowego celu
+    addToGoalBtn = document.querySelector('.goal__btn--add')
+    removeGoalBtn = document.querySelector('.goal__btn--remove')
+
+    //Okno dodawnia celu
+    depositPanel = document.querySelector('.deposit')
+    depositAmountInput = document.querySelector('#goal__deposit-amount')
+    depositCloseBtn = document.querySelector('.deposit__btn--close')
+    depositAddBtn = document.querySelector('.deposit__btn--add')
+    openDepositBtns = document.querySelectorAll('.goal__btn--deposit')
+
 
 
     //Panel Finansów i budżetu
@@ -74,26 +90,46 @@ const togglePanel = (panel) => {
 };
 
 
+//Funkcja otwierania okna do zasilenia celu 
+
+const toggleDeposit = () => {
+console.log("siema");
+    const isCurrentlyVisible = depositPanel.style.display === 'flex';
+
+    depositPanel.style.display = isCurrentlyVisible ? 'none' : 'flex';
+
+    if (!isCurrentlyVisible) {
+        clearInputs();
+    }
+};
+    
+
+
+
 
 //funkcja czyszczenia Inputów paneli
 
 const clearInputs = () => {
 
+    //Panel dodawania transakcji
     addNameInput.value = "";
     addAmountInput.value = "";
     addCategoryInput.value = "";
     addDateInput.value = "";
 
+    //panel dodawania celi
     goalNameInput.value = "";
     goalAmountInput.value = "";
     goalDateInput.value = "";
 
-
+    //panel budżetu
     budgetNameInput.value = "";
     budgetAmountInput.value = "";
     feeNameInput.value = "";
     feeAmountInput.value = "";
-    financeCloseBtn.value = "";
+
+    //okno zasilania celu
+    depositAmountInput.value = ""
 }
 
 
@@ -109,6 +145,15 @@ const prepareDomEvents = () => {
 
     openBudgetBtn.addEventListener('click', () => togglePanel(financePanel));
     financeCloseBtn.addEventListener('click', () => togglePanel(financePanel));
+
+    openDepositBtns.forEach(btn => {
+        btn.addEventListener('click', toggleDeposit)
+        
+    });
+
+    depositCloseBtn.addEventListener('click', toggleDeposit)
+
+
 
 }
 

@@ -21,40 +21,90 @@
 
 <body class="body__main">
 
-    <main class="main__container">
+    <main class=" credit__container container">
 
-            <section class="nav__panel">
-                <ul class="nav__items">
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="transactions.html">Transakcje</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="raports.html">Raporty</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link active" href="creditworthines.html">Zdolność kredytowa</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="calendar.html">Kalendarz</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="statistics.html">Statystyki</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="educations.html">Edukacja</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="currency_calculator.html">Kalkulator walut</a>
-                    </li>
+        <section class="nav__panel">
+            <ul class="nav__items">
+                <li class="nav__item">
+                    <a class="nav__item--link" href="transactions.html">Transakcje</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="raports.html">Raporty</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link active" href="creditworthines.html">Zdolność kredytowa</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="calendar.html">Kalendarz</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="statistics.html">Statystyki</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="educations.html">Edukacja</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="currency_calculator.html">Kalkulator walut</a>
+                </li>
                 <li class="">
                     <a class="nav__item--logout" href="login.html"><i class="fa-solid fa-power-off"></i></a>
                 </li>
-                </ul>
+            </ul>
+
+        </section>
+
+        <h1 class="credit__title">Kalkulator Zdolności kredytowej</h1>
+        <p class="credit__text"> Kalkulator umożliwia ocenę zdolności kredytowej w obrębie kretydu gotówkowego
+        </p>
+        <p class="small credit__small">(Realna zdolność możę się troche różnić)</p>
+
+        <section class="credit__app">
+            <form class="credit__form">
+                <div class="credit__option">
+                    <label class="credit__label label-grey" for="Income">Miesięczny dochód netto gospodarstwa na
+                        rękę:</label>
+                    <input class="credit__input input-grey" type="number" id="credit-panel-income" required>
+                </div>
+
+                <div class="credit__option">
+                    <label class="credit__label label-grey" for="monthlyExpenses">Stałe miesięczne wydatki
+                        gospodarstwa:</label>
+                    <input class="credit__input input-grey" type="number" id="credit-panel-expenses" required>
+                </div>
+
+                <div class="credit__option">
+                    <label class="credit__label label-grey" for="monthlyLiabilities">Miesięczne zobowiązania (raty
+                        kredytów,
+                        limity na koncie i karcie itp.):</label>
+                    <input class="credit__input input-grey" type="number" id="credit-panel-liabilities" required>
+                </div>
+
+                <div class="credit__option">
+                    <label class="credit__label label-grey" for="dependents">Liczba osób w gospodarstwie:</label>
+                    <input class="credit__input input-grey" type="number" id="credit-panel-dependents" required>
+                </div>
+
+                <div class="credit__option">
+                    <label class="credit__label label-grey" for="Period">Okres kredytowania (w miesiącach):</label>
+                    <input class="credit__input input-grey" type="number" id="credit-panel-period" required>
+                </div>
+
+                <div class="credit__option">
+                    <label class="credit__label label-grey" for="latePayments">Czy były opóźnienia w spłacie rat, wynoszące więcej niż 90 dni?</label>
+                    <select class="credit__input input-grey" id="credit-panel-late" required>
+                        <option value="none" selected disabled></option>
+                        <option value="yes">Tak</option>
+                        <option value="no">Nie</option>
+                    </select>
+
+                </div>
+
+                <button type="submit" class="credit__btn credit__btn--submit accept-btn">Oblicz zdolność kredytową</button>
+            </form>
+            <p class="credit__info"> Twoja zdolność kredytowa wynosi : <span class="credit__result"></span> zł</p>
             
-            </section>
-
-
-
+            </div>
+        </section>
 
 
 
@@ -65,7 +115,7 @@
 
 
 
-    <script src="script.js"></script>
+    <script src="script_credit.js"></script>
 </body>
 
 </html>

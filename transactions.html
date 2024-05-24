@@ -152,7 +152,7 @@
 
             <label class="add-panel__label label-grey" for="amount">Kwota : </label>
             <p>(jeśli jest to wydatek dodaj "-")</p>
-            <input class="add-panel__input" type="number" id="add-panel-amount">
+            <input class="add-panel__input input-grey" type="number" id="add-panel-amount">
 
             <label class="add-panel__label label-grey   " for="category">Kategoria : </label>
             <select class="add-panel__select" id="add-panel-category">
@@ -205,10 +205,11 @@
                     <li class="goals__list--item" id="1">
                         <p class="goal__info"> Audi A4 : <span class="goal__paid">100</span> zł z <span
                                 class="goal__to-pay">1000</span> zł</p>
+                        <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> 22.03.2024</span></p>
                         <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">65 dni</span></p>
                         <div class="goal__btns">
-                            <button class="goal__btn accept-btn">Zasil cel</button>
-                            <button class="goal__btn decline-btn">usuń cel</button>
+                            <button class="goal__btn--deposit accept-btn">Zasil cel</button>
+                            <button class="goal__btn--remove decline-btn">usuń cel</button>
                         </div>
 
                     </li>
@@ -216,6 +217,7 @@
                         <p class="goal__info"> Dom : <span class="goal__paid">1000</span> zł z <span
                                 class="goal__to-pay">300000</span> zł
                         </p>
+                        <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> 22.03.2024</span></p>
                         <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">650 dni</span></p>
                         <div class="goal__btns">
                             <button class="goal__btn--deposit accept-btn">Zasil cel</button>
