@@ -1365,11 +1365,7 @@ body {
 
 .credit {
     &__title {
-        color: $white_color;
-        font-family: "Playfair Display", serif;
-        text-transform: uppercase;
         font-size: 32px;
-        margin-bottom: 10px;
         padding: 10px;
     }
 
@@ -1446,5 +1442,230 @@ body {
         &:hover {
             border: 1px solid $white_color;
         }
+    }
+}
+
+
+
+//////////////////// RAPORTY ////////////////////////
+/// 
+
+
+.raports {
+
+    &__title {
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+    &__text {
+        font-size: 18px;
+        padding: 0 0 10px 10px;
+        border-bottom: 1px solid $white_color;
+
+    }
+
+    &__app {
+        height: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+    }
+
+    &__form {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__options {
+        display: block;
+        text-align: center;
+
+        &--month,
+        &--year {
+            display: none;
+        }
+    }
+
+    &__input {
+        margin-top: 20px;
+        width: 100%;
+
+        &--select {
+            width: 20%;
+        }
+    }
+
+    &__btn {
+        font-size: 15px;
+        padding: 10px 20px;
+
+    }
+
+
+
+
+}
+
+
+//////////////////// STATYSTYKI ////////////////////
+/// 
+
+.stats {
+
+    &__title {
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+    &__text {
+        font-size: 18px;
+        padding: 0 0 10px 10px;
+        border-bottom: 1px solid $white_color;
+
+    }
+
+    &__app {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+
+    }
+
+    &__form {
+        width: 25%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        margin-right: 100px;
+        padding: 20px 0;
+    }
+
+
+    &__input {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    &__btn {
+        font-size: 15px;
+        padding: 10px 20px;
+
+    }
+
+
+}
+
+#barChart {
+    width: 88% !important;
+    height: 100%;
+    height: auto !important;
+    margin-bottom: 20px;
+}
+
+#lineChart {
+    width: 88% !important;
+    height: 100%;
+    height: auto !important;
+    margin-bottom: 20px;
+}
+
+#pieChart {
+    width: 100% !important;
+    height: 70% !important;
+
+}
+
+
+
+
+
+
+
+
+
+////////////// USTAWIENIA //////////
+/// 
+
+.settings {
+    &__app {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__btn {
+        color: $white_color;
+        font-size: 18px;
+        padding: 20px 40px;
+        margin-right: 10px;
+        background-color: transparent;
+        border: 1px solid $border_color;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: border .3s;
+
+        &:last-child:hover {
+            border: 1px solid $alert_color;
+        }
+
+
+        &:hover {
+            border: 1px solid $white_color;
+        }
+
+    }
+}
+
+
+.personal,
+.password,
+.email,
+.delete {
+display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 300px;
+    background-color: $dark_light_background;
+    border: 1px solid $border_color;
+    border-radius: 8px;
+    box-shadow: 0 0 20px $dark_color;
+
+    &__panel {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__btn {
+        font-size: 16px;
+        padding: 10px 20px;
+
+        &--close {
+            font-size: 14px;
+            position: fixed;
+            right: 15px;
+            top: 15px;
+        }
+
     }
 }

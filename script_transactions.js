@@ -93,7 +93,7 @@ const togglePanel = (panel) => {
 //Funkcja otwierania okna do zasilenia celu 
 
 const toggleDeposit = () => {
-console.log("siema");
+
     const isCurrentlyVisible = depositPanel.style.display === 'flex';
 
     depositPanel.style.display = isCurrentlyVisible ? 'none' : 'flex';

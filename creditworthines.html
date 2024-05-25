@@ -29,13 +29,10 @@
                     <a class="nav__item--link" href="transactions.html">Transakcje</a>
                 </li>
                 <li class="nav__item">
-                    <a class="nav__item--link" href="raports.html">Raporty</a>
+                    <a class="nav__item--link " href="raports.html">Raporty</a>
                 </li>
                 <li class="nav__item">
                     <a class="nav__item--link active" href="creditworthines.html">Zdolność kredytowa</a>
-                </li>
-                <li class="nav__item">
-                    <a class="nav__item--link" href="calendar.html">Kalendarz</a>
                 </li>
                 <li class="nav__item">
                     <a class="nav__item--link" href="statistics.html">Statystyki</a>
@@ -46,14 +43,18 @@
                 <li class="nav__item">
                     <a class="nav__item--link" href="currency_calculator.html">Kalkulator walut</a>
                 </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="settings.html">Ustawienia</a>
+                </li>
                 <li class="">
                     <a class="nav__item--logout" href="login.html"><i class="fa-solid fa-power-off"></i></a>
                 </li>
+
             </ul>
 
         </section>
 
-        <h1 class="credit__title">Kalkulator Zdolności kredytowej</h1>
+        <h1 class="credit__title title">Kalkulator Zdolności kredytowej</h1>
         <p class="credit__text"> Kalkulator umożliwia ocenę zdolności kredytowej w obrębie kretydu gotówkowego
         </p>
         <p class="small credit__small">(Realna zdolność możę się troche różnić)</p>
@@ -90,7 +91,8 @@
                 </div>
 
                 <div class="credit__option">
-                    <label class="credit__label label-grey" for="latePayments">Czy były opóźnienia w spłacie rat, wynoszące więcej niż 90 dni?</label>
+                    <label class="credit__label label-grey" for="latePayments">Czy były opóźnienia w spłacie rat,
+                        wynoszące więcej niż 90 dni?</label>
                     <select class="credit__input input-grey" id="credit-panel-late" required>
                         <option value="none" selected disabled></option>
                         <option value="yes">Tak</option>
@@ -99,10 +101,11 @@
 
                 </div>
 
-                <button type="submit" class="credit__btn credit__btn--submit accept-btn">Oblicz zdolność kredytową</button>
+                <button type="submit" class="credit__btn credit__btn--submit accept-btn">Oblicz zdolność
+                    kredytową</button>
             </form>
             <p class="credit__info"> Twoja zdolność kredytowa wynosi : <span class="credit__result"></span> zł</p>
-            
+
             </div>
         </section>
 

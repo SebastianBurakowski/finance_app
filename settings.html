@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/App_Favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/35828e693f.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Praca Inżynierska - Sebastian Burakowski</title>
+</head>
+
+<body class="body__main">
+
+    <main class="settings__container container">
+
+        <section class="nav__panel">
+            <ul class="nav__items">
+                <li class="nav__item">
+                    <a class="nav__item--link" href="transactions.html">Transakcje</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link " href="raports.html">Raporty</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="creditworthines.html">Zdolność kredytowa</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="statistics.html">Statystyki</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="educations.html">Edukacja</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="currency_calculator.html">Kalkulator walut</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link active" href="settings.html">Ustawienia</a>
+                </li>
+                <li class="">
+                    <a class="nav__item--logout" href="login.html"><i class="fa-solid fa-power-off"></i></a>
+                </li>
+
+            </ul>
+
+        </section>
+
+        <section class="settings__app">
+
+            <div class="settings__btns">
+                <button class="settings__btn settings__btn--personal"><i class="fa-solid fa-user"></i> Zmień swoje dane
+                </button>
+                <button class="settings__btn settings__btn--password"><i class="fa-solid fa-lock"></i> Zmień
+                    hasło</button>
+                <button class="settings__btn settings__btn--email"><i class="fa-solid fa-envelope"></i> Zmień
+                    e-mail</button>
+                <button class="settings__btn settings__btn--delete"><i class="fa-solid fa-user-slash"></i> Usuń
+                    konto</button>
+            </div>
+
+        </section>
+
+
+        <section class="personal">
+            <div class="personal__panel">
+                <i class="fa-solid fa-x personal__btn--close close-btn"></i>
+                <label class="personal__label label-grey" for="amount"> Imie : </label>
+                <input class="personal__input input-grey" type="text" id="personal-panel-name">
+                <label class="personal__label label-grey" for="amount">Nazwisko : </label>
+                <input class="personal__input input-grey" type="text" id="personal-panel-surname">
+                <button class="personal__btn personal__btn--add accept-btn">Zmień</button>
+            </div>
+
+        </section>
+
+        <section class="email">
+            <div class="email__panel">
+                <i class="fa-solid fa-x email__btn--close close-btn"></i>
+                <label class="email__label label-grey" for="amount"> Nowy e-mail : </label>
+                <input class="email__input input-grey" type="text" id="email-panel-input">
+                <button class="email__btn email__btn--add accept-btn">Zmień</button>
+            </div>
+
+        </section>
+
+                <section class="delete">
+                    <div class="delete__panel">
+                        <i class="fa-solid fa-x delete__panel__btn--close close-btn"></i>
+                       <h1 class="delete_title">Napewno chcesz usunać konto ?</h1>
+                        <button class="delete__panel__btn delete__panel__btn--add accept-btn">Tak</button>
+                        <button class="delete__panel__btn delete__panel__btn--add decline-btn">Nie</button>
+                    </div>
+                
+                </section>
+
+        <section class="password">
+            <div class="password__panel">
+                <i class="fa-solid fa-x password__btn--close close-btn"></i>
+                <label class="password__label label-grey" for="amount"> Nowe hasło : </label>
+                <input class="password__input input-grey" type="text" id="password1">
+                <label class="password__label label-grey" for="amount">Powtórz hasło : </label>
+                <input class="password__input input-grey" type="text" id="password2">
+                <button class="password__btn password__btn--add accept-btn">Zmień</button>
+            </div>
+
+        </section>
+
+
+
+
+    </main>
+
+
+
+
+
+
+    <script src="script_settings.js"></script>
+</body>
+
+</html>

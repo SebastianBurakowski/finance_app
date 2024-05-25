@@ -44,11 +44,6 @@ const calculateHandle = (incomeInput, monthlyExpensesInput, monthlyLiabilitiesIn
         // Maksymalna Kwota
         const maxLoan = maxMonthlyLoan * period;
 
-        console.log("wydatki" + totalExpenses);
-        console.log("wolna kasa " + freeMoney);
-        console.log("max rata" + maxMonthlyLoan);
-        console.log("max kredyt" + maxLoan);
-
         return maxLoan;
 
     }
@@ -79,15 +74,13 @@ const prepareDomEvents = () => {
             return;
      
         } else {
-            resultSpan.innerText = result.toFixed(2)
-
-            creditInfoText.innerHTML = `<p class="credit__info"> Twoja zdolność kredytowa wynosi : <span class="credit__result">${result}</span> zł</p>`
+            creditInfoText.innerHTML = `<p class="credit__info"> Twoja zdolność kredytowa wynosi : <span class="credit__result">${result.toFixed(2)}</span> zł</p>`
             creditInfoText.style.color = 'white'
         }
 
 
         clearInputs()
-        console.log(result);
+      
     });
 }
 

@@ -21,37 +21,80 @@
 
 <body class="body__main">
 
-    <main class="main__container">
+    <main class="raports__container container">
 
-            <section class="nav__panel">
-                <ul class="nav__items">
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="transactions.html">Transakcje</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link active" href="raports.html">Raporty</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="creditworthines.html">Zdolność kredytowa</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="calendar.html">Kalendarz</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="statistics.html">Statystyki</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="educations.html">Edukacja</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__item--link" href="currency_calculator.html">Kalkulator walut</a>
-                    </li>
+        <section class="nav__panel">
+            <ul class="nav__items">
+                <li class="nav__item">
+                    <a class="nav__item--link" href="transactions.html">Transakcje</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link active" href="raports.html">Raporty</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="creditworthines.html">Zdolność kredytowa</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="statistics.html">Statystyki</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="educations.html">Edukacja</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="currency_calculator.html">Kalkulator walut</a>
+                </li>
+                <li class="nav__item">
+                    <a class="nav__item--link" href="settings.html">Ustawienia</a>
+                </li>
                 <li class="">
                     <a class="nav__item--logout" href="login.html"><i class="fa-solid fa-power-off"></i></a>
                 </li>
-                </ul>
-            
-            </section>
+
+            </ul>
+
+        </section>
+
+        <h1 class="raports__title title">Raporty</h1>
+        <p class="raports__text"> Sekcja raportów umożliwia generowanie raportów z wybranego miesiąca lub raportu
+            rocznego
+        </p>
+
+
+        <section class="raports__app">
+
+            <form class="raports__form">
+
+                <label class="raports__label label-grey" for="raportType">Wybierz typ raporu : </label>
+                <select class=" raports__input raports__input--select input-grey" id="raport-panel-type">
+                    <option value="none" selected disabled>
+                    <option value="month">Miesięczny</option>
+                    <option value="year">Roczny</option>
+                    </option>
+                </select>
+
+
+                <div class="raports__options">
+
+                    <div class="raports__options--month">
+                        <label class="raports__label label-grey" for="month">Miesiąc:</label>
+                        <input class="raports__input input-grey" type="month" id="raport-panel-month">
+                    </div>
+
+                    <div class="raports__options--year">
+                        <label class="raports__label label-grey" for="year">Rok:</label>
+                        <input class="raports__input input-grey" type="number" id="raport-panel-year"
+                        placeholder="Wprowadź rok">
+                        <p class="raports__alert"></p>
+                    </div>
+                </div>
+
+                <button type="submit" class="raports__btn raports__btn--submit accept-btn"> Generuj </button>
+
+            </form>
+
+            <div class="raports__result"></div>
+
+        </section>
 
 
 
@@ -65,7 +108,7 @@
 
 
 
-    <script src="script.js"></script>
+    <script src="script_raports.js"></script>
 </body>
 
 </html>
