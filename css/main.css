@@ -794,9 +794,8 @@ body__login {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
@@ -821,11 +820,24 @@ body__login {
 }
 
 .transaction {
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 10px 0;
 }
 .transaction__name {
   font-size: 20px;
   padding: 10px 0;
+}
+.transaction__name--category {
+  font-size: 14px;
 }
 .transaction__amount {
   font-size: 18px;
@@ -853,6 +865,12 @@ body__login {
 .transaction__delete:hover {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
+}
+.transaction__alert {
+  font-style: normal;
+  font-weight: bold;
+  color: rgb(217, 0, 0);
+  font-size: 20px;
 }
 
 .options {

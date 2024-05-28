@@ -1,9 +1,15 @@
 //Głowna strona przyciski
 let openTransactionBtn, openGoalBtn, openBudgetBtn;
+let availableMoney, transactionSearchInputIncome, transactionSearchInputExpense, transactionsIncomeArr, transactionsExpenseArr
+
 
 
 //Panel dodawania transakcjji
-let addTransactionPanel, addNameInput, addAmountInput, addCategoryInput, addDateInput, addPanelCancelBtn;
+let addTransactionPanel, addNameInput, addAmountInput, addCategoryInput, addDateInput
+let ID, category, categoryPicked, totalMoney
+let addPanelBtn, addPanelCategoryBtn, addPanelCancelBtn
+let addPanelCategoryParagraph, incomeTransactions, expenseTransactions
+
 
 
 //Panel celów finansowych
@@ -20,6 +26,10 @@ let financePanel, budgetNameInput, budgetAmountInput, feeNameInput, feeAmountInp
 
 
 
+
+
+
+
 const prepareDomElements = () => {
 
     //////// POBIERANIE ELEMENTÓW STRONY //////
@@ -32,6 +42,8 @@ const prepareDomElements = () => {
     openGoalBtn = document.querySelector('.options__btn--goal')
     openBudgetBtn = document.querySelector('.options__btn--fee')
 
+ 
+
 
     //Panel dodawania transakcji
     addTransactionPanel = document.querySelector('.add-panel')
@@ -39,9 +51,21 @@ const prepareDomElements = () => {
     addAmountInput = document.querySelector('#add-panel-amount')
     addCategoryInput = document.querySelector('#add-panel-category')
     addDateInput = document.querySelector('#add-panel-date')
-    addPanelCancelBtn = document.querySelector('.add-panel__btn--cancel')
+    addAlertText = document.querySelector('.transaction__alert')
 
-//-----------------------------------------------------------------------//
+
+    addPanelBtn = document.querySelector('.add-panel__btn--add')
+    addPanelCategoryBtn = document.querySelector('.add-panel__btn--category')
+    addPanelCancelBtn = document.querySelector('.add-panel__btn--cancel')
+    addPanelCategoryParagraph = document.querySelector('.transaction__name--category')
+
+    incomeTransactions = document.querySelector('.transactions__income')
+    expenseTransactions = document.querySelector('.transactions__expenses')
+
+
+
+
+    //-----------------------------------------------------------------------//
     //Panel celów finansowych
     addGoalPanel = document.querySelector('.goals__panel')
     goalPanelCancelBtn = document.querySelector('.goals__btn--cancel')
@@ -62,13 +86,24 @@ const prepareDomElements = () => {
 
 
 
-    //Panel Finansów i budżetu
+    //Panel Główny
     financePanel = document.querySelector('.finances__panel')
     budgetNameInput = document.querySelector('#budget-panel-name')
     budgetAmountInput = document.querySelector('#budget-panel-amount')
     feeNameInput = document.querySelector('#fees-panel-name')
     feeAmountInput = document.querySelector('#fees-panel-amount')
     financeCloseBtn = document.querySelector('.finances__btn--close')
+
+    availableMoney = document.querySelector('.options__info--money')
+    transactionSearchInputIncome = document.querySelector('.transactions__search--incomes')
+    transactionSearchInputExpense = document.querySelector('.transactions__search--expenses')
+    totalMoney = [0]
+    ID = 0
+
+   
+
+    transactionsIncomeArr = [];
+    transactionsExpenseArr = [];
 }
 
 ///////////////////  FUNKCJE /////////////////
@@ -102,7 +137,164 @@ const toggleDeposit = () => {
         clearInputs();
     }
 };
+
+
+//Funkcja wyszukiwania transakcji
+
+const searchTransactionIncome = (e) => {
+    const searchTerm = e.target.value;
+    transactionsIncomeArr.forEach(transaction => {
+        const isMatch = new RegExp(searchTerm, 'i').test(transaction.textContent);
+        if (!isMatch) {
+            transaction.style.display = "none"; 
+        } else {
+            transaction.style.display = "flex"; 
+        }
+    });
+
     
+};
+
+const searchTransactionExpense = (e) => {
+    const searchTerm = e.target.value;
+    transactionsExpenseArr.forEach(transaction => {
+        const isMatch = new RegExp(searchTerm, 'i').test(transaction.textContent);
+        if (!isMatch) {
+            transaction.style.display = "none";
+        } else {
+            transaction.style.display = "flex";
+        }
+    });
+
+
+};
+
+
+
+
+// Funckja dodawania nowej transkacji
+
+
+const addnewTransaction = () => {
+
+
+    if (!addNameInput.value) {
+        addAlertText.textContent = "Proszę podać nazwę transakcji.";
+        return;
+    }
+    if (!addAmountInput.value) {
+        addAlertText.textContent = "Proszę podać kwotę transakcji.";
+        return;
+    }
+    if (!addCategoryInput.value || addCategoryInput.value === 'none') {
+        addAlertText.textContent = "Proszę wybrać kategorię transakcji.";
+        return;
+    }
+    if (!addDateInput.value) {
+        addAlertText.textContent = "Proszę podać datę transakcji.";
+        return;
+    }
+
+
+
+    const newTransaction = document.createElement('div')
+    newTransaction.classList.add('transaction')
+    newTransaction.setAttribute('id', ID)
+
+    const selectedCategory = checkCategory(addCategoryInput.value)
+
+    const categoryClass = addCategoryInput.value === 'income' ? 'transaction__name--income' : 'transaction__name--expenses';
+    const amountClass = addCategoryInput.value === 'income' ? 'transaction__amount--income' : 'transaction__amount--expenses';
+
+    newTransaction.innerHTML = `
+        <p class="transaction__name transaction__name--category small">${selectedCategory}</p>
+                <p class="transaction__date small">${addDateInput.value}</p>
+        <p class="transaction__name ${categoryClass}">${addNameInput.value}</p>
+        <p class="transaction__amount ${amountClass}">${addAmountInput.value} zł
+            <button class="transaction__delete" onclick="deleteTransaction(${ID})">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </p>
+
+       
+    `;
+
+
+
+    if (addCategoryInput.value === 'income') {
+        incomeTransactions.appendChild(newTransaction);
+        transactionsIncomeArr.push(newTransaction);
+    } else {
+        expenseTransactions.appendChild(newTransaction);
+        transactionsExpenseArr.push(newTransaction);
+    }
+   
+
+    const transactionAmount = parseFloat(addAmountInput.value)
+    const amountValue = addCategoryInput.value === 'income' ? transactionAmount : -transactionAmount;
+
+    totalMoney.push(amountValue)
+        countMoney(totalMoney)
+    ID++
+    togglePanel(addTransactionPanel)
+    clearInputs()
+
+    console.log(categoryClass);
+
+}
+
+const deleteTransaction = (id) => {
+
+    const transactionDelete = document.getElementById(id)
+    const transactionDeleteAmount = parseFloat(transactionDelete.childNodes[7].textContent)
+
+    const transactionToDeleteIndex = totalMoney.indexOf(transactionDeleteAmount)
+
+    totalMoney.splice(transactionToDeleteIndex, 1)
+
+    countMoney(totalMoney)
+
+   
+    const isIncomeTransaction = transactionDelete.childNodes[5].classList.contains('transaction__name--income')
+
+    if (isIncomeTransaction) {
+        incomeTransactions.removeChild(transactionDelete);
+    } else {
+        expenseTransactions.removeChild(transactionDelete);
+    }
+
+    console.log(transactionDelete.childNodes[5].classList.contains('transaction__name--income'));
+
+};
+
+
+const countMoney = money => {
+    const newMoney = money.reduce((a, b) => a + b)
+    availableMoney.textContent = `${newMoney} zł`
+
+
+    if (newMoney < 0) {
+        availableMoney.style.color = 'red';
+        alert('Po dodaniu tej transakcji twoje dostępne środki spadną poniżej zera');
+    } else {
+        availableMoney.style.color = "white";
+    }
+
+}
+
+
+
+const checkCategory = (selected) => {
+    switch (selected) {
+        case "income":
+            return "[Przychód]";
+        case "expense":
+            return "[Wydatek]";
+        default:
+            return "[Brak kategorii]";
+    }
+};
+
 
 
 
@@ -148,11 +340,17 @@ const prepareDomEvents = () => {
 
     openDepositBtns.forEach(btn => {
         btn.addEventListener('click', toggleDeposit)
-        
+
     });
 
     depositCloseBtn.addEventListener('click', toggleDeposit)
 
+    addPanelBtn.addEventListener('click', addnewTransaction)
+
+
+    transactionSearchInputIncome.addEventListener('keyup', searchTransactionIncome)
+    transactionSearchInputExpense.addEventListener('keyup', searchTransactionExpense)
+   
 
 
 }

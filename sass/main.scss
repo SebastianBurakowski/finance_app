@@ -768,7 +768,7 @@ body {
 
     &__list {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
         align-items: flex-start;
 
 
@@ -802,10 +802,18 @@ body {
 }
 
 .transaction {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     padding: 10px 0;
 
     &__name {
+        &--category {
+            font-size: 14px;
+        }
+
         font-size: 20px;
         padding: 10px 0;
 
@@ -837,6 +845,14 @@ body {
         &:hover {
             transform: scale(.9);
         }
+
+    }
+
+    &__alert {
+        font-style: normal;
+        font-weight: bold;
+        color: $alert_color;
+        font-size: 20px;
 
     }
 }
@@ -1635,7 +1651,7 @@ body {
 .password,
 .email,
 .delete {
-display: none;
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
