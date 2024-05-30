@@ -1066,6 +1066,11 @@ body {
 }
 
 .goals {
+    &__alert{
+        font-size: 18px;
+        font-weight: bold;
+        color: $alert_color;
+    }
     &__panel {
         position: fixed;
         top: 0;
@@ -1185,6 +1190,11 @@ body {
 }
 
 .deposit {
+    &__alert {
+            font-size: 18px;
+            font-weight: bold;
+            color: $alert_color;
+        }
     display: none;
     position: fixed;
     top: 50%;
@@ -1621,6 +1631,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        
     }
 
     &__btn {

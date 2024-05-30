@@ -69,33 +69,18 @@
 
                     <div class="transactions__income">
                         <h1 class="transactions__income--title">Przychody:</h1>
-                        <input type="text" class="transactions__search transactions__search--incomes" placeholder="Wyszukaj transakcje">
+                        <input type="text" class="transactions__search transactions__search--incomes"
+                            placeholder="Wyszukaj transakcje">
 
-                        <!-- <div class="transaction" id="0">
-                            <p class="transaction__name transaction__name--category small">
-                                [Wypłata]</p>
-                            <p class="transaction__name transaction__name--income">
-                                Wypłata za maj</p>
-                            <p class="transaction__amount transaction__amount--income">2000zł <button
-                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
-                        </div> -->
-
+                        <!-- Tutaj dodają sie divy dynamicznie -->
                     </div>
 
                     <div class="transactions__expenses">
                         <h1 class="transactions__expenses--title">Wydatki:</h1>
-                        <input type="text" class="transactions__search transactions__search--expenses" placeholder="Wyszukaj transakcje">
-                        <!-- 
-                        <div class="transaction" id="1">
-                            <p class="transaction__name transaction__name--category small">
-                                [Zakupy]</p>
-                            <p class="transaction__name transaction__name--expenses">
-                                Zakupy na grilla </p>
-                            <p class="transaction__amount transaction__amount--expenses">-200zł <button
-                                    class="transaction__delete"><i class="fa-solid fa-x "></i></button></p>
-                        </div> -->
+                        <input type="text" class="transactions__search transactions__search--expenses"
+                            placeholder="Wyszukaj transakcje">
 
-
+                        <!-- Tutaj dodają sie divy dynamicznie -->
 
 
                     </div>
@@ -109,7 +94,7 @@
                 <div class="options__container">
                     <div class="options__info">
                         <h2 class="options__info--title">Dostępne środki :</h2>
-                        <p class="options__info--money"></p>
+                        <p class="options__info--money">0 zł</p>
                     </div>
                     <div class="options__btns">
                         <button class="options__btn options__btn--add"><i class="fas fa-plus"></i> Dodaj
@@ -186,9 +171,10 @@
                 <label class="goals__label label-grey" for="category">Data Końcowa Celu : </label> <input
                     class="goals__input goals__calendar input-grey" type="date" id="goals-panel-date">
 
+                    <p class="goals__alert"></p>
                 <div class="goals__btns">
                     <button class="goals__btn goals__btn--add accept-btn">dodaj</button>
-                    <button class="goals__btn goals__btn--cancel decline-btn">Anuluj</button>
+                    <button class="goals__btn goals__btn--cancel decline-btn">Zamknij</button>
                 </div>
             </div>
 
@@ -196,28 +182,7 @@
             <div class="goals__active">
                 <h2 class="goals__title">Moje cele</h2>
                 <ul class="goals__list">
-                    <li class="goals__list--item" id="1">
-                        <p class="goal__info"> Audi A4 : <span class="goal__paid">100</span> zł z <span
-                                class="goal__to-pay">1000</span> zł</p>
-                        <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> 22.03.2024</span></p>
-                        <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">65 dni</span></p>
-                        <div class="goal__btns">
-                            <button class="goal__btn--deposit accept-btn">Zasil cel</button>
-                            <button class="goal__btn--remove decline-btn">usuń cel</button>
-                        </div>
-
-                    </li>
-                    <li class="goals__list--item" id="2">
-                        <p class="goal__info"> Dom : <span class="goal__paid">1000</span> zł z <span
-                                class="goal__to-pay">300000</span> zł
-                        </p>
-                        <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> 22.03.2024</span></p>
-                        <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">650 dni</span></p>
-                        <div class="goal__btns">
-                            <button class="goal__btn--deposit accept-btn">Zasil cel</button>
-                            <button class="goal__btn--remove decline-btn">usuń cel</button>
-                        </div>
-                    </li>
+      <!-- Tu dodaja sie elementy dynamicznie -->
                 </ul>
             </div>
 
@@ -227,6 +192,7 @@
                     <i class="fa-solid fa-x deposit__btn--close close-btn"></i>
                     <label class="deposit__label label-grey" for="amount">Kwota Zasilenia : </label>
                     <input class="deposit__input input-grey" type="number" id="goal__deposit-amount">
+                    <p class="deposit__alert"></p>
                     <button class="deposit__btn deposit__btn--add accept-btn">Zasil</button>
                 </div>
 

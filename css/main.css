@@ -1092,6 +1092,11 @@ body__login {
   border: 1px solid rgb(245, 245, 245);
 }
 
+.goals__alert {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(217, 0, 0);
+}
 .goals__panel {
   position: fixed;
   top: 0;
@@ -1234,6 +1239,11 @@ body__login {
   border-radius: 8px;
   -webkit-box-shadow: 0 0 20px rgb(0, 0, 0);
           box-shadow: 0 0 20px rgb(0, 0, 0);
+}
+.deposit__alert {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(217, 0, 0);
 }
 .deposit__panel {
   width: 100%;

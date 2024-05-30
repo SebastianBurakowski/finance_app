@@ -1,5 +1,5 @@
 //Głowna strona przyciski
-let openTransactionBtn, openGoalBtn, openBudgetBtn;
+let openTransactionBtn, openGoalBtn, openBudgetBtn, deleteAllBtn;
 let availableMoney, transactionSearchInputIncome, transactionSearchInputExpense, transactionsIncomeArr, transactionsExpenseArr
 
 
@@ -9,15 +9,16 @@ let addTransactionPanel, addNameInput, addAmountInput, addCategoryInput, addDate
 let ID, category, categoryPicked, totalMoney
 let addPanelBtn, addPanelCategoryBtn, addPanelCancelBtn
 let addPanelCategoryParagraph, incomeTransactions, expenseTransactions
+let currentGoal
 
 
 
 //Panel celów finansowych
-let addGoalPanel, goalPanelCancelBtn, goalNameInput, goalAmountInput, goalDateInput;
+let addGoalPanel, goalPanelCancelBtn, goalNameInput, goalAmountInput, goalDateInput, goalList;
 //Dodawnie nowego celu
-let addToGoalBtn, removeGoalBtn
+let addToGoalBtn, removeGoalBtn, goalAlert
 //Okno dodawnia celu
-let depositAmountInput, depositAddBtn, depositCloseBtn
+let depositAmountInput, depositAddBtn, depositCloseBtn, depositAlert
 
 
 //Panel Finansów i budżetu
@@ -42,7 +43,9 @@ const prepareDomElements = () => {
     openGoalBtn = document.querySelector('.options__btn--goal')
     openBudgetBtn = document.querySelector('.options__btn--fee')
 
- 
+    deleteAllBtn = document.querySelector('.options__btn--delete')
+
+
 
 
     //Panel dodawania transakcji
@@ -65,24 +68,33 @@ const prepareDomElements = () => {
 
 
 
-    //-----------------------------------------------------------------------//
-    //Panel celów finansowych
+    //--------------------------Panel celów finansowych----------------------------//
+    //
     addGoalPanel = document.querySelector('.goals__panel')
     goalPanelCancelBtn = document.querySelector('.goals__btn--cancel')
     goalNameInput = document.querySelector('#goals-panel-name')
     goalAmountInput = document.querySelector('#goals-panel-amount')
     goalDateInput = document.querySelector('#goals-panel-date')
+    goalList = document.querySelector('.goals__list')
+    goalAlert = document.querySelector('.goals__alert')
 
-    //Dodawnie nowego celu
-    addToGoalBtn = document.querySelector('.goal__btn--add')
-    removeGoalBtn = document.querySelector('.goal__btn--remove')
-
-    //Okno dodawnia celu
+    goalID = 0
+ 
+    //Okno zasilenia celu
     depositPanel = document.querySelector('.deposit')
     depositAmountInput = document.querySelector('#goal__deposit-amount')
     depositCloseBtn = document.querySelector('.deposit__btn--close')
     depositAddBtn = document.querySelector('.deposit__btn--add')
-    openDepositBtns = document.querySelectorAll('.goal__btn--deposit')
+    depositAlert = document.querySelector('.deposit__alert')
+
+    //-------------------------------------------------------------------------//
+
+    //Dodawnie nowego celu
+    addToGoalBtn = document.querySelector('.goals__btn--add')
+    removeGoalBtn = document.querySelector('.goals__btn--remove')
+
+
+
 
 
 
@@ -100,13 +112,189 @@ const prepareDomElements = () => {
     totalMoney = [0]
     ID = 0
 
-   
+
 
     transactionsIncomeArr = [];
     transactionsExpenseArr = [];
 }
 
 ///////////////////  FUNKCJE /////////////////
+
+
+//Funckja dodawnia celu
+
+const addNewGoal = () => {
+
+    const currentDate = new Date();
+    const inputDate = new Date(goalDateInput.value);
+
+
+    if (!goalNameInput.value){
+
+        goalAlert.textContent = "Proszę podać nazwę dodawanego celu"
+        return;
+    } else if(goalAmountInput.value <= 0 ){
+        goalAlert.textContent = "Kwota celu musi być większa od zera"
+        return;
+    }
+    else if (!goalAmountInput.value){
+
+        goalAlert.textContent = "Proszę podać kwotę dodawanego celu"
+        return;
+    }
+    else if (!goalDateInput.value){
+
+        goalAlert.textContent = "Proszę podać datę końcową dodawanego celu"
+        return;
+    } else if (inputDate < currentDate) {
+        goalAlert.textContent = "Data nie może być wcześniejsza niż obecna"
+        return
+    }
+
+
+
+
+
+    const newGoal = document.createElement('li')
+    newGoal.classList.add('goals__list--item')
+    newGoal.setAttribute('id', goalID)
+
+
+   
+
+    let daysLeft = Math.ceil((inputDate - currentDate) / (1000 * 60 * 60 * 24));
+
+
+
+    newGoal.innerHTML =
+        `  <p class="goal__info"> ${goalNameInput.value} : <span class="goal__paid">0</span> zł z <span
+                 class="goal__to-pay">${goalAmountInput.value}</span> zł</p>
+            <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> ${goalDateInput.value}</span></p>
+            <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">${daysLeft} dni</span></p>
+                                    <div class="goal__btns">
+                            <button class="goal__btn--deposit accept-btn">Zasil cel</button>
+                            <button class="goal__btn--remove decline-btn">usuń cel</button>
+                        </div>`
+
+
+    goalList.appendChild(newGoal)
+    goalID++;
+
+
+    const depositBtn = newGoal.querySelector('.goal__btn--deposit');
+    const removeBtn = newGoal.querySelector('.goal__btn--remove');
+
+    depositBtn.addEventListener('click', () => {
+        currentGoal = newGoal
+        toggleDeposit();
+    });
+
+    
+    removeBtn.addEventListener('click', () => {
+        removeGoal(newGoal)
+    });
+
+
+
+console.log(currentDate);
+console.log(inputDate);
+
+}
+
+//Funkcja usuwania celu 
+
+const removeGoal = (goalElement) => {
+    const goalPaidElement = goalElement.querySelector('.goal__paid');
+    const goalPaidAmount = parseFloat(goalPaidElement.textContent);
+    const goalId = goalElement.getAttribute('id');
+
+    
+    totalMoney.push(goalPaidAmount);
+    countMoney(totalMoney);
+
+    document.querySelectorAll(`[data-goal-id='${goalId}']`).forEach(transaction => {
+        transaction.remove();
+    });
+
+    goalElement.remove();
+};
+
+
+// Funkcja dodawania pieniedzy do celu
+
+const addDepositToGoal = () => {
+
+    const depositedAmount = parseFloat(depositAmountInput.value)
+
+    const goalPaid = document.querySelector('.goal__paid')
+    const goalToPay = document.querySelector('.goal__to-pay')
+
+
+    if (!depositAmountInput.value){
+        depositAlert.textContent = "Proszę podać kwotę o którą chcesz doładować cel"
+        return
+    }
+    if (depositAmountInput.value <= 0){
+        depositAlert.textContent = "Kwota musi być większa od zera"
+        return
+    } 
+
+    let currentgoalPaid = parseFloat(goalPaid.textContent)
+    
+
+    currentgoalPaid += depositedAmount
+    goalPaid.textContent = currentgoalPaid;
+
+    totalMoney.push(-depositedAmount);
+    countMoney(totalMoney);
+
+
+    const newTransaction = document.createElement('div');
+    newTransaction.classList.add('transaction');
+    newTransaction.setAttribute('id', ID);
+
+    const transactionGoalDate = goalDateInput.value;
+    const transactionGoalName = currentGoal.querySelector('.goal__info').textContent.split(' : ')[0]
+    const goalId = currentGoal.getAttribute('id');
+
+    newTransaction.setAttribute('data-goal-id', goalId);
+
+    newTransaction.innerHTML = `
+        <p class="transaction__name transaction__name--category small">[Wydatek]</p>
+        <p class="transaction__date small">${transactionGoalDate}</p>
+        <p class="transaction__name transaction__name--expenses">Zasilono cel: ${transactionGoalName}</p>
+        <p class="transaction__amount transaction__amount--expenses">${depositedAmount} zł
+            <button class="transaction__delete" onclick="deleteTransaction(${ID})">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </p>
+    `;
+
+    expenseTransactions.appendChild(newTransaction);
+    transactionsExpenseArr.push(newTransaction);
+    ID++;
+
+    toggleDeposit()
+    
+}
+
+
+// Funkcja aktualizacji dni celu
+
+const updateDaysLeft = () => {
+
+    const currentDate = new Date();
+
+    document.querySelectorAll('.goals__list--item').forEach(goal => {
+
+        const goalDate = new Date(goal.querySelector('.goal__date'));
+        const daysLeft = Math.ceil((goalDate - currentDate) / (1000 * 60 * 60 * 24));
+
+        goal.querySelector('.goal__days').textContent = `${daysLeft} dni`;
+
+    });
+};
+setInterval(updateDaysLeft, 1000 * 60 * 60 * 24);
 
 
 
@@ -124,6 +312,28 @@ const togglePanel = (panel) => {
     }
 };
 
+//Funckcja usuwania wszystkich transakcji
+
+
+const deleteAllTransactions = () => {
+
+
+    while (incomeTransactions.children.length > 2) {
+        incomeTransactions.removeChild(incomeTransactions.lastChild);
+    }
+    while (expenseTransactions.children.length > 2) {
+        expenseTransactions.removeChild(expenseTransactions.lastChild);
+    }
+
+
+    totalMoney = [0]
+    ID = 0
+    transactionsIncomeArr = [];
+    transactionsExpenseArr = [];
+
+    countMoney(totalMoney)
+
+}
 
 //Funkcja otwierania okna do zasilenia celu 
 
@@ -146,13 +356,13 @@ const searchTransactionIncome = (e) => {
     transactionsIncomeArr.forEach(transaction => {
         const isMatch = new RegExp(searchTerm, 'i').test(transaction.textContent);
         if (!isMatch) {
-            transaction.style.display = "none"; 
+            transaction.style.display = "none";
         } else {
-            transaction.style.display = "flex"; 
+            transaction.style.display = "flex";
         }
     });
 
-    
+
 };
 
 const searchTransactionExpense = (e) => {
@@ -212,7 +422,7 @@ const addnewTransaction = () => {
         <p class="transaction__name ${categoryClass}">${addNameInput.value}</p>
         <p class="transaction__amount ${amountClass}">${addAmountInput.value} zł
             <button class="transaction__delete" onclick="deleteTransaction(${ID})">
-                <i class="fa-solid fa-x"></i>
+                <i class="fa-solid fa-x"></i>f
             </button>
         </p>
 
@@ -228,13 +438,13 @@ const addnewTransaction = () => {
         expenseTransactions.appendChild(newTransaction);
         transactionsExpenseArr.push(newTransaction);
     }
-   
+
 
     const transactionAmount = parseFloat(addAmountInput.value)
     const amountValue = addCategoryInput.value === 'income' ? transactionAmount : -transactionAmount;
 
     totalMoney.push(amountValue)
-        countMoney(totalMoney)
+    countMoney(totalMoney)
     ID++
     togglePanel(addTransactionPanel)
     clearInputs()
@@ -247,6 +457,7 @@ const deleteTransaction = (id) => {
 
     const transactionDelete = document.getElementById(id)
     const transactionDeleteAmount = parseFloat(transactionDelete.childNodes[7].textContent)
+    const goalId = transactionDelete.getAttribute('data-goal-id');
 
     const transactionToDeleteIndex = totalMoney.indexOf(transactionDeleteAmount)
 
@@ -254,7 +465,7 @@ const deleteTransaction = (id) => {
 
     countMoney(totalMoney)
 
-   
+
     const isIncomeTransaction = transactionDelete.childNodes[5].classList.contains('transaction__name--income')
 
     if (isIncomeTransaction) {
@@ -265,6 +476,14 @@ const deleteTransaction = (id) => {
 
     console.log(transactionDelete.childNodes[5].classList.contains('transaction__name--income'));
 
+    if (goalId) {
+        const goalItem = document.getElementById(goalId);
+        const goalPaidElement = goalItem.querySelector('.goal__paid');
+        let currentPaid = parseFloat(goalPaidElement.textContent);
+        currentPaid -= transactionDeleteAmount;
+        goalPaidElement.textContent = currentPaid;
+    }
+     transactionDelete.remove();
 };
 
 
@@ -338,19 +557,20 @@ const prepareDomEvents = () => {
     openBudgetBtn.addEventListener('click', () => togglePanel(financePanel));
     financeCloseBtn.addEventListener('click', () => togglePanel(financePanel));
 
-    openDepositBtns.forEach(btn => {
-        btn.addEventListener('click', toggleDeposit)
-
-    });
-
-    depositCloseBtn.addEventListener('click', toggleDeposit)
-
     addPanelBtn.addEventListener('click', addnewTransaction)
 
 
     transactionSearchInputIncome.addEventListener('keyup', searchTransactionIncome)
     transactionSearchInputExpense.addEventListener('keyup', searchTransactionExpense)
-   
+
+    deleteAllBtn.addEventListener('click', deleteAllTransactions)
+
+
+    addToGoalBtn.addEventListener('click', addNewGoal)
+
+    depositCloseBtn.addEventListener('click', () => toggleDeposit());
+    depositAddBtn.addEventListener('click', addDepositToGoal)
+
 
 
 }
