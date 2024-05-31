@@ -455,6 +455,15 @@ body {
 
 
 .nav {
+    &__welcome{
+        font-size: 24px;
+        font-style: italic;
+        color: $white_color;
+        position: fixed;
+        top: 150px;
+        right: 100px;
+
+    }
 
     &__panel {
         width: 100%;

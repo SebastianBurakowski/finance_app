@@ -7,9 +7,9 @@ const signUpDiv = document.querySelector('.signup__container')
 
 
 //pobieranie elementów z formularza rejestracji
-const name = document.querySelector('#name')
-const surname = document.querySelector('#surname')
-const email = document.querySelector('#email')
+const userName = document.querySelector('#name')
+const userSurname = document.querySelector('#surname')
+const email = document.querySelector('#e-mail')
 const password = document.querySelector('#password1')
 const passwordRepeat = document.querySelector('#password2')
 const signUpAlert = document.querySelector('.signup__alert')
@@ -78,7 +78,8 @@ const checkPasswords = (pass1, pass2, msg) => {
         msg.textContent = "Podane hasła nie są identyczne"
 
     } else {
-        window.location.href = "main.html"
+        console.log("ok");
+        // window.location.href = "main.html"
     }
 
 }
@@ -95,7 +96,7 @@ const passwordValidation = (pass, msg) => {
     } else if(!uppercaseLetters.test(pass.value)){
         msg.textContent = "hasło musi zawierać minimum jedną wielka litere"
     } else{
-        msg.textContent = "ok"
+       
         checkPasswords(password,passwordRepeat, signUpAlert)
         
     }
@@ -109,19 +110,16 @@ const passwordValidation = (pass, msg) => {
 
 
 
-// logowanie
-
-const loginHandle = () => {
-    window.location.href = "main.html"
-}
 
 
+
+// Funkcja logowania
 
 
 
 //Wywołanie funkcji na odpowiednich elementach
 
-signinSubmitBtn.addEventListener('click', loginHandle)
+
 
 showPassBtn.addEventListener('click', showPassword)
 
@@ -135,9 +133,53 @@ signUpBtn.addEventListener('click', OpenSignUp)
 
 
 
-signupSubmitBtn.addEventListener('click', e =>{
+// Obsługa rejestracji
+signupSubmitBtn.addEventListener('click', e => {
+    e.preventDefault();
+    passwordValidation(password, signUpAlert);
+  
+        const formData = new FormData();
+        formData.append('email', email.value);
+        formData.append('name', userName.value);
+        formData.append('surname', userSurname.value);
+        formData.append('password', password.value);
+
+        fetch('http://localhost/Aplikacja%20Webowa/register.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                signUpAlert.textContent = "Konto Utworzone, aby przejść dalej zaloguj się"
+                signUpAlert.style.color = "white"
+            })
+            .catch(error => console.error('Error:', error));
+    
+});
+
+// Obsługa logowania
+signinSubmitBtn.addEventListener('click', e => {
     e.preventDefault();
 
-    passwordValidation(password, signUpAlert)
+    const formData = new FormData();
+    formData.append('email', loginName.value);
+    formData.append('password', loginPassword.value);
 
-})
+    fetch('http://localhost/Aplikacja%20Webowa/login.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => {
+            if (data === "Logowanie pomyślne.") {
+                window.location.href = "main.html"; // Przekierowanie do main.html
+            } else {
+                const signInAlert = document.querySelector('.signin__alert');
+                signInAlert.textContent = data; // Wyświetlenie odpowiedniej wiadomości
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+

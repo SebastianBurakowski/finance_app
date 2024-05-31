@@ -378,7 +378,59 @@ const searchTransactionExpense = (e) => {
 
 
 };
+const addCategory = () => {
+    const categoryName = prompt("Podaj nazwę kategorii (poprzedzając [Przychód] lub [Wydatek]):");
 
+    if (!categoryName) {
+        alert("Nazwa kategorii jest wymagana.");
+        return;
+    }
+
+    const categoryType = categoryName.startsWith('[Przychód]') ? 'income' : (categoryName.startsWith('[Wydatek]') ? 'expense' : null);
+
+    if (!categoryType) {
+        alert("Nazwa kategorii musi zaczynać się od [Przychód] lub [Wydatek].");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', categoryName);
+    formData.append('type', categoryType);
+
+    fetch('add_category.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const option = document.createElement('option');
+                option.value = categoryType;
+                option.textContent = categoryName;
+                addCategoryInput.appendChild(option);
+                alert("Kategoria została dodana.");
+            } else {
+                alert("Błąd podczas dodawania kategorii.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+// Funkcja do ładowania kategorii
+const loadCategories = () => {
+    fetch('get_categories.php')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.type;
+                option.textContent = category.name;
+                addCategoryInput.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
 
 
 
@@ -559,6 +611,8 @@ const prepareDomEvents = () => {
 
     addPanelBtn.addEventListener('click', addnewTransaction)
 
+    addPanelCategoryBtn.addEventListener('click', addCategory);
+
 
     transactionSearchInputIncome.addEventListener('keyup', searchTransactionIncome)
     transactionSearchInputExpense.addEventListener('keyup', searchTransactionExpense)
@@ -582,6 +636,7 @@ const prepareDomEvents = () => {
 const main = () => {
     prepareDomElements()
     prepareDomEvents();
+    loadCategories();
 
 }
 
