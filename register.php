@@ -12,6 +12,7 @@ if ($conn->connect_error) {
 }
 
 // Przetwarzanie danych formularza
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $name = $_POST['name'];
@@ -22,7 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssss", $email, $name, $surname, $password);
     $stmt->execute();
+    ///ssss to string, i int, f float, d double
 
+
+    // sprawdzanie czy odpalenie php wplynelo na jakis wiersz, przy insercie to czy dodalo cos do bazy
     if ($stmt->affected_rows > 0) {
         echo "Rejestracja przebiegła pomyślnie.";
     } else {

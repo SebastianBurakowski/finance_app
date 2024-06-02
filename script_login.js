@@ -133,7 +133,7 @@ signUpBtn.addEventListener('click', OpenSignUp)
 
 
 
-// Obsługa rejestracji
+// funckja rejestracji dodanie do bazy
 signupSubmitBtn.addEventListener('click', e => {
     e.preventDefault();
     passwordValidation(password, signUpAlert);

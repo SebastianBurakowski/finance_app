@@ -79,7 +79,7 @@ const prepareDomElements = () => {
     goalAlert = document.querySelector('.goals__alert')
 
     goalID = 0
- 
+
     //Okno zasilenia celu
     depositPanel = document.querySelector('.deposit')
     depositAmountInput = document.querySelector('#goal__deposit-amount')
@@ -129,20 +129,20 @@ const addNewGoal = () => {
     const inputDate = new Date(goalDateInput.value);
 
 
-    if (!goalNameInput.value){
+    if (!goalNameInput.value) {
 
         goalAlert.textContent = "Proszę podać nazwę dodawanego celu"
         return;
-    } else if(goalAmountInput.value <= 0 ){
+    } else if (goalAmountInput.value <= 0) {
         goalAlert.textContent = "Kwota celu musi być większa od zera"
         return;
     }
-    else if (!goalAmountInput.value){
+    else if (!goalAmountInput.value) {
 
         goalAlert.textContent = "Proszę podać kwotę dodawanego celu"
         return;
     }
-    else if (!goalDateInput.value){
+    else if (!goalDateInput.value) {
 
         goalAlert.textContent = "Proszę podać datę końcową dodawanego celu"
         return;
@@ -153,52 +153,107 @@ const addNewGoal = () => {
 
 
 
+    const formData = new FormData();
+    formData.append('name', goalNameInput.value);
+    formData.append('amount', goalAmountInput.value);
+    formData.append('date', goalDateInput.value);
+
+    fetch('add_goals.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const newGoal = document.createElement('li');
+                newGoal.classList.add('goals__list--item');
+                newGoal.setAttribute('id', data.id);
+
+                let daysLeft = Math.ceil((inputDate - currentDate) / (1000 * 60 * 60 * 24));
+
+                newGoal.innerHTML = `
+                    <p class="goal__info"> ${goalNameInput.value} : <span class="goal__paid">0</span> zł z <span
+                         class="goal__to-pay">${goalAmountInput.value}</span> zł</p>
+                    <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> ${goalDateInput.value}</span></p>
+                    <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">${daysLeft} dni</span></p>
+                    <div class="goal__btns">
+                        <button class="goal__btn--deposit accept-btn">Zasil cel</button>
+                        <button class="goal__btn--remove decline-btn">usuń cel</button>
+                    </div>
+                `;
+
+                goalList.appendChild(newGoal);
+                goalID++;
+
+                const depositBtn = newGoal.querySelector('.goal__btn--deposit');
+                const removeBtn = newGoal.querySelector('.goal__btn--remove');
+
+                depositBtn.addEventListener('click', () => {
+                    currentGoal = newGoal;
+                    toggleDeposit();
+                });
+
+                removeBtn.addEventListener('click', () => {
+                    removeGoal(newGoal);
+                });
+
+                clearInputs();
+            } else {
+                goalAlert.textContent = "Błąd: " + data.error;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            goalAlert.textContent = "Wystąpił błąd podczas dodawania celu.";
+        });
+}
 
 
-    const newGoal = document.createElement('li')
-    newGoal.classList.add('goals__list--item')
-    newGoal.setAttribute('id', goalID)
-
-
-   
-
-    let daysLeft = Math.ceil((inputDate - currentDate) / (1000 * 60 * 60 * 24));
 
 
 
-    newGoal.innerHTML =
-        `  <p class="goal__info"> ${goalNameInput.value} : <span class="goal__paid">0</span> zł z <span
-                 class="goal__to-pay">${goalAmountInput.value}</span> zł</p>
-            <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> ${goalDateInput.value}</span></p>
-            <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">${daysLeft} dni</span></p>
-                                    <div class="goal__btns">
-                            <button class="goal__btn--deposit accept-btn">Zasil cel</button>
-                            <button class="goal__btn--remove decline-btn">usuń cel</button>
-                        </div>`
+//funkcja wczytywania celu z bazy
 
+const loadGoals = () => {
+    fetch('get_goals.php')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(goal => {
+                const newGoal = document.createElement('li');
+                newGoal.classList.add('goals__list--item');
+                newGoal.setAttribute('id', goal.id);
 
-    goalList.appendChild(newGoal)
-    goalID++;
+                const currentDate = new Date();
+                const inputDate = new Date(goal.date);
+                let daysLeft = Math.ceil((inputDate - currentDate) / (1000 * 60 * 60 * 24));
 
+                newGoal.innerHTML = `
+                    <p class="goal__info"> ${goal.name} : <span class="goal__paid">${goal.paid}</span> zł z <span
+                         class="goal__to-pay">${goal.amount}</span> zł</p>
+                    <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> ${goal.date}</span></p>
+                    <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">${daysLeft} dni</span></p>
+                    <div class="goal__btns">
+                        <button class="goal__btn--deposit accept-btn">Zasil cel</button>
+                        <button class="goal__btn--remove decline-btn">usuń cel</button>
+                    </div>
+                `;
 
-    const depositBtn = newGoal.querySelector('.goal__btn--deposit');
-    const removeBtn = newGoal.querySelector('.goal__btn--remove');
+                goalList.appendChild(newGoal);
 
-    depositBtn.addEventListener('click', () => {
-        currentGoal = newGoal
-        toggleDeposit();
-    });
+                const depositBtn = newGoal.querySelector('.goal__btn--deposit');
+                const removeBtn = newGoal.querySelector('.goal__btn--remove');
 
-    
-    removeBtn.addEventListener('click', () => {
-        removeGoal(newGoal)
-    });
+                depositBtn.addEventListener('click', () => {
+                    currentGoal = newGoal;
+                    toggleDeposit();
+                });
 
-
-
-console.log(currentDate);
-console.log(inputDate);
-
+                removeBtn.addEventListener('click', () => {
+                    removeGoal(newGoal);
+                });
+            });
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 //Funkcja usuwania celu 
@@ -208,7 +263,7 @@ const removeGoal = (goalElement) => {
     const goalPaidAmount = parseFloat(goalPaidElement.textContent);
     const goalId = goalElement.getAttribute('id');
 
-    
+
     totalMoney.push(goalPaidAmount);
     countMoney(totalMoney);
 
@@ -223,75 +278,99 @@ const removeGoal = (goalElement) => {
 // Funkcja dodawania pieniedzy do celu
 
 const addDepositToGoal = () => {
+    const depositedAmount = parseFloat(depositAmountInput.value);
+    const goalId = currentGoal.getAttribute('id'); // Poprawne uzyskanie ID celu
+    const currentDate = new Date().toISOString().split('T')[0]; // Formatowanie daty na 'YYYY-MM-DD'
 
-    const depositedAmount = parseFloat(depositAmountInput.value)
-
-    const goalPaid = document.querySelector('.goal__paid')
-    const goalToPay = document.querySelector('.goal__to-pay')
-
-
-    if (!depositAmountInput.value){
-        depositAlert.textContent = "Proszę podać kwotę o którą chcesz doładować cel"
-        return
+    if (!depositAmountInput.value) {
+        depositAlert.textContent = "Proszę podać kwotę o którą chcesz doładować cel";
+        return;
     }
-    if (depositAmountInput.value <= 0){
-        depositAlert.textContent = "Kwota musi być większa od zera"
-        return
-    } 
+    if (depositAmountInput.value <= 0) {
+        depositAlert.textContent = "Kwota musi być większa od zera";
+        return;
+    }
 
-    let currentgoalPaid = parseFloat(goalPaid.textContent)
-    
+    const formData = new FormData();
+    formData.append('goal_id', goalId);
+    formData.append('amount', depositedAmount);
+    formData.append('date', currentDate);
 
-    currentgoalPaid += depositedAmount
-    goalPaid.textContent = currentgoalPaid;
+    fetch('update_goal.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const goalPaid = currentGoal.querySelector('.goal__paid');
+                let currentGoalPaid = parseFloat(goalPaid.textContent);
+                currentGoalPaid += depositedAmount;
+                goalPaid.textContent = currentGoalPaid;
 
-    totalMoney.push(-depositedAmount);
-    countMoney(totalMoney);
+                totalMoney.push(-depositedAmount);
+                countMoney(totalMoney);
+
+                // Dodaj transakcję do sekcji wydatków
+                const newTransaction = document.createElement('div');
+                newTransaction.classList.add('transaction');
+                newTransaction.setAttribute('id', `transaction_${data.id}`); // Ustawienie poprawnego ID z bazy danych
+                console.log('New Transaction ID:', data.id); // Logowanie nowego ID transakcji
+
+                newTransaction.innerHTML = `
+                <p class="transaction__name transaction__name--category small">[Wydatek]</p>
+                <p class="transaction__date small">${currentDate}</p>
+                <p class="transaction__name transaction__name--expenses">Zasilono cel</p>
+                <p class="transaction__amount transaction__amount--expenses">${depositedAmount} zł
+                    <button class="transaction__delete" onclick="deleteTransaction(${data.id}, ${goalId})">
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+                </p>
+            `;
+
+                expenseTransactions.appendChild(newTransaction);
+                transactionsExpenseArr.push(newTransaction);
+
+                // Aktualizacja dostępnych środków
+                availableMoney.textContent = `${data.availableMoney} zł`;
+
+                toggleDeposit();
+                clearInputs();
+            } else {
+                depositAlert.textContent = "Błąd: " + data.error;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            depositAlert.textContent = "Wystąpił błąd podczas dodawania kwoty do celu.";
+        });
+};
 
 
-    const newTransaction = document.createElement('div');
-    newTransaction.classList.add('transaction');
-    newTransaction.setAttribute('id', ID);
 
-    const transactionGoalDate = goalDateInput.value;
-    const transactionGoalName = currentGoal.querySelector('.goal__info').textContent.split(' : ')[0]
-    const goalId = currentGoal.getAttribute('id');
 
-    newTransaction.setAttribute('data-goal-id', goalId);
 
-    newTransaction.innerHTML = `
-        <p class="transaction__name transaction__name--category small">[Wydatek]</p>
-        <p class="transaction__date small">${transactionGoalDate}</p>
-        <p class="transaction__name transaction__name--expenses">Zasilono cel: ${transactionGoalName}</p>
-        <p class="transaction__amount transaction__amount--expenses">${depositedAmount} zł
-            <button class="transaction__delete" onclick="deleteTransaction(${ID})">
-                <i class="fa-solid fa-x"></i>
-            </button>
-        </p>
-    `;
 
-    expenseTransactions.appendChild(newTransaction);
-    transactionsExpenseArr.push(newTransaction);
-    ID++;
 
-    toggleDeposit()
-    
-}
+
+
+
+
+
+
+
 
 
 // Funkcja aktualizacji dni celu
 
 const updateDaysLeft = () => {
-
     const currentDate = new Date();
 
     document.querySelectorAll('.goals__list--item').forEach(goal => {
-
-        const goalDate = new Date(goal.querySelector('.goal__date'));
+        const goalDate = new Date(goal.querySelector('.goal__date').textContent);
         const daysLeft = Math.ceil((goalDate - currentDate) / (1000 * 60 * 60 * 24));
 
         goal.querySelector('.goal__days').textContent = `${daysLeft} dni`;
-
     });
 };
 setInterval(updateDaysLeft, 1000 * 60 * 60 * 24);
@@ -312,28 +391,10 @@ const togglePanel = (panel) => {
     }
 };
 
-//Funckcja usuwania wszystkich transakcji
+//Funckcja usuwania wszystkich transakcji +  z bazy
 
 
-const deleteAllTransactions = () => {
 
-
-    while (incomeTransactions.children.length > 2) {
-        incomeTransactions.removeChild(incomeTransactions.lastChild);
-    }
-    while (expenseTransactions.children.length > 2) {
-        expenseTransactions.removeChild(expenseTransactions.lastChild);
-    }
-
-
-    totalMoney = [0]
-    ID = 0
-    transactionsIncomeArr = [];
-    transactionsExpenseArr = [];
-
-    countMoney(totalMoney)
-
-}
 
 //Funkcja otwierania okna do zasilenia celu 
 
@@ -438,8 +499,6 @@ const loadCategories = () => {
 
 
 const addnewTransaction = () => {
-
-
     if (!addNameInput.value) {
         addAlertText.textContent = "Proszę podać nazwę transakcji.";
         return;
@@ -457,92 +516,133 @@ const addnewTransaction = () => {
         return;
     }
 
-
-
-    const newTransaction = document.createElement('div')
-    newTransaction.classList.add('transaction')
-    newTransaction.setAttribute('id', ID)
-
-    const selectedCategory = checkCategory(addCategoryInput.value)
-
-    const categoryClass = addCategoryInput.value === 'income' ? 'transaction__name--income' : 'transaction__name--expenses';
-    const amountClass = addCategoryInput.value === 'income' ? 'transaction__amount--income' : 'transaction__amount--expenses';
-
-    newTransaction.innerHTML = `
-        <p class="transaction__name transaction__name--category small">${selectedCategory}</p>
-                <p class="transaction__date small">${addDateInput.value}</p>
-        <p class="transaction__name ${categoryClass}">${addNameInput.value}</p>
-        <p class="transaction__amount ${amountClass}">${addAmountInput.value} zł
-            <button class="transaction__delete" onclick="deleteTransaction(${ID})">
-                <i class="fa-solid fa-x"></i>f
-            </button>
-        </p>
-
-       
-    `;
-
-
-
-    if (addCategoryInput.value === 'income') {
-        incomeTransactions.appendChild(newTransaction);
-        transactionsIncomeArr.push(newTransaction);
-    } else {
-        expenseTransactions.appendChild(newTransaction);
-        transactionsExpenseArr.push(newTransaction);
+    let transactionAmount = parseFloat(addAmountInput.value);
+    if (addCategoryInput.value === 'expense') {
+        transactionAmount = -transactionAmount; // Wydatki jako wartości ujemne
     }
 
+    const formData = new FormData();
+    formData.append('name', addNameInput.value);
+    formData.append('amount', transactionAmount);
+    formData.append('category', addCategoryInput.value);
+    formData.append('date', addDateInput.value);
 
-    const transactionAmount = parseFloat(addAmountInput.value)
-    const amountValue = addCategoryInput.value === 'income' ? transactionAmount : -transactionAmount;
+    fetch('add_transaction.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Debugowanie odpowiedzi
+            if (data.success) {
+                const newTransaction = document.createElement('div');
+                newTransaction.classList.add('transaction');
+                newTransaction.setAttribute('id', `transaction_${data.id}`); // Ustawienie poprawnego ID z bazy danych
 
-    totalMoney.push(amountValue)
-    countMoney(totalMoney)
-    ID++
-    togglePanel(addTransactionPanel)
-    clearInputs()
+                const selectedCategory = checkCategory(addCategoryInput.value);
 
-    console.log(categoryClass);
+                const categoryClass = addCategoryInput.value === 'income' ? 'transaction__name--income' : 'transaction__name--expenses';
+                const amountClass = addCategoryInput.value === 'income' ? 'transaction__amount--income' : 'transaction__amount--expenses';
 
+                newTransaction.innerHTML = `
+                <p class="transaction__name transaction__name--category small">${selectedCategory}</p>
+                <p class="transaction__date small">${addDateInput.value}</p>
+                <p class="transaction__name ${categoryClass}">${addNameInput.value}</p>
+                <p class="transaction__amount ${amountClass}">${transactionAmount} zł
+                    <button class="transaction__delete" onclick="deleteTransaction(${data.id})">
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+                </p>
+            `;
+
+                if (addCategoryInput.value === 'income') {
+                    incomeTransactions.appendChild(newTransaction);
+                    transactionsIncomeArr.push(newTransaction);
+                } else {
+                    expenseTransactions.appendChild(newTransaction);
+                    transactionsExpenseArr.push(newTransaction);
+                }
+
+                // Aktualizacja dostępnych środków
+                availableMoney.textContent = `${data.availableMoney} zł`;
+
+                totalMoney.push(transactionAmount);
+                countMoney(totalMoney);
+                togglePanel(addTransactionPanel);
+                clearInputs();
+            } else {
+                addAlertText.textContent = "Błąd: " + data.error;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            addAlertText.textContent = "Wystąpił błąd podczas dodawania transakcji.";
+        });
 }
 
-const deleteTransaction = (id) => {
-
-    const transactionDelete = document.getElementById(id)
-    const transactionDeleteAmount = parseFloat(transactionDelete.childNodes[7].textContent)
-    const goalId = transactionDelete.getAttribute('data-goal-id');
-
-    const transactionToDeleteIndex = totalMoney.indexOf(transactionDeleteAmount)
-
-    totalMoney.splice(transactionToDeleteIndex, 1)
-
-    countMoney(totalMoney)
 
 
-    const isIncomeTransaction = transactionDelete.childNodes[5].classList.contains('transaction__name--income')
 
-    if (isIncomeTransaction) {
-        incomeTransactions.removeChild(transactionDelete);
-    } else {
-        expenseTransactions.removeChild(transactionDelete);
-    }
 
-    console.log(transactionDelete.childNodes[5].classList.contains('transaction__name--income'));
+//funkcja ładowania transkacji z bazy
 
-    if (goalId) {
-        const goalItem = document.getElementById(goalId);
-        const goalPaidElement = goalItem.querySelector('.goal__paid');
-        let currentPaid = parseFloat(goalPaidElement.textContent);
-        currentPaid -= transactionDeleteAmount;
-        goalPaidElement.textContent = currentPaid;
-    }
-     transactionDelete.remove();
+const loadTransactions = () => {
+    fetch('get_transactions.php')
+        .then(response => response.json())
+        .then(data => {
+            transactionsIncomeArr = [];
+            transactionsExpenseArr = [];
+            totalMoney = [0]; // Resetowanie totalMoney przed załadowaniem transakcji
+
+            data.transactions.forEach(transaction => {
+                const newTransaction = document.createElement('div');
+                newTransaction.classList.add('transaction');
+                newTransaction.setAttribute('id', transaction.id);
+
+                const selectedCategory = checkCategory(transaction.category);
+
+                const categoryClass = transaction.category === 'income' ? 'transaction__name--income' : 'transaction__name--expenses';
+                const amountClass = transaction.category === 'income' ? 'transaction__amount--income' : 'transaction__amount--expenses';
+
+                newTransaction.innerHTML = `
+                    <p class="transaction__name transaction__name--category small">${selectedCategory}</p>
+                    <p class="transaction__date small">${transaction.date}</p>
+                    <p class="transaction__name ${categoryClass}">${transaction.name}</p>
+                    <p class="transaction__amount ${amountClass}">${transaction.amount} zł
+                        <button class="transaction__delete" onclick="deleteTransaction(${transaction.id})">
+                            <i class="fa-solid fa-x"></i>
+                        </button>
+                    </p>
+                `;
+
+                if (transaction.category === 'income') {
+                    incomeTransactions.appendChild(newTransaction);
+                    transactionsIncomeArr.push(newTransaction);
+                } else {
+                    expenseTransactions.appendChild(newTransaction);
+                    transactionsExpenseArr.push(newTransaction);
+                }
+
+                totalMoney.push(parseFloat(transaction.amount));
+            });
+
+            // Po załadowaniu wszystkich transakcji, oblicz dostępne środki
+            countMoney(totalMoney);
+
+            // Aktualizacja dostępnych środków na podstawie obliczeń z backendu
+            availableMoney.textContent = `${data.availableMoney} zł`;
+        })
+        .catch(error => console.error('Error:', error));
 };
+
+
+
+
 
 
 const countMoney = money => {
     const newMoney = money.reduce((a, b) => a + b)
     availableMoney.textContent = `${newMoney} zł`
-
 
     if (newMoney < 0) {
         availableMoney.style.color = 'red';
@@ -550,8 +650,73 @@ const countMoney = money => {
     } else {
         availableMoney.style.color = "white";
     }
-
 }
+
+
+//funkcja usuwania transakcji + baza
+
+function deleteTransaction(transactionId, goalId) {
+    console.log('Deleting Transaction ID:', transactionId, 'Goal ID:', goalId); // Logowanie ID transakcji i celu
+
+    const formData = new FormData();
+    formData.append('transaction_id', transactionId);
+    if (goalId) {
+        formData.append('goal_id', goalId);
+    }
+
+    fetch('delete_transaction.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            return response.text().then(text => {
+                console.log('Response text:', text); // Logowanie odpowiedzi
+                return JSON.parse(text);
+            });
+        })
+        .then(data => {
+            if (data.success) {
+                const transactionElement = document.querySelector(`#transaction_${transactionId}`);
+                console.log('Transaction Element:', transactionElement); // Logowanie elementu transakcji
+
+                if (transactionElement) {
+                    transactionElement.remove();
+                    // Aktualizacja wyświetlanej kwoty dostępnych środków
+                    document.querySelector('.options__info--money').textContent = `${data.availableMoney} zł`;
+
+                    // Jeśli istnieje goalId, zaktualizuj także goal__paid
+                    if (goalId) {
+                        const goalPaidElement = document.querySelector(`#goal_${goalId} .goal__paid`);
+                        if (goalPaidElement) {
+                            const newPaidAmount = parseFloat(goalPaidElement.textContent) - parseFloat(depositedAmount);
+                            goalPaidElement.textContent = `${newPaidAmount} zł`;
+                        } else {
+                            console.error('Goal Paid Element not found');
+                        }
+                    }
+                } else {
+                    console.error('Transaction Element not found');
+                }
+            } else {
+                console.error('Błąd:', data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -567,7 +732,40 @@ const checkCategory = (selected) => {
 };
 
 
+//usuwanie wszystkich trans + baza 
 
+//Funckcja usuwania wszystkich transakcji +  z bazy
+
+
+const deleteAllTransactions = () => {
+    fetch('delete_all_transactions.php', {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Usuwanie transakcji z widoku aplikacji
+                while (incomeTransactions.children.length > 2) {
+                    incomeTransactions.removeChild(incomeTransactions.lastChild);
+                }
+                while (expenseTransactions.children.length > 2) {
+                    expenseTransactions.removeChild(expenseTransactions.lastChild);
+                }
+
+                // Resetowanie danych w JS
+                totalMoney = [0];
+                ID = 0;
+                transactionsIncomeArr = [];
+                transactionsExpenseArr = [];
+
+                // Aktualizacja dostępnych środków
+                countMoney(totalMoney);
+            } else {
+                console.error('Błąd:', data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
 
 
 //funkcja czyszczenia Inputów paneli
@@ -637,6 +835,9 @@ const main = () => {
     prepareDomElements()
     prepareDomEvents();
     loadCategories();
+    loadTransactions();
+    loadGoals();
+
 
 }
 
