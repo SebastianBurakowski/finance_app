@@ -1292,6 +1292,13 @@ body {
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+    margin-top: 40px;
+
+    &__alert{
+        font-size: 18px;
+        color: red;
+        padding: 10px;
+    }
 
     &__panel {
         display: flex;
@@ -1318,6 +1325,7 @@ body {
 
     &__list {
         list-style: none;
+        height: 50%;
 
         &--item {
             width: 350px;
@@ -1346,6 +1354,7 @@ body {
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+    margin-top: 40px;
 
     &__info {
 
@@ -1359,6 +1368,12 @@ body {
         font-size: 16px;
         padding: 5px 0;
 
+    }
+
+    &__alert{
+        font-size: 18px;
+        color: red;
+        padding: 10px;
     }
 
 
@@ -1377,9 +1392,12 @@ body {
 
     &__list {
         list-style: none;
+        height: 50%;
+     
 
         &--item {
-            width: 350px;
+          
+            width: 100%;
             font-size: 20px;
             padding: 10px 0;
             display: flex;
@@ -1387,9 +1405,22 @@ body {
             align-items: center;
             flex-wrap: wrap;
             border-bottom: 1px solid $border_color;
+
+          
         }
+                  &--info {
+                    
+                      margin-bottom: 5px;
+                  }
 
 
+    }
+
+    &__btns{
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items:center
     }
 
 

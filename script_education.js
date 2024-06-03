@@ -1,7 +1,12 @@
+let accordion, accordionBtn
 
-// pobieranie elementów sekcji
-const accordion = document.querySelector('.acordeon')
-const accordionBtn = document.querySelectorAll('.acordeon__btn')
+const prepareDomElements = () => {
+    accordion = document.querySelector('.acordeon')
+    accordionBtn = document.querySelectorAll('.acordeon__btn')
+}
+
+
+
 
 
 // Funkcja pokazująca lub ukrywająca odpowiedz na pytanie
@@ -29,9 +34,23 @@ const closeAllAccordion = () => {
 
 }
 
-// wywołanie funkcji na wszystkich buttonach
-accordionBtn.forEach(btn =>
-    btn.addEventListener('click', showAccordion),
 
 
-)
+
+const prepareDomEvents = () => {
+    accordionBtn.forEach(btn =>
+        btn.addEventListener('click', showAccordion),
+
+
+    )
+
+
+}
+
+
+const main = () => {
+    prepareDomElements();
+    prepareDomEvents();
+}
+
+window.addEventListener('DOMContentLoaded', main);

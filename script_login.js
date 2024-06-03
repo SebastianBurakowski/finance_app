@@ -1,33 +1,52 @@
-//pobieranie elementów ze strony logowania
+//strona logowania
+let signInBtn, signUpBtn, signInDiv, signUpDiv
 
-const SignInBtn = document.querySelector('.login__btn--signin')
-const signUpBtn = document.querySelector('.login__btn--signup')
-const signInDiv = document.querySelector('.signin__container')
-const signUpDiv = document.querySelector('.signup__container')
+// formularz rejestracji
 
+let userName, userSurname, email, password, passwordRepeat, signUpAlert
 
-//pobieranie elementów z formularza rejestracji
-const userName = document.querySelector('#name')
-const userSurname = document.querySelector('#surname')
-const email = document.querySelector('#e-mail')
-const password = document.querySelector('#password1')
-const passwordRepeat = document.querySelector('#password2')
-const signUpAlert = document.querySelector('.signup__alert')
+//formularz logowania
 
-//pobieranie elementów z formularza logowania
-const loginName = document.querySelector('#login-mail')
-const loginPassword = document.querySelector('#login-password')
-const signInAlert = document.querySelector('.singin__alert')
+let loginName, loginPassword, signInAlert, signupSubmitBtn, showPassBtn
 
 
-//pobieranie przycisków z formularzy oraz strony logowania
+//przyciski
+let closeBtns, signinSubmitBtn
 
-const closeBtns = document.querySelectorAll('.close-btn')
-const signinSubmitBtn = document.querySelector('.signin__btn')
-const signupSubmitBtn = document.querySelector('.signup__btn')
-const showPassBtn = document.querySelector('.signup__show-btn')
 
-//pobieranie elementów z sekcji edukacja
+
+const prepareDomElements = () => {
+    //pobieranie elementów ze strony logowania
+
+    signInBtn = document.querySelector('.login__btn--signin')
+    signUpBtn = document.querySelector('.login__btn--signup')
+    signInDiv = document.querySelector('.signin__container')
+    signUpDiv = document.querySelector('.signup__container')
+
+
+    //pobieranie elementów z formularza rejestracji
+    userName = document.querySelector('#name')
+    userSurname = document.querySelector('#surname')
+    email = document.querySelector('#e-mail')
+    password = document.querySelector('#password1')
+    passwordRepeat = document.querySelector('#password2')
+    signUpAlert = document.querySelector('.signup__alert')
+
+    //pobieranie elementów z formularza logowania
+    loginName = document.querySelector('#login-mail')
+    loginPassword = document.querySelector('#login-password')
+    signInAlert = document.querySelector('.singin__alert')
+
+
+    //pobieranie przycisków z formularzy oraz strony logowania
+
+    closeBtns = document.querySelectorAll('.close-btn')
+    signinSubmitBtn = document.querySelector('.signin__btn')
+    signupSubmitBtn = document.querySelector('.signup__btn')
+    showPassBtn = document.querySelector('.signup__show-btn')
+ 
+
+}
 
 
 
@@ -108,58 +127,32 @@ const passwordValidation = (pass, msg) => {
 
 
 
-
-
-
-
-
-// Funkcja logowania
-
-
-
-//Wywołanie funkcji na odpowiednich elementach
-
-
-
-showPassBtn.addEventListener('click', showPassword)
-
-closeBtns.forEach(btn => {
-    btn.addEventListener('click', closeHandle)
-})
-
-
-SignInBtn.addEventListener('click', OpenSignIn)
-signUpBtn.addEventListener('click', OpenSignUp)
-
-
-
-// funckja rejestracji dodanie do bazy
-signupSubmitBtn.addEventListener('click', e => {
+// Funkcja obsługująca rejestrację
+const handleSignup = (e) => {
     e.preventDefault();
     passwordValidation(password, signUpAlert);
-  
-        const formData = new FormData();
-        formData.append('email', email.value);
-        formData.append('name', userName.value);
-        formData.append('surname', userSurname.value);
-        formData.append('password', password.value);
 
-        fetch('http://localhost/Aplikacja%20Webowa/register.php', {
-            method: 'POST',
-            body: formData
+    const formData = new FormData();
+    formData.append('email', email.value);
+    formData.append('name', userName.value);
+    formData.append('surname', userSurname.value);
+    formData.append('password', password.value);
+
+    fetch('http://localhost/Aplikacja%20Webowa/register.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            signUpAlert.textContent = "Konto Utworzone, aby przejść dalej zaloguj się";
+            signUpAlert.style.color = "white";
         })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-                signUpAlert.textContent = "Konto Utworzone, aby przejść dalej zaloguj się"
-                signUpAlert.style.color = "white"
-            })
-            .catch(error => console.error('Error:', error));
-    
-});
+        .catch(error => console.error('Error:', error));
+};
 
-// Obsługa logowania
-signinSubmitBtn.addEventListener('click', e => {
+// Funkcja obsługująca logowanie
+const handleSignin = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -180,6 +173,33 @@ signinSubmitBtn.addEventListener('click', e => {
             }
         })
         .catch(error => console.error('Error:', error));
-});
+};
+
+// Funkcja przygotowująca nasłuchiwacze zdarzeń
+const prepareDomEvents = () => {
+    signupSubmitBtn.addEventListener('click', handleSignup);
+    signinSubmitBtn.addEventListener('click', handleSignin);
 
 
+
+
+    showPassBtn.addEventListener('click', showPassword)
+
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', closeHandle)
+    })
+
+
+    signInBtn.addEventListener('click', OpenSignIn)
+    signUpBtn.addEventListener('click', OpenSignUp)
+
+};
+
+
+
+const main = () => {
+    prepareDomElements();
+    prepareDomEvents();
+}
+
+window.addEventListener('DOMContentLoaded', main);

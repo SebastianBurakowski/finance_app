@@ -1,19 +1,34 @@
-const currencyOne = document.querySelector('#currency-one')
-const amountOne = document.querySelector('.currency__amount--one')
+let currencyOne, amountOne, currencyTwo, amountTwo, swapBtn, rateInfo
 
 
-const currencyTwo = document.querySelector('#currency-two')
-const amountTwo = document.querySelector('.currency__amount--two')
 
-const swapBtn = document.querySelector('.currency__btn')
-const rateInfo = document.querySelector('.currency__rate')
+
+
+
+
+const prepareDomElements = () => {
+    currencyOne = document.querySelector('#currency-one')
+    amountOne = document.querySelector('.currency__amount--one')
+
+
+    currencyTwo = document.querySelector('#currency-two')
+    amountTwo = document.querySelector('.currency__amount--two')
+
+    swapBtn = document.querySelector('.currency__btn')
+    rateInfo = document.querySelector('.currency__rate')
+
+}
+
+
+
+
 
 
 
 const calculate = () => {
     const host = 'api.frankfurter.app'
 
-    
+
 
     fetch(`https://${host}/latest?amount=${amountOne.value}&from=${currencyOne.value}&to=${currencyTwo.value}`)
         .then(resp => resp.json())
@@ -33,11 +48,25 @@ const swap = () => {
 }
 
 
-currencyOne.addEventListener('change', calculate);
-currencyTwo.addEventListener('change', calculate);
-amountOne.addEventListener('input', calculate);
-swapBtn.addEventListener('click', swap)
+const prepareDomEvents = () => {
+    currencyOne.addEventListener('change', calculate);
+    currencyTwo.addEventListener('change', calculate);
+    amountOne.addEventListener('input', calculate);
+    swapBtn.addEventListener('click', swap)
 
-calculate();
+    calculate();
+
+
+}
+
+
+const main = () => {
+    prepareDomElements();
+    prepareDomEvents();
+}
+
+window.addEventListener('DOMContentLoaded', main);
+
+
 
 

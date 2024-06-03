@@ -171,7 +171,7 @@
                 <label class="goals__label label-grey" for="category">Data Końcowa Celu : </label> <input
                     class="goals__input goals__calendar input-grey" type="date" id="goals-panel-date">
 
-                    <p class="goals__alert"></p>
+                <p class="goals__alert"></p>
                 <div class="goals__btns">
                     <button class="goals__btn goals__btn--add accept-btn">dodaj</button>
                     <button class="goals__btn goals__btn--cancel decline-btn">Zamknij</button>
@@ -182,7 +182,7 @@
             <div class="goals__active">
                 <h2 class="goals__title">Moje cele</h2>
                 <ul class="goals__list">
-      <!-- Tu dodaja sie elementy dynamicznie -->
+                    <!-- Tu dodaja sie elementy dynamicznie -->
                 </ul>
             </div>
 
@@ -206,10 +206,8 @@
                 <div class="budget__info">
                     <h1 class="budget__title title">Ustal Swój budżet</h1>
                     <p class="budget__text">w tej sekcji możesz ustalić swój budżet.</p>
-                    <p class="small">Przykład : </p>
-                    <p class="small">Ustalając budżet na Zakupy dodaj odpowiednią nazwę oraz budżet
-                        jaki chcesz
-                        przeznaczyć na zakupy.</p>
+                    <p class="small">Nazwa budżetu musi być taka sama jak nazwa kategorii do której przypisana jest transkacjia, w innym przypadku naliczanie nie będzie działać. Przykład : </p>
+                    <p class="small">Ustalając budżet Rozrywka w sekcji dodawania transkacji dodaj kategorię "Rozrywka" a potem ustal budżet jaki chcesz przeznaczyć na ten cel. Dodając transkacje z kategorią rozrywka twój budżet będzie się aktualizował</p>
                 </div>
                 <div class="budget__panel">
 
@@ -218,23 +216,16 @@
 
                     <label class="budget__label label-grey" for="amount">Kwota : </label>
                     <input class="budget__input input-grey" type="number" id="budget-panel-amount">
+                    <p class="budget__alert"></p>
                     <button class="budget__panel--btn accept-btn">dodaj</button>
                 </div>
                 <ul class="budget__list">
-                    <li class="budget__list--item" id="1">
+                    <!-- <li class="budget__list--item" id="1">
                         <p class="budget__list--info"> <span class="budget__name">Rozrywka</span> : <span
                                 class="budget__spent">300</span> zł / <span class="budget__amount">1000</span> zł</p>
                         <button class="budget__btn--remove decline-btn">usuń</button>
 
-                    </li>
-                    <li class="budget__list--item" id="2">
-                        <p class="budget__list--info"> <span class="budget__name">Rozrywka</span> : <span
-                                class="budget__spent">300</span> zł /
-                            <span class="budget__amount">1000</span> zł
-                        </p>
-                        <button class="budget__btn--remove decline-btn">usuń</button>
-
-                    </li>
+                    </li> -->
                 </ul>
             </div>
 
@@ -243,9 +234,8 @@
                     <h1 class="fees__title title">Ustal Swoje stałe opłaty</h1>
                     <p class="fees__text">w tej sekcji możesz ustalić swoje stałe opłaty takie jak rachunki, raty
                         kredytów itp.</p>
-                    <p class="small">Dodane opłaty będą automatycznie aktualizowane z dostępnymi środkami
-                        na koncie (jeśli dodasz np ratę kredytu w wysokości 1000zł, dostępne środki zostaną pomniejszone
-                        o tę kwotę)</p>
+                    <p class="small">Dodane opłaty będą aktualizowane z dostępnymi środkami
+                        na koncie po kliknięciu przycisku "Opłacone"</p>
                 </div>
                 <div class="fees__panel">
 
@@ -254,20 +244,18 @@
 
                     <label class="fees__label label-grey" for="amount">Kwota : </label>
                     <input class="fees__input input-grey" type="number" id="fees-panel-amount">
-                    <button class="fees__btn accept-btn">dodaj</button>
+                    <p class="fees__alert"></p>
+                    <button class="fees__btn fees__btn--add accept-btn">dodaj</button>
                 </div>
 
                 <ul class="fees__list">
-                    <li class="fees__list--item" id="1">
+                    <!-- <li class="fees__list--item" id="1">
                         <p class="fees__list--info"> <span class="fees__name">Rata za mieszkanie</span> : <span
                                 class="fees__amount">1000</span> zł</p>
-                        <button class="fees__btn--remove decline-btn">usuń</button>
-
-                    </li>
-                    <li class="fees__list--item" id="1">
-                        <p class="fees__list--info"> <span class="fees__name">sdasda</span> : <span
-                                class="fees__amount">1000</span> zł</p>
-                        <button class="fees__btn--remove decline-btn">usuń</button>
+                        <div class="fees__btns">
+                            <button class="fees__btn--remove decline-btn">usuń</button>
+                            <button class="fees__btn--remove fees__btn--paid accept-btn">Opłacone</button>
+                        </div> -->
 
                     </li>
                 </ul>

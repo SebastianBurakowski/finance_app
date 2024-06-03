@@ -1334,6 +1334,12 @@ body__login {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-top: 40px;
+}
+.budget__alert {
+  font-size: 18px;
+  color: red;
+  padding: 10px;
 }
 .budget__panel {
   display: -webkit-box;
@@ -1364,6 +1370,7 @@ body__login {
 }
 .budget__list {
   list-style: none;
+  height: 50%;
 }
 .budget__list--item {
   width: 350px;
@@ -1401,6 +1408,7 @@ body__login {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-top: 40px;
 }
 .fees__info {
   text-align: center;
@@ -1410,6 +1418,11 @@ body__login {
   text-transform: capitalize;
   font-size: 16px;
   padding: 5px 0;
+}
+.fees__alert {
+  font-size: 18px;
+  color: red;
+  padding: 10px;
 }
 .fees__panel {
   display: -webkit-box;
@@ -1431,9 +1444,10 @@ body__login {
 }
 .fees__list {
   list-style: none;
+  height: 50%;
 }
 .fees__list--item {
-  width: 350px;
+  width: 100%;
   font-size: 20px;
   padding: 10px 0;
   display: -webkit-box;
@@ -1448,6 +1462,21 @@ body__login {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   border-bottom: 1px solid #4b5769;
+}
+.fees__list--info {
+  margin-bottom: 5px;
+}
+.fees__btns {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .credit__title {

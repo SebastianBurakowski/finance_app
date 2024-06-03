@@ -22,7 +22,18 @@ let depositAmountInput, depositAddBtn, depositCloseBtn, depositAlert
 
 
 //Panel Finansów i budżetu
-let financePanel, budgetNameInput, budgetAmountInput, feeNameInput, feeAmountInput, financeCloseBtn;
+let financePanel, financeCloseBtn;
+
+//panel budzetu
+let budgetNameInput, budgetAmountInput, budgetAddBtn, budgetAlert
+
+let budgetID;
+
+
+//Panel Stałych Opłat
+let feeAmount, feeName, feesList, feeRemoveBtn, feePaidBtn, feeAlert, feeAddBtn
+
+let feeID;
 
 
 
@@ -36,19 +47,52 @@ const prepareDomElements = () => {
     //////// POBIERANIE ELEMENTÓW STRONY //////
 
 
+    ///---------------------------PANEL BUDŻETU-----------------------------------------///
 
 
-    //przyciski głownej strony
+    budgetNameInput = document.querySelector('#budget-panel-name')
+    budgetAmountInput = document.querySelector('#budget-panel-amount')
+    budgetAddBtn = document.querySelector('.budget__panel--btn')
+    budgetAlert = document.querySelector('.budget__alert')
+    budgetList = document.querySelector('.budget__list')
+
+    budgetID = 0
+
+
+
+
+    ///----------------------------------------------------------------------------------///
+
+
+    ///---------------------------PANEL STAŁYCH OPŁAT-----------------------------------///
+
+    feeAmount = document.querySelector('#fees-panel-amount')
+    feeName = document.querySelector('#fees-panel-name')
+    feesList = document.querySelector('.fees__list')
+    feeRemoveBtn = document.querySelector('.fees__btn--remove')
+    feePaidBtn = document.querySelector('.fees__btn--paid')
+    feeAlert = document.querySelector('.fees__alert')
+    feeAddBtn = document.querySelector('.fees__btn--add')
+
+    feeID = 0
+
+    //------------------------------------------------------------------------------------------///
+
+
+    ///---------------------------PRZYCISKI OTWIERANIA PANELI-----------------------------------///
     openTransactionBtn = document.querySelector('.options__btn--add')
     openGoalBtn = document.querySelector('.options__btn--goal')
     openBudgetBtn = document.querySelector('.options__btn--fee')
 
     deleteAllBtn = document.querySelector('.options__btn--delete')
 
+    ///-----------------------------------------------------------------------------------------///
 
 
 
-    //Panel dodawania transakcji
+
+    ///---------------------------PANEL DODAWANIA TRANSAKCJI-----------------------------------///
+
     addTransactionPanel = document.querySelector('.add-panel')
     addNameInput = document.querySelector('#add-panel-name')
     addAmountInput = document.querySelector('#add-panel-amount')
@@ -65,11 +109,14 @@ const prepareDomElements = () => {
     incomeTransactions = document.querySelector('.transactions__income')
     expenseTransactions = document.querySelector('.transactions__expenses')
 
+    ///-----------------------------------------------------------------------------------------///
 
 
 
-    //--------------------------Panel celów finansowych----------------------------//
-    //
+
+
+    ///---------------------------PANEL CELÓW FINANSOWYCH-----------------------------------///
+
     addGoalPanel = document.querySelector('.goals__panel')
     goalPanelCancelBtn = document.querySelector('.goals__btn--cancel')
     goalNameInput = document.querySelector('#goals-panel-name')
@@ -78,32 +125,35 @@ const prepareDomElements = () => {
     goalList = document.querySelector('.goals__list')
     goalAlert = document.querySelector('.goals__alert')
 
+    addToGoalBtn = document.querySelector('.goals__btn--add')
+    removeGoalBtn = document.querySelector('.goals__btn--remove')
+
+    ///-----------------------------------------------------------------------------------------///
+
     goalID = 0
 
-    //Okno zasilenia celu
+    ///---------------------------PANEL ZASILENIA CELU DEPOSIT-----------------------------------///
+
     depositPanel = document.querySelector('.deposit')
     depositAmountInput = document.querySelector('#goal__deposit-amount')
     depositCloseBtn = document.querySelector('.deposit__btn--close')
     depositAddBtn = document.querySelector('.deposit__btn--add')
     depositAlert = document.querySelector('.deposit__alert')
 
-    //-------------------------------------------------------------------------//
-
-    //Dodawnie nowego celu
-    addToGoalBtn = document.querySelector('.goals__btn--add')
-    removeGoalBtn = document.querySelector('.goals__btn--remove')
+    //-------------------------------------------------------------------------------------------//
 
 
 
 
 
 
-    //Panel Główny
+    ///---------------------------PANEL GŁÓWNY-----------------------------------///
+
+
+
+    
     financePanel = document.querySelector('.finances__panel')
-    budgetNameInput = document.querySelector('#budget-panel-name')
-    budgetAmountInput = document.querySelector('#budget-panel-amount')
-    feeNameInput = document.querySelector('#fees-panel-name')
-    feeAmountInput = document.querySelector('#fees-panel-amount')
+
     financeCloseBtn = document.querySelector('.finances__btn--close')
 
     availableMoney = document.querySelector('.options__info--money')
@@ -118,10 +168,97 @@ const prepareDomElements = () => {
     transactionsExpenseArr = [];
 }
 
+
+//-------------------------------------------------------------------------------------------//
+
 ///////////////////  FUNKCJE /////////////////
 
 
-//Funckja dodawnia celu
+
+
+//funckcja dodawania stałej opłaty
+
+
+const addNewFee = () => {
+
+    if (!feeName.value) {
+        feeAlert.textContent = "Proszę podać nazwę opłaty"
+        return;
+
+    } else if (!feeAmount.value) {
+        feeAlert.textContent = "Proszę podać wysokość opłaty"
+        return;
+    } else if (feeAmount.value <= 0) {
+        feeAlert.textContent = "Wysokość opłaty musi być więszka niż 0"
+        return;
+    }
+
+    const newFee = document.createElement('li');
+    newFee.classList.add('fees__list--item');
+    newFee.setAttribute('id', feeID);
+
+
+
+    newFee.innerHTML = `<p class="fees__list--info"> <span class="fees__name">${feeName.value}</span> : <span
+                                class="fees__amount">${feeAmount.value}</span> zł</p>
+                        <div class="fees__btns">
+                            <button class="fees__btn--remove decline-btn">usuń</button>
+                            <button class="fees__btn--remove fees__btn--paid accept-btn">Opłacone</button>
+                        </div>`
+
+
+
+    feesList.appendChild(newFee)
+    feeID++
+
+    clearInputs()
+
+
+
+}
+
+
+//funkcja dodawnia budżetu
+
+
+const addNewBudget = () => {
+
+
+    if (!budgetNameInput.value) {
+        budgetAlert.textContent = "Proszę podać nazwę budżetu"
+        return;
+
+    } else if (!budgetAmountInput.value) {
+        budgetAlert.textContent = "Proszę podać wysokość budżetu"
+        return;
+    } else if (budgetAmountInput.value <= 0) {
+        budgetAlert.textContent = "Wysokość budżetu musi być więszka niż 0"
+        return;
+    }
+
+
+    const newBudget = document.createElement('li');
+    newBudget.classList.add('budget__list--item');
+    newBudget.setAttribute('id', budgetID);
+
+
+    newBudget.innerHTML = 
+    ` <p class="budget__list--info"> <span class="budget__name">${budgetNameInput.value}</span> : <span
+                                class="budget__spent">300</span> zł / <span class="budget__amount">${budgetAmountInput.value}</span> zł</p>
+                        <button class="budget__btn--remove decline-btn">usuń</button>
+`
+
+budgetList.appendChild(newBudget)
+budgetID++;
+
+clearInputs()
+
+
+
+}
+
+
+// Funkcja dodawania celu
 
 const addNewGoal = () => {
 
@@ -786,11 +923,14 @@ const clearInputs = () => {
     //panel budżetu
     budgetNameInput.value = "";
     budgetAmountInput.value = "";
-    feeNameInput.value = "";
-    feeAmountInput.value = "";
+
 
     //okno zasilania celu
     depositAmountInput.value = ""
+
+    //panel stalych oplat
+    feeName.value = ''
+    feeAmount.value = ''
 }
 
 
@@ -824,6 +964,10 @@ const prepareDomEvents = () => {
     depositAddBtn.addEventListener('click', addDepositToGoal)
 
 
+    feeAddBtn.addEventListener('click', addNewFee)
+
+
+    budgetAddBtn.addEventListener('click', addNewBudget)
 
 }
 
