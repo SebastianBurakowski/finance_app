@@ -180,41 +180,231 @@ const prepareDomElements = () => {
 
 
 const addNewFee = () => {
-
     if (!feeName.value) {
-        feeAlert.textContent = "Proszę podać nazwę opłaty"
+        feeAlert.textContent = "Proszę podać nazwę opłaty";
         return;
-
     } else if (!feeAmount.value) {
-        feeAlert.textContent = "Proszę podać wysokość opłaty"
+        feeAlert.textContent = "Proszę podać wysokość opłaty";
         return;
     } else if (feeAmount.value <= 0) {
-        feeAlert.textContent = "Wysokość opłaty musi być więszka niż 0"
+        feeAlert.textContent = "Wysokość opłaty musi być większa niż 0";
         return;
     }
 
-    const newFee = document.createElement('li');
-    newFee.classList.add('fees__list--item');
-    newFee.setAttribute('id', feeID);
+    const formData = new FormData();
+    formData.append('name', feeName.value);
+    formData.append('amount', feeAmount.value);
+
+    fetch('add_fee.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const newFee = document.createElement('li');
+                newFee.classList.add('fees__list--item');
+                newFee.setAttribute('id', `fee_${data.id}`); // Ustawienie poprawnego ID z bazy danych
+
+                newFee.innerHTML = `
+                <p class="fees__list--info"> <span class="fees__name">${feeName.value}</span> : <span
+                                    class="fees__amount">${feeAmount.value}</span> zł</p>
+                <div class="fees__btns">
+                    <button class="fees__btn--remove decline-btn">usuń</button>
+                    <button class="fees__btn--remove fees__btn--paid accept-btn">Opłacone</button>
+                </div>`;
+
+                feesList.appendChild(newFee);
+
+                // Dodanie nasłuchiwania zdarzeń do przycisków
+                const removeBtn = newFee.querySelector('.fees__btn--remove');
+                removeBtn.addEventListener('click', () => {
+                    removeFee(newFee);
+                });
+
+                const paidBtn = newFee.querySelector('.fees__btn--paid');
+                paidBtn.addEventListener('click', () => {
+                    markFeeAsPaid(newFee);
+                });
+
+                feeID++;
+                clearInputs();
+            } else {
+                feeAlert.textContent = "Błąd: " + data.error;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            feeAlert.textContent = "Wystąpił błąd podczas dodawania opłaty.";
+        });
+}
+
+//wczytywanie oplat z bazy 
+
+const loadFees = () => {
+    fetch('get_fees.php')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(fee => {
+                const newFee = document.createElement('li');
+                newFee.classList.add('fees__list--item');
+                newFee.setAttribute('id', `fee_${fee.id}`); // Ustawienie poprawnego ID z bazy danych
+
+                newFee.innerHTML = `
+                <p class="fees__list--info"> <span class="fees__name">${fee.name}</span> : <span
+                                    class="fees__amount">${fee.amount}</span> zł</p>
+                <div class="fees__btns">
+                    <button class="fees__btn--remove decline-btn">usuń</button>
+                    <button class="fees__btn--remove fees__btn--paid accept-btn">Opłacone</button>
+                </div>`;
+
+                feesList.appendChild(newFee);
+
+                // Dodanie nasłuchiwania zdarzeń do przycisków
+                const removeBtn = newFee.querySelector('.fees__btn--remove');
+                removeBtn.addEventListener('click', () => {
+                    removeFee(newFee);
+                });
+
+                const paidBtn = newFee.querySelector('.fees__btn--paid');
+                paidBtn.addEventListener('click', () => {
+                    markFeeAsPaid(newFee);
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+//usuwanie oplat
+
+const removeFee = (feeElement) => {
+    const feeId = feeElement.getAttribute('id').split('_')[1]; // Pobierz ID opłaty
+    const formData = new FormData();
+    formData.append('fee_id', feeId);
+
+    fetch('delete_fee.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                feeElement.remove();
+            } else {
+                console.error('Błąd:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+//funckja opłacania stałej opłaty
+
+const markFeeAsPaid = (feeElement) => {
+    const feeId = feeElement.getAttribute('id').split('_')[1]; // Pobierz ID opłaty
+    const feeAmount = parseFloat(feeElement.querySelector('.fees__amount').textContent);
+    const feeName = feeElement.querySelector('.fees__name').textContent;
+    const currentDate = new Date().toISOString().split('T')[0]; // Formatowanie daty na 'YYYY-MM-DD'
+
+    // Aktualizacja dostępnych środków
+    availableMoney.textContent = `${parseFloat(availableMoney.textContent) - feeAmount} zł`;
+
+    // Zmiana koloru przycisku na zielony
+    const paidBtn = feeElement.querySelector('.fees__btn--paid');
+    paidBtn.style.backgroundColor = 'green';
+
+    // Dodanie transakcji w sekcji wydatków
+    const newTransaction = document.createElement('div');
+    newTransaction.classList.add('transaction');
+    newTransaction.setAttribute('id', `transaction_fee_${feeId}`); // Ustawienie poprawnego ID
+    newTransaction.setAttribute('data-fee-id', feeId); // Dodanie atrybutu data-fee-id
+
+    newTransaction.innerHTML = `
+        <p class="transaction__name transaction__name--category small">[Wydatek]</p>
+        <p class="transaction__date small">${currentDate}</p>
+        <p class="transaction__name transaction__name--expenses">Opłata - ${feeName}</p>
+        <p class="transaction__amount transaction__amount--expenses">${feeAmount} zł
+            <button class="transaction__delete" onclick="deleteFeeTransaction(${feeId}, ${feeAmount})">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </p>
+    `;
+
+    expenseTransactions.appendChild(newTransaction);
+    transactionsExpenseArr.push(newTransaction);
+
+    // Dodanie transakcji do bazy danych
+    const formData = new FormData();
+    formData.append('name', `Opłata - ${feeName}`);
+    formData.append('amount', -feeAmount); // Kwota ujemna jako wydatek
+    formData.append('category', 'expense');
+    formData.append('date', currentDate);
+    formData.append('fee_id', feeId); // Dodanie fee_id
+
+    fetch('add_transaction.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                newTransaction.setAttribute('id', `transaction_${data.id}`); // Aktualizacja ID transakcji
+            } else {
+                console.error('Błąd:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
 
+//usuwanie opłaty z transkacji 
 
-    newFee.innerHTML = `<p class="fees__list--info"> <span class="fees__name">${feeName.value}</span> : <span
-                                class="fees__amount">${feeAmount.value}</span> zł</p>
-                        <div class="fees__btns">
-                            <button class="fees__btn--remove decline-btn">usuń</button>
-                            <button class="fees__btn--remove fees__btn--paid accept-btn">Opłacone</button>
-                        </div>`
+function deleteFeeTransaction(transactionId, feeId, feeAmount) {
+    console.log('Deleting Transaction ID:', transactionId, 'Fee ID:', feeId, 'Fee Amount:', feeAmount); // Logowanie ID transakcji i opłaty
 
+    const formData = new FormData();
+    formData.append('transaction_id', transactionId);
+    formData.append('fee_id', feeId);
 
+    fetch('delete_transaction.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            return response.text().then(text => {
+                console.log('Response text:', text); // Logowanie odpowiedzi
+                return JSON.parse(text);
+            });
+        })
+        .then(data => {
+            if (data.success) {
+                const transactionElement = document.querySelector(`#transaction_${transactionId}`);
+                console.log('Transaction Element:', transactionElement); // Logowanie elementu transakcji
 
-    feesList.appendChild(newFee)
-    feeID++
+                if (transactionElement) {
+                    transactionElement.remove();
+                    // Aktualizacja wyświetlanej kwoty dostępnych środków
+                    availableMoney.textContent = `${data.availableMoney} zł`;
 
-    clearInputs()
-
-
-
+                    // Zmiana koloru przycisku na czerwony
+                    const feeElement = document.querySelector(`#fee_paid_${feeId}`);
+                    const paidBtn = feeElement.querySelector('.fees__btn--paid');
+                    paidBtn.style.backgroundColor = 'red';
+                } else {
+                    console.error('Transaction Element not found');
+                }
+            } else {
+                console.error('Błąd:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 
@@ -261,34 +451,25 @@ clearInputs()
 // Funkcja dodawania celu
 
 const addNewGoal = () => {
-
     const currentDate = new Date();
     const inputDate = new Date(goalDateInput.value);
 
-
     if (!goalNameInput.value) {
-
-        goalAlert.textContent = "Proszę podać nazwę dodawanego celu"
+        goalAlert.textContent = "Proszę podać nazwę dodawanego celu";
         return;
     } else if (goalAmountInput.value <= 0) {
-        goalAlert.textContent = "Kwota celu musi być większa od zera"
+        goalAlert.textContent = "Kwota celu musi być większa od zera";
         return;
-    }
-    else if (!goalAmountInput.value) {
-
-        goalAlert.textContent = "Proszę podać kwotę dodawanego celu"
+    } else if (!goalAmountInput.value) {
+        goalAlert.textContent = "Proszę podać kwotę dodawanego celu";
         return;
-    }
-    else if (!goalDateInput.value) {
-
-        goalAlert.textContent = "Proszę podać datę końcową dodawanego celu"
+    } else if (!goalDateInput.value) {
+        goalAlert.textContent = "Proszę podać datę końcową dodawanego celu";
         return;
     } else if (inputDate < currentDate) {
-        goalAlert.textContent = "Data nie może być wcześniejsza niż obecna"
-        return
+        goalAlert.textContent = "Data nie może być wcześniejsza niż obecna";
+        return;
     }
-
-
 
     const formData = new FormData();
     formData.append('name', goalNameInput.value);
@@ -304,12 +485,12 @@ const addNewGoal = () => {
             if (data.success) {
                 const newGoal = document.createElement('li');
                 newGoal.classList.add('goals__list--item');
-                newGoal.setAttribute('id', data.id);
+                newGoal.setAttribute('id', `goal_${data.id}`); // Poprawne ustawienie ID celu
 
                 let daysLeft = Math.ceil((inputDate - currentDate) / (1000 * 60 * 60 * 24));
 
                 newGoal.innerHTML = `
-                    <p class="goal__info"> ${goalNameInput.value} : <span class="goal__paid">0</span> zł z <span
+                    <p class="goal__info"> ${goalNameInput.value} : <span class="goal__paid" id="goal_paid_${data.id}">0</span> zł z <span
                          class="goal__to-pay">${goalAmountInput.value}</span> zł</p>
                     <p class="goal__time">Data Końcowa : <span class="goal__days goal__date"> ${goalDateInput.value}</span></p>
                     <p class="goal__time">Cel trwa jeszcze przez : <span class="goal__days">${daysLeft} dni</span></p>
@@ -343,7 +524,13 @@ const addNewGoal = () => {
             console.error('Error:', error);
             goalAlert.textContent = "Wystąpił błąd podczas dodawania celu.";
         });
-}
+};
+
+
+
+
+
+
 
 
 
@@ -416,7 +603,9 @@ const removeGoal = (goalElement) => {
 
 const addDepositToGoal = () => {
     const depositedAmount = parseFloat(depositAmountInput.value);
-    const goalId = currentGoal.getAttribute('id'); // Poprawne uzyskanie ID celu
+    const goalId = currentGoal.getAttribute('id').split('_')[1]; // Poprawne uzyskanie ID celu
+    console.log('Adding deposit to goal with ID:', goalId); // Debugowanie ID celu
+
     const currentDate = new Date().toISOString().split('T')[0]; // Formatowanie daty na 'YYYY-MM-DD'
 
     if (!depositAmountInput.value) {
@@ -452,6 +641,7 @@ const addDepositToGoal = () => {
                 const newTransaction = document.createElement('div');
                 newTransaction.classList.add('transaction');
                 newTransaction.setAttribute('id', `transaction_${data.id}`); // Ustawienie poprawnego ID z bazy danych
+                newTransaction.setAttribute('data-goal-id', goalId); // Dodanie atrybutu data-goal-id
                 console.log('New Transaction ID:', data.id); // Logowanie nowego ID transakcji
 
                 newTransaction.innerHTML = `
@@ -459,7 +649,7 @@ const addDepositToGoal = () => {
                 <p class="transaction__date small">${currentDate}</p>
                 <p class="transaction__name transaction__name--expenses">Zasilono cel</p>
                 <p class="transaction__amount transaction__amount--expenses">${depositedAmount} zł
-                    <button class="transaction__delete" onclick="deleteTransaction(${data.id}, ${goalId})">
+                    <button class="transaction__delete" onclick="deleteTransaction(${data.id}, ${goalId}, ${depositedAmount})">
                         <i class="fa-solid fa-x"></i>
                     </button>
                 </p>
@@ -482,6 +672,18 @@ const addDepositToGoal = () => {
             depositAlert.textContent = "Wystąpił błąd podczas dodawania kwoty do celu.";
         });
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -792,8 +994,8 @@ const countMoney = money => {
 
 //funkcja usuwania transakcji + baza
 
-function deleteTransaction(transactionId, goalId) {
-    console.log('Deleting Transaction ID:', transactionId, 'Goal ID:', goalId); // Logowanie ID transakcji i celu
+function deleteTransaction(transactionId, goalId, depositedAmount) {
+    console.log('Deleting Transaction ID:', transactionId, 'Goal ID:', goalId, 'Deposited Amount:', depositedAmount); // Logowanie ID transakcji, celu i wpłaconej kwoty
 
     const formData = new FormData();
     formData.append('transaction_id', transactionId);
@@ -823,10 +1025,12 @@ function deleteTransaction(transactionId, goalId) {
 
                     // Jeśli istnieje goalId, zaktualizuj także goal__paid
                     if (goalId) {
-                        const goalPaidElement = document.querySelector(`#goal_${goalId} .goal__paid`);
+                        const goalPaidElement = document.querySelector(`#goal_paid_${goalId}`);
+                        console.log('Goal Paid Element:', goalPaidElement); // Logowanie elementu goal__paid
+
                         if (goalPaidElement) {
-                            const newPaidAmount = parseFloat(goalPaidElement.textContent) - parseFloat(depositedAmount);
-                            goalPaidElement.textContent = `${newPaidAmount} zł`;
+                            const newPaidAmount = parseFloat(goalPaidElement.textContent) - depositedAmount; // Dodanie ujemnej kwoty
+                            goalPaidElement.textContent = `${newPaidAmount.toFixed(2)} zł`;
                         } else {
                             console.error('Goal Paid Element not found');
                         }
@@ -840,6 +1044,17 @@ function deleteTransaction(transactionId, goalId) {
         })
         .catch(error => console.error('Error:', error));
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -981,6 +1196,7 @@ const main = () => {
     loadCategories();
     loadTransactions();
     loadGoals();
+    loadFees()
 
 
 }

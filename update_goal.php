@@ -19,15 +19,15 @@ $stmt->bind_param("dii", $amount, $goal_id, $user_id);
 $stmt->execute();
 
 // Dodanie nowej transakcji do tabeli transactions jako wydatek
-$sql = "INSERT INTO transactions (user_id, name, amount, category, date) VALUES (?, ?, ?, ?, ?)";
+$sql = "INSERT INTO transactions (user_id, name, amount, category, date, goal_id) VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $category = "expense";
 $name = "Zasilenie celu";
 $amountNegative = -$amount; // Traktuj zasilenie celu jako wydatek
-$stmt->bind_param("isdss", $user_id, $name, $amountNegative, $category, $date);
+$stmt->bind_param("isdssi", $user_id, $name, $amountNegative, $category, $date, $goal_id);
 $stmt->execute();
 
-$transaction_id = $stmt->insert_id;
+$transaction_id = $stmt->insert_id; // Pobieranie ID transakcji
 
 // Pobranie wszystkich transakcji użytkownika w celu obliczenia dostępnych środków
 $sql = "SELECT SUM(amount) as total FROM transactions WHERE user_id = ?";
@@ -38,7 +38,7 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $available_money = $row['total'];
 
-$response = array('success' => true, 'id' => $transaction_id, 'availableMoney' => $available_money);
+$response = array('success' => true, 'id' => $transaction_id, 'availableMoney' => $available_money); // Dodanie ID transakcji do odpowiedzi
 echo json_encode($response);
 
 $stmt->close();
