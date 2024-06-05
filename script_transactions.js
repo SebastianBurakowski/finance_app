@@ -24,11 +24,6 @@ let depositAmountInput, depositAddBtn, depositCloseBtn, depositAlert
 //Panel Finansów i budżetu
 let financePanel, financeCloseBtn;
 
-//panel budzetu
-let budgetNameInput, budgetAmountInput, budgetAddBtn, budgetAlert
-
-let budgetID;
-
 
 //Panel Stałych Opłat
 let feeAmount, feeName, feesList, feeRemoveBtn, feePaidBtn, feeAlert, feeAddBtn
@@ -45,23 +40,6 @@ let feeID;
 const prepareDomElements = () => {
 
     //////// POBIERANIE ELEMENTÓW STRONY //////
-
-
-    ///---------------------------PANEL BUDŻETU-----------------------------------------///
-
-
-    budgetNameInput = document.querySelector('#budget-panel-name')
-    budgetAmountInput = document.querySelector('#budget-panel-amount')
-    budgetAddBtn = document.querySelector('.budget__panel--btn')
-    budgetAlert = document.querySelector('.budget__alert')
-    budgetList = document.querySelector('.budget__list')
-
-    budgetID = 0
-
-
-
-
-    ///----------------------------------------------------------------------------------///
 
 
     ///---------------------------PANEL STAŁYCH OPŁAT-----------------------------------///
@@ -273,7 +251,7 @@ const addFeeTransaction = (feeId, feeName, feeAmount, paidBtn) => {
 
                 availableMoney.textContent = `${data.availableMoney} zł`;
                 paidBtn.style.backgroundColor = 'green';
-                paidBtn.disabled = true; // Disable the button to prevent multiple submissions
+                paidBtn.disabled = true;
             } else {
                 console.error('Błąd:', data.error);
             }
@@ -383,8 +361,15 @@ const loadFees = () => {
 
 const removeFee = (feeElement) => {
     const feeId = feeElement.getAttribute('id').split('_')[1]; // Pobierz ID opłaty
+    const paidBtn = feeElement.querySelector('.fees__btn--paid');
     const formData = new FormData();
     formData.append('fee_id', feeId);
+
+
+    if (paidBtn.style.backgroundColor === 'green') {
+        alert('Nie możesz usunąć opłaty, która została już opłacona. Najpierw usuń ją z wydatków.');
+        return;
+    }
 
     fetch('delete_fee.php', {
         method: 'POST',
@@ -533,41 +518,6 @@ function deleteFeeTransaction(transactionId, feeId, feeAmount) {
 //funkcja dodawnia budżetu
 
 
-const addNewBudget = () => {
-
-
-    if (!budgetNameInput.value) {
-        budgetAlert.textContent = "Proszę podać nazwę budżetu"
-        return;
-
-    } else if (!budgetAmountInput.value) {
-        budgetAlert.textContent = "Proszę podać wysokość budżetu"
-        return;
-    } else if (budgetAmountInput.value <= 0) {
-        budgetAlert.textContent = "Wysokość budżetu musi być więszka niż 0"
-        return;
-    }
-
-
-    const newBudget = document.createElement('li');
-    newBudget.classList.add('budget__list--item');
-    newBudget.setAttribute('id', budgetID);
-
-
-    newBudget.innerHTML =
-        ` <p class="budget__list--info"> <span class="budget__name">${budgetNameInput.value}</span> : <span
-                                class="budget__spent">300</span> zł / <span class="budget__amount">${budgetAmountInput.value}</span> zł</p>
-                        <button class="budget__btn--remove decline-btn">usuń</button>
-`
-
-    budgetList.appendChild(newBudget)
-    budgetID++;
-
-    clearInputs()
-
-
-
-}
 
 
 // Funkcja dodawania celu
@@ -1266,9 +1216,6 @@ const clearInputs = () => {
     goalAmountInput.value = "";
     goalDateInput.value = "";
 
-    //panel budżetu
-    budgetNameInput.value = "";
-    budgetAmountInput.value = "";
 
 
     //okno zasilania celu
@@ -1313,7 +1260,7 @@ const prepareDomEvents = () => {
     feeAddBtn.addEventListener('click', addNewFee)
 
 
-    budgetAddBtn.addEventListener('click', addNewBudget)
+    
 
 }
 

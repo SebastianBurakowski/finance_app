@@ -35,10 +35,10 @@ const prepareDomEvents = () => {
 
 
 const raportHandle = () => {
-
-    //Sprawdzanie roku raportu
+    // Sprawdzanie roku raportu
     const selectedYear = parseInt(raportYearInput.value, 10);
     const selectedType = raportTypeInput.value;
+    const selectedMonth = raportMonthInput.value;
 
     raportAlert.innerText = '';
     raportAlert.style.color = '';
@@ -49,9 +49,34 @@ const raportHandle = () => {
         return;
     }
 
-   
-    raportResult.innerText = `Wybrany typ: ${raportTypeInput.value} ; wybrany miesiąc: ${raportMonthInput.value} ; wybrany rok: ${selectedYear || 'nie dotyczy'}`;
+    fetch('generate_pdf.php', {
+        method: 'POST',
+        body: new URLSearchParams({
+            type: selectedType,
+            month: selectedMonth,
+            year: selectedYear
+        })
+    })
+        .then(response => response.text()) // Zmiana na text() aby zobaczyć surową odpowiedź
+        .then(text => {
+            console.log('Response text:', text); // Logowanie odpowiedzi
+            const blob = new Blob([text], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `Raport_${selectedType === 'month' ? selectedMonth : selectedYear}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    raportResult.innerText = `Wybrany typ: ${raportTypeInput.value} ; wybrany miesiąc: ${selectedMonth} ; wybrany rok: ${selectedYear || 'nie dotyczy'}`;
 }
+
+
 
 
 //Wyswietlanie wyboru dat w zalezności od wyboru
