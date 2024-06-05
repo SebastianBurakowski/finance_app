@@ -3,26 +3,27 @@ session_start();
 header('Content-Type: application/json');
 include 'db.php';
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    $name = $_POST['name'];
-    $amount = $_POST['amount'];
+// Włącz wyświetlanie błędów
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-    $sql = "INSERT INTO fees (user_id, name, amount) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isd", $user_id, $name, $amount);
-    $stmt->execute();
+$name = $_POST['name'];
+$amount = $_POST['amount'];
+$user_id = $_SESSION['user_id'];
 
-    if ($stmt->affected_rows > 0) {
-        echo json_encode(["success" => true, "id" => $stmt->insert_id]);
-    } else {
-        echo json_encode(["success" => false, "error" => "Błąd podczas dodawania opłaty."]);
-    }
+$sql = "INSERT INTO fees (name, amount, user_id) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sdi", $name, $amount, $user_id);
 
-    $stmt->close();
+if ($stmt->execute()) {
+    $fee_id = $stmt->insert_id; // Pobierz ID wygenerowane przez AUTO_INCREMENT
+    echo json_encode(['success' => true, 'id' => $fee_id]);
 } else {
-    echo json_encode(["success" => false, "error" => "Nieprawidłowe żądanie."]);
+    echo json_encode(['success' => false, 'error' => $stmt->error]);
 }
 
+$stmt->close();
 $conn->close();
 ?>
+

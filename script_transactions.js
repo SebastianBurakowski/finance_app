@@ -151,7 +151,7 @@ const prepareDomElements = () => {
 
 
 
-    
+
     financePanel = document.querySelector('.finances__panel')
 
     financeCloseBtn = document.querySelector('.finances__btn--close')
@@ -199,45 +199,147 @@ const addNewFee = () => {
         method: 'POST',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => response.text()) // Odbieramy jako tekst zamiast JSON, żeby zobaczyć całą odpowiedź
         .then(data => {
-            if (data.success) {
+            console.log(data); // Logowanie odpowiedzi, żeby zobaczyć, co serwer zwraca
+            const parsedData = JSON.parse(data); // Parsowanie JSON-a ręcznie
+            if (parsedData.success) {
                 const newFee = document.createElement('li');
                 newFee.classList.add('fees__list--item');
-                newFee.setAttribute('id', `fee_${data.id}`); // Ustawienie poprawnego ID z bazy danych
+                newFee.setAttribute('id', `fee_${parsedData.id}`);
 
                 newFee.innerHTML = `
-                <p class="fees__list--info"> <span class="fees__name">${feeName.value}</span> : <span
-                                    class="fees__amount">${feeAmount.value}</span> zł</p>
+                <p class="fees__list--info">
+                    <span class="fees__name">${feeName.value}</span> : 
+                    <span class="fees__amount">${feeAmount.value}</span> zł
+                </p>
                 <div class="fees__btns">
-                    <button class="fees__btn--remove decline-btn">usuń</button>
-                    <button class="fees__btn--remove fees__btn--paid accept-btn">Opłacone</button>
-                </div>`;
+                    <button class="fees__btn--remove decline-btn" onclick="removeFee(${parsedData.id}, '${feeName.value}', ${feeAmount.value}, this)">usuń</button>
+                    <button class="fees__btn--paid accept-btn" onclick="addFeeTransaction(${parsedData.id}, '${feeName.value}', ${feeAmount.value}, this)">Opłacone</button>
+                </div>
+            `;
 
                 feesList.appendChild(newFee);
-
-                // Dodanie nasłuchiwania zdarzeń do przycisków
-                const removeBtn = newFee.querySelector('.fees__btn--remove');
-                removeBtn.addEventListener('click', () => {
-                    removeFee(newFee);
-                });
-
-                const paidBtn = newFee.querySelector('.fees__btn--paid');
-                paidBtn.addEventListener('click', () => {
-                    markFeeAsPaid(newFee);
-                });
-
                 feeID++;
                 clearInputs();
             } else {
-                feeAlert.textContent = "Błąd: " + data.error;
+                feeAlert.textContent = "Błąd: " + parsedData.error;
             }
         })
         .catch(error => {
             console.error('Error:', error);
             feeAlert.textContent = "Wystąpił błąd podczas dodawania opłaty.";
         });
+};
+
+
+
+
+
+
+const addFeeTransaction = (feeId, feeName, feeAmount, paidBtn) => {
+    const formData = new FormData();
+    formData.append('fee_id', feeId);
+    formData.append('name', `Opłata - ${feeName}`);
+    formData.append('amount', -feeAmount);
+    formData.append('category', 'expense');
+    formData.append('date', new Date().toISOString().split('T')[0]);
+
+    fetch('add_transaction.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const newTransaction = document.createElement('div');
+                newTransaction.classList.add('transaction');
+                newTransaction.setAttribute('id', `transaction_${data.id}`);
+                newTransaction.setAttribute('data-fee-id', feeId);
+
+                newTransaction.innerHTML = `
+                <p class="transaction__name transaction__name--category small">[Wydatek]</p>
+                <p class="transaction__date small">${new Date().toISOString().split('T')[0]}</p>
+                <p class="transaction__name transaction__name--expenses">Opłata - ${feeName}</p>
+                <p class="transaction__amount transaction__amount--expenses">${feeAmount} zł
+                    <button class="transaction__delete" onclick="deleteFeeTransaction(${data.id}, ${feeId}, ${feeAmount})">
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+                </p>
+            `;
+
+                expenseTransactions.appendChild(newTransaction);
+                transactionsExpenseArr.push(newTransaction);
+
+                availableMoney.textContent = `${data.availableMoney} zł`;
+                paidBtn.style.backgroundColor = 'green';
+                paidBtn.disabled = true; // Disable the button to prevent multiple submissions
+            } else {
+                console.error('Błąd:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+};
+
+
+// Funkcja usuwania opłaty z transakcji 
+
+function deleteFeeTransaction(transactionId, feeId, feeAmount) {
+    console.log('Deleting Transaction ID:', transactionId, 'Fee ID:', feeId, 'Fee Amount:', feeAmount);
+
+    const formData = new FormData();
+    formData.append('transaction_id', transactionId);
+    formData.append('fee_id', feeId);
+
+    fetch('delete_transaction.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text()) // Odbieramy jako tekst zamiast JSON, żeby zobaczyć całą odpowiedź
+        .then(data => {
+            console.log(data); // Logowanie odpowiedzi, żeby zobaczyć, co serwer zwraca
+            const parsedData = JSON.parse(data); // Parsowanie JSON-a ręcznie
+            if (parsedData.success) {
+                const transactionElement = document.querySelector(`#transaction_${transactionId}`);
+                console.log('Transaction Element:', transactionElement);
+
+                if (transactionElement) {
+                    transactionElement.remove();
+                    // Aktualizacja wyświetlanej kwoty dostępnych środków
+                    document.querySelector('.options__info--money').textContent = `${parsedData.availableMoney} zł`;
+
+                    // Zmiana koloru przycisku na czerwony
+                    const feeElement = document.querySelector(`#fee_${feeId}`);
+                    if (feeElement) {
+                        const paidBtn = feeElement.querySelector('.fees__btn--paid');
+                        paidBtn.style.backgroundColor = 'red';
+                        paidBtn.disabled = false; // Enable the button to allow re-submission
+                    }
+                } else {
+                    console.error('Transaction Element not found');
+                }
+            } else {
+                console.error('Błąd:', parsedData.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 //wczytywanie oplat z bazy 
 
@@ -309,11 +411,16 @@ const markFeeAsPaid = (feeElement) => {
     const feeName = feeElement.querySelector('.fees__name').textContent;
     const currentDate = new Date().toISOString().split('T')[0]; // Formatowanie daty na 'YYYY-MM-DD'
 
+    // Sprawdzenie, czy opłata została już opłacona
+    const paidBtn = feeElement.querySelector('.fees__btn--paid');
+    if (paidBtn.style.backgroundColor === 'green') {
+        return; // Opłata została już opłacona, zakończ funkcję
+    }
+
     // Aktualizacja dostępnych środków
     availableMoney.textContent = `${parseFloat(availableMoney.textContent) - feeAmount} zł`;
 
     // Zmiana koloru przycisku na zielony
-    const paidBtn = feeElement.querySelector('.fees__btn--paid');
     paidBtn.style.backgroundColor = 'green';
 
     // Dodanie transakcji w sekcji wydatków
@@ -352,6 +459,7 @@ const markFeeAsPaid = (feeElement) => {
         .then(data => {
             if (data.success) {
                 newTransaction.setAttribute('id', `transaction_${data.id}`); // Aktualizacja ID transakcji
+                newTransaction.querySelector('.transaction__delete').setAttribute('onclick', `deleteFeeTransaction(${data.id}, ${feeId}, ${feeAmount})`);
             } else {
                 console.error('Błąd:', data.error);
             }
@@ -359,13 +467,16 @@ const markFeeAsPaid = (feeElement) => {
         .catch(error => {
             console.error('Error:', error);
         });
-}
+};
+
+
+
 
 
 //usuwanie opłaty z transkacji 
 
 function deleteFeeTransaction(transactionId, feeId, feeAmount) {
-    console.log('Deleting Transaction ID:', transactionId, 'Fee ID:', feeId, 'Fee Amount:', feeAmount); // Logowanie ID transakcji i opłaty
+    console.log('Deleting Transaction ID:', transactionId, 'Fee ID:', feeId, 'Fee Amount:', feeAmount);
 
     const formData = new FormData();
     formData.append('transaction_id', transactionId);
@@ -375,37 +486,48 @@ function deleteFeeTransaction(transactionId, feeId, feeAmount) {
         method: 'POST',
         body: formData
     })
-        .then(response => {
-            return response.text().then(text => {
-                console.log('Response text:', text); // Logowanie odpowiedzi
-                return JSON.parse(text);
-            });
-        })
+        .then(response => response.text()) // Odbieramy jako tekst zamiast JSON, żeby zobaczyć całą odpowiedź
         .then(data => {
-            if (data.success) {
+            console.log(data); // Logowanie odpowiedzi, żeby zobaczyć, co serwer zwraca
+            const parsedData = JSON.parse(data); // Parsowanie JSON-a ręcznie
+            if (parsedData.success) {
                 const transactionElement = document.querySelector(`#transaction_${transactionId}`);
-                console.log('Transaction Element:', transactionElement); // Logowanie elementu transakcji
+                console.log('Transaction Element:', transactionElement);
 
                 if (transactionElement) {
                     transactionElement.remove();
                     // Aktualizacja wyświetlanej kwoty dostępnych środków
-                    availableMoney.textContent = `${data.availableMoney} zł`;
+                    document.querySelector('.options__info--money').textContent = `${parsedData.availableMoney} zł`;
 
                     // Zmiana koloru przycisku na czerwony
-                    const feeElement = document.querySelector(`#fee_paid_${feeId}`);
-                    const paidBtn = feeElement.querySelector('.fees__btn--paid');
-                    paidBtn.style.backgroundColor = 'red';
+                    const feeElement = document.querySelector(`#fee_${feeId}`);
+                    if (feeElement) {
+                        const paidBtn = feeElement.querySelector('.fees__btn--paid');
+                        paidBtn.style.backgroundColor = 'red';
+                        paidBtn.disabled = false; // Enable the button to allow re-submission
+                    }
                 } else {
                     console.error('Transaction Element not found');
                 }
             } else {
-                console.error('Błąd:', data.error);
+                console.error('Błąd:', parsedData.error);
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 //funkcja dodawnia budżetu
@@ -432,16 +554,16 @@ const addNewBudget = () => {
     newBudget.setAttribute('id', budgetID);
 
 
-    newBudget.innerHTML = 
-    ` <p class="budget__list--info"> <span class="budget__name">${budgetNameInput.value}</span> : <span
+    newBudget.innerHTML =
+        ` <p class="budget__list--info"> <span class="budget__name">${budgetNameInput.value}</span> : <span
                                 class="budget__spent">300</span> zł / <span class="budget__amount">${budgetAmountInput.value}</span> zł</p>
                         <button class="budget__btn--remove decline-btn">usuń</button>
 `
 
-budgetList.appendChild(newBudget)
-budgetID++;
+    budgetList.appendChild(newBudget)
+    budgetID++;
 
-clearInputs()
+    clearInputs()
 
 
 
@@ -536,6 +658,9 @@ const addNewGoal = () => {
 
 
 
+
+
+
 //funkcja wczytywania celu z bazy
 
 const loadGoals = () => {
@@ -603,7 +728,7 @@ const removeGoal = (goalElement) => {
 
 const addDepositToGoal = () => {
     const depositedAmount = parseFloat(depositAmountInput.value);
-    const goalId = currentGoal.getAttribute('id').split('_')[1]; // Poprawne uzyskanie ID celu
+    const goalId = currentGoal.getAttribute('id').split('_')[1]; // Pobierz poprawne ID celu
     console.log('Adding deposit to goal with ID:', goalId); // Debugowanie ID celu
 
     const currentDate = new Date().toISOString().split('T')[0]; // Formatowanie daty na 'YYYY-MM-DD'
@@ -645,15 +770,15 @@ const addDepositToGoal = () => {
                 console.log('New Transaction ID:', data.id); // Logowanie nowego ID transakcji
 
                 newTransaction.innerHTML = `
-                <p class="transaction__name transaction__name--category small">[Wydatek]</p>
-                <p class="transaction__date small">${currentDate}</p>
-                <p class="transaction__name transaction__name--expenses">Zasilono cel</p>
-                <p class="transaction__amount transaction__amount--expenses">${depositedAmount} zł
-                    <button class="transaction__delete" onclick="deleteTransaction(${data.id}, ${goalId}, ${depositedAmount})">
-                        <i class="fa-solid fa-x"></i>
-                    </button>
-                </p>
-            `;
+            <p class="transaction__name transaction__name--category small">[Wydatek]</p>
+            <p class="transaction__date small">${currentDate}</p>
+            <p class="transaction__name transaction__name--expenses">Zasilono cel</p>
+            <p class="transaction__amount transaction__amount--expenses">${depositedAmount} zł
+                <button class="transaction__delete" onclick="deleteTransaction(${data.id}, ${goalId}, ${depositedAmount})">
+                    <i class="fa-solid fa-x"></i>
+                </button>
+            </p>
+        `;
 
                 expenseTransactions.appendChild(newTransaction);
                 transactionsExpenseArr.push(newTransaction);
@@ -672,6 +797,11 @@ const addDepositToGoal = () => {
             depositAlert.textContent = "Wystąpił błąd podczas dodawania kwoty do celu.";
         });
 };
+
+
+
+
+
 
 
 
@@ -1044,6 +1174,7 @@ function deleteTransaction(transactionId, goalId, depositedAmount) {
         })
         .catch(error => console.error('Error:', error));
 }
+
 
 
 

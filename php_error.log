@@ -1,0 +1,100 @@
+[05-Jun-2024 16:33:07 Europe/Berlin] Array
+(
+    [transaction_id] => 15
+    [fee_id] => 8
+)
+
+[05-Jun-2024 16:33:07 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\Aplikacja Webowa\delete_transaction.php on line 45
+[05-Jun-2024 16:33:07 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'amount_paid' in 'field list' in C:\xampp\htdocs\Aplikacja Webowa\delete_transaction.php:50
+Stack trace:
+#0 C:\xampp\htdocs\Aplikacja Webowa\delete_transaction.php(50): mysqli->prepare('UPDATE fees SET...')
+#1 {main}
+  thrown in C:\xampp\htdocs\Aplikacja Webowa\delete_transaction.php on line 50
+[05-Jun-2024 16:35:32 Europe/Berlin] Array
+(
+    [transaction_id] => 16
+    [fee_id] => 9
+)
+
+[05-Jun-2024 16:35:32 Europe/Berlin] Transaction amount result is null
+[05-Jun-2024 16:37:46 Europe/Berlin] Array
+(
+    [transaction_id] => 17
+    [fee_id] => 10
+)
+
+[05-Jun-2024 16:37:46 Europe/Berlin] Transaction amount result is null
+[05-Jun-2024 16:40:53 Europe/Berlin] Array
+(
+    [transaction_id] => 18
+    [fee_id] => 11
+)
+
+[05-Jun-2024 16:41:52 Europe/Berlin] Array
+(
+    [transaction_id] => 19
+    [goal_id] => 3
+)
+
+[05-Jun-2024 16:42:40 Europe/Berlin] Array
+(
+    [transaction_id] => 23
+)
+
+[05-Jun-2024 16:42:44 Europe/Berlin] Array
+(
+    [transaction_id] => 22
+    [goal_id] => 3
+)
+
+[05-Jun-2024 16:42:45 Europe/Berlin] Array
+(
+    [transaction_id] => 21
+    [fee_id] => 12
+)
+
+[05-Jun-2024 16:42:47 Europe/Berlin] Array
+(
+    [transaction_id] => 20
+    [fee_id] => 11
+)
+
+[05-Jun-2024 16:43:25 Europe/Berlin] Array
+(
+    [transaction_id] => 1
+)
+
+[05-Jun-2024 16:45:01 Europe/Berlin] Array
+(
+    [transaction_id] => 32
+    [fee_id] => 14
+)
+
+[05-Jun-2024 16:45:04 Europe/Berlin] Array
+(
+    [transaction_id] => 31
+    [goal_id] => 5
+)
+
+[05-Jun-2024 16:45:05 Europe/Berlin] Array
+(
+    [transaction_id] => 30
+    [fee_id] => 13
+)
+
+[05-Jun-2024 16:45:06 Europe/Berlin] Array
+(
+    [transaction_id] => 29
+    [goal_id] => 4
+)
+
+[05-Jun-2024 16:45:08 Europe/Berlin] Array
+(
+    [transaction_id] => 28
+)
+
+[05-Jun-2024 16:45:11 Europe/Berlin] Array
+(
+    [transaction_id] => 27
+)
+

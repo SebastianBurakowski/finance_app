@@ -1,0 +1,15 @@
+Request received: Array
+(
+    [fee_id] => 1717595132330
+    [name] => agd
+    [amount] => 5
+    [date] => 2024-06-05
+)
+Request received: Array
+(
+    [fee_id] => 1717595177174
+    [name] => s
+    [amount] => 2
+    [date] => 2024-06-05
+)
+Adding fee: name=2, amount=122, user_id=8Adding fee: name=agd, amount=2, user_id=8
