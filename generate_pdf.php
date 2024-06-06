@@ -50,7 +50,7 @@ class PDF extends FPDF {
             }
             $this->Ln();
         }
-        // Add total amount row
+        
         $this->SetFont('Arial', 'B', 12);
         $this->Cell(40, 7, '', 0);
         $this->Cell(40, 7, '', 0);
@@ -107,7 +107,7 @@ try {
     $goals_result = $stmt->get_result();
     $goals = [];
     while ($row = $goals_result->fetch_assoc()) {
-        // Dodanie kolumny "Pozostało do wpłacenia"
+       
         $row['remaining'] = $row['amount'] - $row['paid'];
         $goals[] = $row;
     }
@@ -115,7 +115,7 @@ try {
 
     error_log("Goals fetched: " . print_r($goals, true));
 
-    // Pobieranie stałych opłat
+   
     $stmt = $conn->prepare($fees_sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -148,14 +148,14 @@ try {
     $pdf->Cell(0, 5, 'Wydatki: ' . number_format($expense_total, 2) . ' pln', 0, 1, 'C');
     $pdf->Cell(0, 5, 'Bilans: ' . number_format($balance, 2) . ' pln', 0, 1, 'C');
 
-    // Tabela z celami
+   
     $pdf->Ln(10);
     $pdf->SetFont('Arial', 'B', 16);
     $pdf->Cell(0, 10, 'Cele Finansowe', 0, 1, 'C');
     $header = ['Nazwa', 'Data Koncowa', 'Oplacone', 'Calkowita Kwota', 'Pozostalo'];
     $pdf->ReportTable($header, $goals);
 
-    // Tabela ze stałymi opłatami
+    
     $pdf->Ln(10);
     $pdf->SetFont('Arial', 'B', 16);
     $pdf->Cell(0, 10, 'Stale Oplaty', 0, 1, 'C');

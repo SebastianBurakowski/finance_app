@@ -1,3 +1,6 @@
+//wyswietlanie imienia uzytkownika
+
+
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Script.js loaded");
 

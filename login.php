@@ -22,8 +22,8 @@ $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
     if (password_verify($password, $row['password'])) {
-        $_SESSION['user_id'] = $row['id']; // Zapisanie ID użytkownika w sesji
-        $_SESSION['user_name'] = $row['name']; // Zapisanie imienia użytkownika w sesji
+        $_SESSION['user_id'] = $row['id']; 
+        $_SESSION['user_name'] = $row['name']; 
         echo "Logowanie pomyślne.";
     } else {
         echo "Nieprawidłowe hasło.";

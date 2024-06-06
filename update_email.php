@@ -20,7 +20,7 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-// Aktualizacja emaila użytkownika
+// Aktualizacja emaila
 $sql = "UPDATE users SET email = ? WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("si", $new_email, $user_id);

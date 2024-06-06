@@ -21,14 +21,14 @@ if (isset($_SESSION['user_id'])) {
     }
     $stmt->close();
 
-    // Usuń wszystkie transakcje użytkownika
+    //usuwanie transakcji użytkownika
     $sql = "DELETE FROM transactions WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
-        // Zaktualizuj kolumnę paid w tabeli goals
+        // aktaulizacja wpłat na cele
         foreach ($goals as $goal_id => $amount) {
             $sql = "UPDATE goals SET paid = paid + ? WHERE id = ?";
             $stmt = $conn->prepare($sql);

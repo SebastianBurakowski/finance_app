@@ -6,7 +6,7 @@ if (isset($_POST['goal_id']) && isset($_SESSION['user_id'])) {
     $goal_id = $_POST['goal_id'];
     $user_id = $_SESSION['user_id'];
 
-    // Usuń transakcje powiązane z celem
+    
     $sql = "DELETE FROM transactions WHERE goal_id = ? AND user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $goal_id, $user_id);
@@ -14,7 +14,7 @@ if (isset($_POST['goal_id']) && isset($_SESSION['user_id'])) {
     $transactions_deleted = $stmt->affected_rows;
     $stmt->close();
 
-    // Usuń cel
+    // Usuwanie celu
     $sql = "DELETE FROM goals WHERE id = ? AND user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $goal_id, $user_id);

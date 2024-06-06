@@ -12,7 +12,7 @@ $user_id = $_SESSION['user_id'];
 
 $response = array();
 
-// Sprawdź, czy transakcja istnieje
+// Sprawdzania czy transkacja istnieje
 $check_query = "SELECT amount FROM transactions WHERE id = ? AND user_id = ?";
 $check_stmt = $conn->prepare($check_query);
 if (!$check_stmt) {
@@ -29,7 +29,7 @@ $transaction = $check_result->fetch_assoc();
 $amount_paid = $transaction['amount'];
 $check_stmt->close();
 
-// Usuń transakcję
+// usuwanie transakcji
 $sql = "DELETE FROM transactions WHERE id = ? AND user_id = ?";
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
@@ -45,7 +45,7 @@ if ($stmt->execute()) {
     }
 
     if ($goal_id) {
-        // Zaktualizuj cel
+        // aktualizacja wplat na cel
         $sql_update = "UPDATE goals SET paid = paid - ? WHERE id = ? AND user_id = ?";
         $update_stmt = $conn->prepare($sql_update);
         if (!$update_stmt) {

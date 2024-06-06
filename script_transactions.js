@@ -2,8 +2,6 @@
 let openTransactionBtn, openGoalBtn, openBudgetBtn, deleteAllBtn;
 let availableMoney, transactionSearchInputIncome, transactionSearchInputExpense, transactionsIncomeArr, transactionsExpenseArr
 
-
-
 //Panel dodawania transakcjji
 let addTransactionPanel, addNameInput, addAmountInput, addCategoryInput, addDateInput
 let ID, category, categoryPicked, totalMoney
@@ -11,12 +9,12 @@ let addPanelBtn, addPanelCategoryBtn, addPanelCancelBtn
 let addPanelCategoryParagraph, incomeTransactions, expenseTransactions
 let currentGoal
 
-
-
 //Panel celów finansowych
 let addGoalPanel, goalPanelCancelBtn, goalNameInput, goalAmountInput, goalDateInput, goalList;
+
 //Dodawnie nowego celu
 let addToGoalBtn, removeGoalBtn, goalAlert
+
 //Okno dodawnia celu
 let depositAmountInput, depositAddBtn, depositCloseBtn, depositAlert
 
@@ -177,10 +175,10 @@ const addNewFee = () => {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text()) // Odbieramy jako tekst zamiast JSON, żeby zobaczyć całą odpowiedź
+        .then(response => response.text()) 
         .then(data => {
-            console.log(data); // Logowanie odpowiedzi, żeby zobaczyć, co serwer zwraca
-            const parsedData = JSON.parse(data); // Parsowanie JSON-a ręcznie
+            console.log(data); 
+            const parsedData = JSON.parse(data); 
             if (parsedData.success) {
                 const newFee = document.createElement('li');
                 newFee.classList.add('fees__list--item');
@@ -212,7 +210,7 @@ const addNewFee = () => {
 
 
 
-
+// funkcja dodawania oplaty do transakcji
 
 
 const addFeeTransaction = (feeId, feeName, feeAmount, paidBtn) => {
@@ -275,25 +273,25 @@ function deleteFeeTransaction(transactionId, feeId, feeAmount) {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text()) // Odbieramy jako tekst zamiast JSON, żeby zobaczyć całą odpowiedź
+        .then(response => response.text()) 
         .then(data => {
-            console.log(data); // Logowanie odpowiedzi, żeby zobaczyć, co serwer zwraca
-            const parsedData = JSON.parse(data); // Parsowanie JSON-a ręcznie
+            console.log(data); 
+            const parsedData = JSON.parse(data); 
             if (parsedData.success) {
                 const transactionElement = document.querySelector(`#transaction_${transactionId}`);
                 console.log('Transaction Element:', transactionElement);
 
                 if (transactionElement) {
                     transactionElement.remove();
-                    // Aktualizacja wyświetlanej kwoty dostępnych środków
+                   
                     document.querySelector('.options__info--money').textContent = `${parsedData.availableMoney} zł`;
 
-                    // Zmiana koloru przycisku na czerwony
+                    
                     const feeElement = document.querySelector(`#fee_${feeId}`);
                     if (feeElement) {
                         const paidBtn = feeElement.querySelector('.fees__btn--paid');
                         paidBtn.style.backgroundColor = 'red';
-                        paidBtn.disabled = false; // Enable the button to allow re-submission
+                        paidBtn.disabled = false; 
                     }
                 } else {
                     console.error('Transaction Element not found');
@@ -309,16 +307,6 @@ function deleteFeeTransaction(transactionId, feeId, feeAmount) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 //wczytywanie oplat z bazy 
 
 const loadFees = () => {
@@ -328,8 +316,7 @@ const loadFees = () => {
             data.forEach(fee => {
                 const newFee = document.createElement('li');
                 newFee.classList.add('fees__list--item');
-                newFee.setAttribute('id', `fee_${fee.id}`); // Ustawienie poprawnego ID z bazy danych
-
+                newFee.setAttribute('id', `fee_${fee.id}`); 
                 newFee.innerHTML = `
                 <p class="fees__list--info"> <span class="fees__name">${fee.name}</span> : <span
                                     class="fees__amount">${fee.amount}</span> zł</p>
@@ -340,7 +327,7 @@ const loadFees = () => {
 
                 feesList.appendChild(newFee);
 
-                // Dodanie nasłuchiwania zdarzeń do przycisków
+                
                 const removeBtn = newFee.querySelector('.fees__btn--remove');
                 removeBtn.addEventListener('click', () => {
                     removeFee(newFee);
@@ -360,7 +347,7 @@ const loadFees = () => {
 //usuwanie oplat
 
 const removeFee = (feeElement) => {
-    const feeId = feeElement.getAttribute('id').split('_')[1]; // Pobierz ID opłaty
+    const feeId = feeElement.getAttribute('id').split('_')[1]; 
     const paidBtn = feeElement.querySelector('.fees__btn--paid');
     const formData = new FormData();
     formData.append('fee_id', feeId);
@@ -391,28 +378,28 @@ const removeFee = (feeElement) => {
 //funckja opłacania stałej opłaty
 
 const markFeeAsPaid = (feeElement) => {
-    const feeId = feeElement.getAttribute('id').split('_')[1]; // Pobierz ID opłaty
+    const feeId = feeElement.getAttribute('id').split('_')[1];
     const feeAmount = parseFloat(feeElement.querySelector('.fees__amount').textContent);
     const feeName = feeElement.querySelector('.fees__name').textContent;
-    const currentDate = new Date().toISOString().split('T')[0]; // Formatowanie daty na 'YYYY-MM-DD'
+    const currentDate = new Date().toISOString().split('T')[0];
 
-    // Sprawdzenie, czy opłata została już opłacona
+    
     const paidBtn = feeElement.querySelector('.fees__btn--paid');
     if (paidBtn.style.backgroundColor === 'green') {
-        return; // Opłata została już opłacona, zakończ funkcję
+        return; 
     }
 
-    // Aktualizacja dostępnych środków
+    
     availableMoney.textContent = `${parseFloat(availableMoney.textContent) - feeAmount} zł`;
 
-    // Zmiana koloru przycisku na zielony
+    
     paidBtn.style.backgroundColor = 'green';
 
-    // Dodanie transakcji w sekcji wydatków
+   
     const newTransaction = document.createElement('div');
     newTransaction.classList.add('transaction');
-    newTransaction.setAttribute('id', `transaction_fee_${feeId}`); // Ustawienie poprawnego ID
-    newTransaction.setAttribute('data-fee-id', feeId); // Dodanie atrybutu data-fee-id
+    newTransaction.setAttribute('id', `transaction_fee_${feeId}`); 
+    newTransaction.setAttribute('data-fee-id', feeId); 
 
     newTransaction.innerHTML = `
         <p class="transaction__name transaction__name--category small">[Wydatek]</p>
@@ -431,10 +418,10 @@ const markFeeAsPaid = (feeElement) => {
     // Dodanie transakcji do bazy danych
     const formData = new FormData();
     formData.append('name', `Opłata - ${feeName}`);
-    formData.append('amount', -feeAmount); // Kwota ujemna jako wydatek
+    formData.append('amount', -feeAmount); 
     formData.append('category', 'expense');
     formData.append('date', currentDate);
-    formData.append('fee_id', feeId); // Dodanie fee_id
+    formData.append('fee_id', feeId); 
 
     fetch('add_transaction.php', {
         method: 'POST',
@@ -443,7 +430,7 @@ const markFeeAsPaid = (feeElement) => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                newTransaction.setAttribute('id', `transaction_${data.id}`); // Aktualizacja ID transakcji
+                newTransaction.setAttribute('id', `transaction_${data.id}`); 
                 newTransaction.querySelector('.transaction__delete').setAttribute('onclick', `deleteFeeTransaction(${data.id}, ${feeId}, ${feeAmount})`);
             } else {
                 console.error('Błąd:', data.error);
@@ -471,25 +458,25 @@ function deleteFeeTransaction(transactionId, feeId, feeAmount) {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text()) // Odbieramy jako tekst zamiast JSON, żeby zobaczyć całą odpowiedź
+        .then(response => response.text()) 
         .then(data => {
-            console.log(data); // Logowanie odpowiedzi, żeby zobaczyć, co serwer zwraca
-            const parsedData = JSON.parse(data); // Parsowanie JSON-a ręcznie
+            console.log(data); 
+            const parsedData = JSON.parse(data);
             if (parsedData.success) {
                 const transactionElement = document.querySelector(`#transaction_${transactionId}`);
                 console.log('Transaction Element:', transactionElement);
 
                 if (transactionElement) {
                     transactionElement.remove();
-                    // Aktualizacja wyświetlanej kwoty dostępnych środków
+                  
                     document.querySelector('.options__info--money').textContent = `${parsedData.availableMoney} zł`;
 
-                    // Zmiana koloru przycisku na czerwony
+                    
                     const feeElement = document.querySelector(`#fee_${feeId}`);
                     if (feeElement) {
                         const paidBtn = feeElement.querySelector('.fees__btn--paid');
                         paidBtn.style.backgroundColor = 'red';
-                        paidBtn.disabled = false; // Enable the button to allow re-submission
+                        paidBtn.disabled = false;
                     }
                 } else {
                     console.error('Transaction Element not found');
@@ -502,21 +489,6 @@ function deleteFeeTransaction(transactionId, feeId, feeAmount) {
             console.error('Error:', error);
         });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//funkcja dodawnia budżetu
-
 
 
 
@@ -557,7 +529,7 @@ const addNewGoal = () => {
             if (data.success) {
                 const newGoal = document.createElement('li');
                 newGoal.classList.add('goals__list--item');
-                newGoal.setAttribute('id', `goal_${data.id}`); // Poprawne ustawienie ID celu
+                newGoal.setAttribute('id', `goal_${data.id}`); 
 
                 let daysLeft = Math.ceil((inputDate - currentDate) / (1000 * 60 * 60 * 24));
 
@@ -597,17 +569,6 @@ const addNewGoal = () => {
             goalAlert.textContent = "Wystąpił błąd podczas dodawania celu.";
         });
 };
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -662,7 +623,7 @@ const removeGoal = (goalElement) => {
     const goalPaidAmount = parseFloat(goalPaidElement.textContent);
     const goalId = goalElement.getAttribute('id').split('_')[1];
 
-    // Sprawdzenie, czy istnieją powiązane transakcje
+   
     const relatedTransactions = document.querySelectorAll(`[data-goal-id='${goalId}']`);
     if (relatedTransactions.length > 0) {
         alert('Nie możesz usunąć celu, który ma powiązane transakcje. Najpierw usuń transakcje.');
@@ -682,12 +643,12 @@ const removeGoal = (goalElement) => {
                 totalMoney.push(goalPaidAmount);
                 countMoney(totalMoney);
 
-                // Usuń powiązane transakcje z widoku
+               
                 relatedTransactions.forEach(transaction => {
                     transaction.remove();
                 });
 
-                // Usuń cel z widoku
+                
                 goalElement.remove();
             } else {
                 console.error('Błąd:', data.error);
@@ -704,10 +665,10 @@ const removeGoal = (goalElement) => {
 
 const addDepositToGoal = () => {
     const depositedAmount = parseFloat(depositAmountInput.value);
-    const goalId = currentGoal.getAttribute('id').split('_')[1]; // Pobierz poprawne ID celu
-    console.log('Adding deposit to goal with ID:', goalId); // Debugowanie ID celu
+    const goalId = currentGoal.getAttribute('id').split('_')[1]; 
+    console.log('Adding deposit to goal with ID:', goalId); 
 
-    const currentDate = new Date().toISOString().split('T')[0]; // Formatowanie daty na 'YYYY-MM-DD'
+    const currentDate = new Date().toISOString().split('T')[0]; 
 
     if (!depositAmountInput.value) {
         depositAlert.textContent = "Proszę podać kwotę o którą chcesz doładować cel";
@@ -738,12 +699,12 @@ const addDepositToGoal = () => {
                 totalMoney.push(-depositedAmount);
                 countMoney(totalMoney);
 
-                // Dodaj transakcję do sekcji wydatków
+                // Dodawanie transakcji do sekcji wydatków
                 const newTransaction = document.createElement('div');
                 newTransaction.classList.add('transaction');
-                newTransaction.setAttribute('id', `transaction_${data.id}`); // Ustawienie poprawnego ID z bazy danych
-                newTransaction.setAttribute('data-goal-id', goalId); // Dodanie atrybutu data-goal-id
-                console.log('New Transaction ID:', data.id); // Logowanie nowego ID transakcji
+                newTransaction.setAttribute('id', `transaction_${data.id}`);h
+                newTransaction.setAttribute('data-goal-id', goalId); 
+                console.log('New Transaction ID:', data.id); 
 
                 newTransaction.innerHTML = `
             <p class="transaction__name transaction__name--category small">[Wydatek]</p>
@@ -759,7 +720,7 @@ const addDepositToGoal = () => {
                 expenseTransactions.appendChild(newTransaction);
                 transactionsExpenseArr.push(newTransaction);
 
-                // Aktualizacja dostępnych środków
+                
                 availableMoney.textContent = `${data.availableMoney} zł`;
 
                 toggleDeposit();
@@ -773,35 +734,6 @@ const addDepositToGoal = () => {
             depositAlert.textContent = "Wystąpił błąd podczas dodawania kwoty do celu.";
         });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -836,9 +768,6 @@ const togglePanel = (panel) => {
     }
 };
 
-//Funckcja usuwania wszystkich transakcji +  z bazy
-
-
 
 
 //Funkcja otwierania okna do zasilenia celu 
@@ -871,6 +800,8 @@ const searchTransactionIncome = (e) => {
 
 };
 
+//-----------------------------------//
+
 const searchTransactionExpense = (e) => {
     const searchTerm = e.target.value;
     transactionsExpenseArr.forEach(transaction => {
@@ -884,6 +815,9 @@ const searchTransactionExpense = (e) => {
 
 
 };
+
+//Funckja dodawania kategorii
+
 const addCategory = () => {
     const categoryName = prompt("Podaj nazwę kategorii (poprzedzając [Przychód] lub [Wydatek]):");
 
@@ -924,6 +858,7 @@ const addCategory = () => {
 
 
 // Funkcja do ładowania kategorii
+
 const loadCategories = () => {
     fetch('get_categories.php')
         .then(response => response.json())
@@ -963,7 +898,7 @@ const addnewTransaction = () => {
 
     let transactionAmount = parseFloat(addAmountInput.value);
     if (addCategoryInput.value === 'expense') {
-        transactionAmount = -transactionAmount; // Wydatki jako wartości ujemne
+        transactionAmount = -transactionAmount; 
     }
 
     const formData = new FormData();
@@ -978,11 +913,11 @@ const addnewTransaction = () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data); // Debugowanie odpowiedzi
+            console.log(data); 
             if (data.success) {
                 const newTransaction = document.createElement('div');
                 newTransaction.classList.add('transaction');
-                newTransaction.setAttribute('id', `transaction_${data.id}`); // Ustawienie poprawnego ID z bazy danych
+                newTransaction.setAttribute('id', `transaction_${data.id}`); 
 
                 const selectedCategory = checkCategory(addCategoryInput.value);
 
@@ -1037,7 +972,7 @@ const loadTransactions = () => {
         .then(data => {
             transactionsIncomeArr = [];
             transactionsExpenseArr = [];
-            totalMoney = [0]; // Resetowanie totalMoney przed załadowaniem transakcji
+            totalMoney = [0];
 
             data.transactions.forEach(transaction => {
                 const newTransaction = document.createElement('div');
@@ -1071,10 +1006,10 @@ const loadTransactions = () => {
                 totalMoney.push(parseFloat(transaction.amount));
             });
 
-            // Po załadowaniu wszystkich transakcji, oblicz dostępne środki
+           
             countMoney(totalMoney);
 
-            // Aktualizacja dostępnych środków na podstawie obliczeń z backendu
+           
             availableMoney.textContent = `${data.availableMoney} zł`;
         })
         .catch(error => console.error('Error:', error));
@@ -1083,7 +1018,7 @@ const loadTransactions = () => {
 
 
 
-
+//funkcja obliczania dostepnych srodkow
 
 const countMoney = money => {
     const newMoney = money.reduce((a, b) => a + b)
@@ -1101,7 +1036,7 @@ const countMoney = money => {
 //funkcja usuwania transakcji + baza
 
 function deleteTransaction(transactionId, goalId, depositedAmount) {
-    console.log('Deleting Transaction ID:', transactionId, 'Goal ID:', goalId, 'Deposited Amount:', depositedAmount); // Logowanie ID transakcji, celu i wpłaconej kwoty
+    console.log('Deleting Transaction ID:', transactionId, 'Goal ID:', goalId, 'Deposited Amount:', depositedAmount); 
 
     const formData = new FormData();
     formData.append('transaction_id', transactionId);
@@ -1115,27 +1050,27 @@ function deleteTransaction(transactionId, goalId, depositedAmount) {
     })
         .then(response => {
             return response.text().then(text => {
-                console.log('Response text:', text); // Logowanie odpowiedzi
+                console.log('Response text:', text); 
                 return JSON.parse(text);
             });
         })
         .then(data => {
             if (data.success) {
                 const transactionElement = document.querySelector(`#transaction_${transactionId}`);
-                console.log('Transaction Element:', transactionElement); // Logowanie elementu transakcji
+                console.log('Transaction Element:', transactionElement);
 
                 if (transactionElement) {
                     transactionElement.remove();
-                    // Aktualizacja wyświetlanej kwoty dostępnych środków
+                 
                     document.querySelector('.options__info--money').textContent = `${data.availableMoney} zł`;
 
-                    // Jeśli istnieje goalId, zaktualizuj także goal__paid
+                  
                     if (goalId) {
                         const goalPaidElement = document.querySelector(`#goal_paid_${goalId}`);
-                        console.log('Goal Paid Element:', goalPaidElement); // Logowanie elementu goal__paid
+                        console.log('Goal Paid Element:', goalPaidElement);
 
                         if (goalPaidElement) {
-                            const newPaidAmount = parseFloat(goalPaidElement.textContent) - depositedAmount; // Dodanie ujemnej kwoty
+                            const newPaidAmount = parseFloat(goalPaidElement.textContent) - depositedAmount;
                             goalPaidElement.textContent = `${newPaidAmount.toFixed(2)} zł`;
                         } else {
                             console.error('Goal Paid Element not found');
@@ -1152,31 +1087,7 @@ function deleteTransaction(transactionId, goalId, depositedAmount) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Sprawdzanie kategorii po nazwie
 
 
 const checkCategory = (selected) => {
@@ -1191,7 +1102,6 @@ const checkCategory = (selected) => {
 };
 
 
-//usuwanie wszystkich trans + baza 
 
 //Funckcja usuwania wszystkich transakcji +  z bazy
 
@@ -1203,7 +1113,7 @@ const deleteAllTransactions = () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Usuwanie transakcji z widoku aplikacji
+               
                 while (incomeTransactions.children.length > 2) {
                     incomeTransactions.removeChild(incomeTransactions.lastChild);
                 }
@@ -1211,19 +1121,19 @@ const deleteAllTransactions = () => {
                     expenseTransactions.removeChild(expenseTransactions.lastChild);
                 }
 
-                // Aktualizacja wartości opłaconych celów w widoku
+                
                 document.querySelectorAll('.goals__list--item').forEach(goalElement => {
                     const goalPaidElement = goalElement.querySelector('.goal__paid');
                     goalPaidElement.textContent = '0';
                 });
 
-                // Resetowanie danych w JS
+                
                 totalMoney = [0];
                 ID = 0;
                 transactionsIncomeArr = [];
                 transactionsExpenseArr = [];
 
-                // Aktualizacja dostępnych środków
+                
                 countMoney(totalMoney);
             } else {
                 console.error('Błąd:', data.error);

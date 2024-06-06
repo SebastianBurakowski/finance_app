@@ -8,6 +8,7 @@ let personalNameInput, personalSurnameInput, emailInput, password1Input, passwor
 let personalChangeBtn, emailChangeBtn, passwordChangeBtn, accountDeleteBtn
 
 const prepareDomElements = () => {
+    //pobieranie elementów
     personalBtn = document.querySelector('.settings__btn--personal');
     passwordBtn = document.querySelector('.settings__btn--password');
     emailBtn = document.querySelector('.settings__btn--email');
@@ -38,6 +39,7 @@ const prepareDomElements = () => {
     accountDeleteBtn = document.querySelector('.delete__panel__btn--add')
 }
 
+//nasluchiwanie
 const prepareDomEvents = () => {
     personalBtn.addEventListener("click", () => {
         openPanel(personalPanel)
@@ -73,6 +75,8 @@ const prepareDomEvents = () => {
 
     accountDeleteBtn.addEventListener('click', deleteAccount)
 }
+
+///FUNKCJE
 
 const openPanel = (panel) => {
     if (panel) {
@@ -207,7 +211,7 @@ const deleteAccount = () => {
         .then(data => {
             if (data.success) {
                 alert(data.message);
-                window.location.href = 'logout.php'; // Wylogowanie użytkownika po usunięciu konta
+                window.location.href = 'logout.php';
             } else {
                 alert(data.message);
             }

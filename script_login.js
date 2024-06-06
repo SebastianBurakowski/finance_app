@@ -98,7 +98,7 @@ const checkPasswords = (pass1, pass2, msg) => {
 
     } else {
         console.log("ok");
-        // window.location.href = "main.html"
+    
     }
 
 }
@@ -166,10 +166,10 @@ const handleSignin = (e) => {
         .then(response => response.text())
         .then(data => {
             if (data === "Logowanie pomyślne.") {
-                window.location.href = "main.html"; // Przekierowanie do main.html
+                window.location.href = "main.html"; 
             } else {
                 const signInAlert = document.querySelector('.signin__alert');
-                signInAlert.textContent = data; // Wyświetlenie odpowiedniej wiadomości
+                signInAlert.textContent = data; 
             }
         })
         .catch(error => console.error('Error:', error));

@@ -3,7 +3,7 @@ session_start();
 header('Content-Type: application/json');
 include 'db.php';
 
-// Włącz wyświetlanie błędów
+//błedy
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -17,7 +17,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("sdi", $name, $amount, $user_id);
 
 if ($stmt->execute()) {
-    $fee_id = $stmt->insert_id; // Pobierz ID wygenerowane przez AUTO_INCREMENT
+    $fee_id = $stmt->insert_id;
     echo json_encode(['success' => true, 'id' => $fee_id]);
 } else {
     echo json_encode(['success' => false, 'error' => $stmt->error]);

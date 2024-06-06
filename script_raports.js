@@ -35,7 +35,7 @@ const prepareDomEvents = () => {
 
 
 const raportHandle = () => {
-    // Sprawdzanie roku raportu
+    // Sprawdzanie roku
     const selectedYear = parseInt(raportYearInput.value, 10);
     const selectedType = raportTypeInput.value;
     const selectedMonth = raportMonthInput.value;

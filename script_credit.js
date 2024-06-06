@@ -38,7 +38,7 @@ const calculateHandle = (incomeInput, monthlyExpensesInput, monthlyLiabilitiesIn
         // Korekta opóźnienia w spłatach
         const latePaymentAdjustment = latePayment === 'yes' ? 0.8 : 1;
 
-        // Maksymalna rata 
+        // Maksymalna rata - zalzoenie ze rata to 65% pieniedzy
         const maxMonthlyLoan = freeMoney * latePaymentAdjustment * 0.65;
 
         // Maksymalna Kwota

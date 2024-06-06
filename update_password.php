@@ -5,7 +5,7 @@ include 'db.php';
 $user_id = $_SESSION['user_id'];
 $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-// Aktualizacja hasła użytkownika
+
 $sql = "UPDATE users SET password = ? WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("si", $new_password, $user_id);

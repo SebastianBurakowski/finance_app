@@ -40,7 +40,7 @@ if ($type == 'monthlyExpenses' || $type == 'monthlyIncomes') {
     $data = [];
     while ($row = $result->fetch_assoc()) {
         $labels[] = $row['month'];
-        $data[] = abs($row['total']); // Używamy abs() tylko dla wydatków
+        $data[] = abs($row['total']);
     }
     $response['labels'] = $labels;
     $response['data'] = $data;
