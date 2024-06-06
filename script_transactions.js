@@ -660,18 +660,44 @@ const loadGoals = () => {
 const removeGoal = (goalElement) => {
     const goalPaidElement = goalElement.querySelector('.goal__paid');
     const goalPaidAmount = parseFloat(goalPaidElement.textContent);
-    const goalId = goalElement.getAttribute('id');
+    const goalId = goalElement.getAttribute('id').split('_')[1];
 
+    // Sprawdzenie, czy istnieją powiązane transakcje
+    const relatedTransactions = document.querySelectorAll(`[data-goal-id='${goalId}']`);
+    if (relatedTransactions.length > 0) {
+        alert('Nie możesz usunąć celu, który ma powiązane transakcje. Najpierw usuń transakcje.');
+        return;
+    }
 
-    totalMoney.push(goalPaidAmount);
-    countMoney(totalMoney);
+    const formData = new FormData();
+    formData.append('goal_id', goalId);
 
-    document.querySelectorAll(`[data-goal-id='${goalId}']`).forEach(transaction => {
-        transaction.remove();
-    });
+    fetch('delete_goal.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                totalMoney.push(goalPaidAmount);
+                countMoney(totalMoney);
 
-    goalElement.remove();
+                // Usuń powiązane transakcje z widoku
+                relatedTransactions.forEach(transaction => {
+                    transaction.remove();
+                });
+
+                // Usuń cel z widoku
+                goalElement.remove();
+            } else {
+                console.error('Błąd:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 };
+
 
 
 // Funkcja dodawania pieniedzy do celu
@@ -1185,6 +1211,12 @@ const deleteAllTransactions = () => {
                     expenseTransactions.removeChild(expenseTransactions.lastChild);
                 }
 
+                // Aktualizacja wartości opłaconych celów w widoku
+                document.querySelectorAll('.goals__list--item').forEach(goalElement => {
+                    const goalPaidElement = goalElement.querySelector('.goal__paid');
+                    goalPaidElement.textContent = '0';
+                });
+
                 // Resetowanie danych w JS
                 totalMoney = [0];
                 ID = 0;
@@ -1199,6 +1231,7 @@ const deleteAllTransactions = () => {
         })
         .catch(error => console.error('Error:', error));
 }
+
 
 
 //funkcja czyszczenia Inputów paneli
