@@ -368,3 +368,487 @@ Stack trace:
 
 )
 
+[06-Jun-2024 12:05:15 Europe/Berlin] Request received: Array
+(
+    [type] => month
+    [month] => 2024-06
+    [year] => NaN
+)
+
+[06-Jun-2024 12:05:15 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [1] => Array
+        (
+            [id] => 101
+            [user_id] => 8
+            [name] => sdad
+            [amount] => 123.00
+            [category] => income
+            [date] => 2024-06-26
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [2] => Array
+        (
+            [id] => 102
+            [user_id] => 8
+            [name] => ssss
+            [amount] => -22222.00
+            [category] => expense
+            [date] => 2024-06-06
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [3] => Array
+        (
+            [id] => 103
+            [user_id] => 8
+            [name] => Opłata - agd
+            [amount] => -1032.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 28
+        )
+
+    [4] => Array
+        (
+            [id] => 104
+            [user_id] => 8
+            [name] => Opłata - kurwa
+            [amount] => -876.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 29
+        )
+
+    [5] => Array
+        (
+            [id] => 105
+            [user_id] => 8
+            [name] => Zasilenie celu
+            [amount] => -500.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 10
+            [fee_id] => 
+        )
+
+)
+
+[06-Jun-2024 12:08:07 Europe/Berlin] Request received: Array
+(
+    [type] => month
+    [month] => 2024-06
+    [year] => NaN
+)
+
+[06-Jun-2024 12:08:07 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [1] => Array
+        (
+            [id] => 101
+            [user_id] => 8
+            [name] => sdad
+            [amount] => 123.00
+            [category] => income
+            [date] => 2024-06-26
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [2] => Array
+        (
+            [id] => 102
+            [user_id] => 8
+            [name] => ssss
+            [amount] => -22222.00
+            [category] => expense
+            [date] => 2024-06-06
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [3] => Array
+        (
+            [id] => 103
+            [user_id] => 8
+            [name] => Opłata - agd
+            [amount] => -1032.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 28
+        )
+
+    [4] => Array
+        (
+            [id] => 104
+            [user_id] => 8
+            [name] => Opłata - kurwa
+            [amount] => -876.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 29
+        )
+
+    [5] => Array
+        (
+            [id] => 105
+            [user_id] => 8
+            [name] => Zasilenie celu
+            [amount] => -500.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 10
+            [fee_id] => 
+        )
+
+)
+
+[06-Jun-2024 12:10:33 Europe/Berlin] Request received: Array
+(
+    [type] => month
+    [month] => 2024-06
+    [year] => NaN
+)
+
+[06-Jun-2024 12:10:33 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [1] => Array
+        (
+            [id] => 101
+            [user_id] => 8
+            [name] => sdad
+            [amount] => 123.00
+            [category] => income
+            [date] => 2024-06-26
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [2] => Array
+        (
+            [id] => 102
+            [user_id] => 8
+            [name] => ssss
+            [amount] => -22222.00
+            [category] => expense
+            [date] => 2024-06-06
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [3] => Array
+        (
+            [id] => 103
+            [user_id] => 8
+            [name] => Opłata - agd
+            [amount] => -1032.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 28
+        )
+
+    [4] => Array
+        (
+            [id] => 104
+            [user_id] => 8
+            [name] => Opłata - kurwa
+            [amount] => -876.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 29
+        )
+
+    [5] => Array
+        (
+            [id] => 105
+            [user_id] => 8
+            [name] => Zasilenie celu
+            [amount] => -500.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 10
+            [fee_id] => 
+        )
+
+)
+
+[06-Jun-2024 12:12:11 Europe/Berlin] Request received: Array
+(
+    [type] => month
+    [month] => 2024-06
+    [year] => NaN
+)
+
+[06-Jun-2024 12:12:11 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [1] => Array
+        (
+            [id] => 101
+            [user_id] => 8
+            [name] => sdad
+            [amount] => 123.00
+            [category] => income
+            [date] => 2024-06-26
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [2] => Array
+        (
+            [id] => 102
+            [user_id] => 8
+            [name] => ssss
+            [amount] => -22222.00
+            [category] => expense
+            [date] => 2024-06-06
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [3] => Array
+        (
+            [id] => 103
+            [user_id] => 8
+            [name] => Opłata - agd
+            [amount] => -1032.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 28
+        )
+
+    [4] => Array
+        (
+            [id] => 104
+            [user_id] => 8
+            [name] => Opłata - kurwa
+            [amount] => -876.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 29
+        )
+
+    [5] => Array
+        (
+            [id] => 105
+            [user_id] => 8
+            [name] => Zasilenie celu
+            [amount] => -500.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 10
+            [fee_id] => 
+        )
+
+)
+
+[06-Jun-2024 12:12:24 Europe/Berlin] Request received: Array
+(
+    [type] => year
+    [month] => 
+    [year] => 2024
+)
+
+[06-Jun-2024 12:12:24 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [1] => Array
+        (
+            [id] => 101
+            [user_id] => 8
+            [name] => sdad
+            [amount] => 123.00
+            [category] => income
+            [date] => 2024-06-26
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [2] => Array
+        (
+            [id] => 102
+            [user_id] => 8
+            [name] => ssss
+            [amount] => -22222.00
+            [category] => expense
+            [date] => 2024-06-06
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+    [3] => Array
+        (
+            [id] => 103
+            [user_id] => 8
+            [name] => Opłata - agd
+            [amount] => -1032.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 28
+        )
+
+    [4] => Array
+        (
+            [id] => 104
+            [user_id] => 8
+            [name] => Opłata - kurwa
+            [amount] => -876.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 
+            [fee_id] => 29
+        )
+
+    [5] => Array
+        (
+            [id] => 105
+            [user_id] => 8
+            [name] => Zasilenie celu
+            [amount] => -500.00
+            [category] => expense
+            [date] => 2024-06-05
+            [goal_id] => 10
+            [fee_id] => 
+        )
+
+)
+
+[06-Jun-2024 12:12:44 Europe/Berlin] Request received: Array
+(
+    [type] => year
+    [month] => 
+    [year] => 2024
+)
+
+[06-Jun-2024 12:12:44 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+)
+
+[06-Jun-2024 12:14:23 Europe/Berlin] Request received: Array
+(
+    [type] => month
+    [month] => 2024-06
+    [year] => NaN
+)
+
+[06-Jun-2024 12:14:23 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+)
+
+[06-Jun-2024 12:15:45 Europe/Berlin] Request received: Array
+(
+    [type] => month
+    [month] => 2024-06
+    [year] => NaN
+)
+
+[06-Jun-2024 12:15:45 Europe/Berlin] Transactions fetched: Array
+(
+    [0] => Array
+        (
+            [id] => 100
+            [user_id] => 8
+            [name] => cos
+            [amount] => 50000.00
+            [category] => income
+            [date] => 2024-06-14
+            [goal_id] => 
+            [fee_id] => 
+        )
+
+)
+

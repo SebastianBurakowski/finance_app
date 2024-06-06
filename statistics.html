@@ -64,12 +64,10 @@
                 <label class="stats__label label-grey" for="statsType">Wybierz typ Statystyki : </label>
                 <select class=" stats__input stats__input--select input-grey" id="stats-panel-type">
                     <option value="none" selected disabled>
-                    <option value="monthlyExpenses"> Miesięczne Wydatki - słupkowy</option> 
-                    <option value="monhlyIncomes">Miesięczne Dochody - słupkowy</option> 
-                    <option value="balance">Porównanie zarobków i wydatków - liniowy</option> 
-                    <option value="yearIncome">Roczny dochód - słupkowy</option> 
-                    <option value="categories">Kategorie Wydatków - kołowy</option> 
-                    </option>
+                    <option value="monthlyExpenses">Miesięczne Wydatki - słupkowy</option>
+                    <option value="monthlyIncomes">Miesięczne Dochody - słupkowy</option>
+                    <option value="balance">Porównanie zarobków i wydatków - liniowy</option>
+                    <option value="goals">Cele - słupkowy</option>
                 </select>
                 <button type="submit" class="stats__btn stats__btn--submit accept-btn"> Generuj </button>
 
@@ -78,7 +76,7 @@
             <div class="stats_result">
                 <canvas id="barChart"></canvas>
                 <canvas id="lineChart"></canvas>
-                <canvas id="pieChart"></canvas>
+                <canvas id="goalsChart"></canvas>
             </div>
 
         </section>

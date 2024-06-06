@@ -57,10 +57,9 @@ const raportHandle = () => {
             year: selectedYear
         })
     })
-        .then(response => response.text()) // Zmiana na text() aby zobaczyć surową odpowiedź
-        .then(text => {
-            console.log('Response text:', text); // Logowanie odpowiedzi
-            const blob = new Blob([text], { type: 'application/pdf' });
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const blob = new Blob([data], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
@@ -75,6 +74,7 @@ const raportHandle = () => {
 
     raportResult.innerText = `Wybrany typ: ${raportTypeInput.value} ; wybrany miesiąc: ${selectedMonth} ; wybrany rok: ${selectedYear || 'nie dotyczy'}`;
 }
+
 
 
 

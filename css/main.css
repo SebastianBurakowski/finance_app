@@ -1690,9 +1690,11 @@ body__login {
   margin-bottom: 20px;
 }
 
-#pieChart {
-  width: 100% !important;
-  height: 70% !important;
+#goalsChart {
+  width: 88% !important;
+  height: 100%;
+  height: auto !important;
+  margin-bottom: 20px;
 }
 
 .settings__app {
@@ -1738,7 +1740,7 @@ body__login {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   width: 600px;
-  height: 300px;
+  height: 350px;
   background-color: rgba(24, 29, 35, 0.9058823529);
   border: 1px solid #4b5769;
   border-radius: 8px;
@@ -1780,4 +1782,12 @@ body__login {
   position: fixed;
   right: 15px;
   top: 15px;
+}
+
+.password__alert,
+.personal__alert,
+.email__alert {
+  color: red;
+  font-size: 18px;
+  padding: 10px;
 }
