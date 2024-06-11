@@ -1,5 +1,17 @@
 //wyswietlanie imienia uzytkownika
 
+let phoneNav, hamburger
+
+phoneNav = document.querySelector('.nav_phone')
+hamburger = document.querySelector('.fa-bars')
+
+
+
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
+
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Script.js loaded");
@@ -15,3 +27,4 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Błąd podczas pobierania danych użytkownika:', error));
 });
+hamburger.addEventListener('click', showNav)

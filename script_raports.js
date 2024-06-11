@@ -1,6 +1,6 @@
 let raportTypeInput, raportMonthInput, raportYearInput, raportBtn, raportMonthPanel, raportYearPanel, raportResult, raportAlert;
 
-
+let phoneNav, hamburger
 
 
 
@@ -17,11 +17,14 @@ const prepareDomElements = () => {
     raportResult = document.querySelector('.raports__result')
     raportAlert = document.querySelector('.raports__alert')
     
+    phoneNav = document.querySelector('.nav_phone')
+    hamburger = document.querySelector('.fa-bars')
 
 }
 
 
 const prepareDomEvents = () => {
+    hamburger.addEventListener('click', showNav)
 
     raportBtn.addEventListener('click', (e) => {
         e.preventDefault()
@@ -33,7 +36,11 @@ const prepareDomEvents = () => {
 
 }
 
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
 
+}
 const raportHandle = () => {
     // Sprawdzanie roku
     const selectedYear = parseInt(raportYearInput.value, 10);

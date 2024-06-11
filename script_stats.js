@@ -1,5 +1,5 @@
 let statsInput, statsGenerateBtn, statsResult, barChart, lineChart, goalsChart;
-
+let phoneNav, hamburger
 let currentChart = null;
 
 const prepareDomElements = () => {
@@ -9,8 +9,17 @@ const prepareDomElements = () => {
     barChart = document.querySelector('#barChart');
     lineChart = document.querySelector('#lineChart');
     goalsChart = document.querySelector('#goalsChart');
+
+    phoneNav = document.querySelector('.nav_phone')
+    hamburger = document.querySelector('.fa-bars')
 }
 
+
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
+
+}
 const chartHandle = () => {
     if (currentChart) {
         currentChart.destroy();
@@ -143,6 +152,7 @@ const generateGoalsChart = (labels, goals, title) => {
 }
 
 const prepareDomEvents = () => {
+    hamburger.addEventListener('click', showNav)
     statsGenerateBtn.addEventListener('click', (e) => {
         e.preventDefault();
         chartHandle();

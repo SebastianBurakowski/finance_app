@@ -1,7 +1,7 @@
 //Głowna strona przyciski
 let openTransactionBtn, openGoalBtn, openBudgetBtn, deleteAllBtn;
 let availableMoney, transactionSearchInputIncome, transactionSearchInputExpense, transactionsIncomeArr, transactionsExpenseArr
-
+let phoneNav, hamburger
 //Panel dodawania transakcjji
 let addTransactionPanel, addNameInput, addAmountInput, addCategoryInput, addDateInput
 let ID, category, categoryPicked, totalMoney
@@ -150,7 +150,11 @@ const prepareDomElements = () => {
 ///////////////////  FUNKCJE /////////////////
 
 
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
 
+}
 
 //funckcja dodawania stałej opłaty
 
@@ -1206,7 +1210,7 @@ const prepareDomEvents = () => {
 
     feeAddBtn.addEventListener('click', addNewFee)
 
-
+    hamburger.addEventListener('click', showNav)
     
 
 }

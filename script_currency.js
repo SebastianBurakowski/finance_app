@@ -1,5 +1,5 @@
 let currencyOne, amountOne, currencyTwo, amountTwo, swapBtn, rateInfo
-
+let phoneNav, hamburger
 
 
 
@@ -17,12 +17,18 @@ const prepareDomElements = () => {
     swapBtn = document.querySelector('.currency__btn')
     rateInfo = document.querySelector('.currency__rate')
 
+    phoneNav = document.querySelector('.nav_phone')
+    hamburger = document.querySelector('.fa-bars')
 }
 
 
 
 
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
 
+}
 
 
 const calculate = () => {
@@ -55,7 +61,7 @@ const prepareDomEvents = () => {
     swapBtn.addEventListener('click', swap)
 
     calculate();
-
+    hamburger.addEventListener('click', showNav)
 
 }
 

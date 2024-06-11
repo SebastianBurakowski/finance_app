@@ -1,8 +1,11 @@
 let accordion, accordionBtn
+let phoneNav, hamburger
 
 const prepareDomElements = () => {
     accordion = document.querySelector('.acordeon')
     accordionBtn = document.querySelectorAll('.acordeon__btn')
+    phoneNav = document.querySelector('.nav_phone')
+    hamburger = document.querySelector('.fa-bars')
 }
 
 
@@ -24,6 +27,13 @@ function showAccordion() {
 }
 
 
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
+    
+}
+
+
 // Funckaj zamykająca daną odpowiedź
 const closeAllAccordion = () => {
     const accordionElements = document.querySelectorAll('.acordeon__info')
@@ -38,6 +48,8 @@ const closeAllAccordion = () => {
 
 
 const prepareDomEvents = () => {
+
+    hamburger.addEventListener('click', showNav)
     accordionBtn.forEach(btn =>
         btn.addEventListener('click', showAccordion),
 

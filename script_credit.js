@@ -1,5 +1,5 @@
 let incomeInput, monthlyExpensesInput, monthlyLiabilitiesInput, dependentsInput, periodInput, latePaymentsInput, submitBtn, resultSpan, creditInfoText;
-
+let phoneNav, hamburger
 const prepareDomElements = () => {
     incomeInput = document.querySelector('#credit-panel-income');
     monthlyExpensesInput = document.querySelector('#credit-panel-expenses');
@@ -9,7 +9,16 @@ const prepareDomElements = () => {
     latePaymentsInput = document.querySelector('#credit-panel-late');
     submitBtn = document.querySelector('.credit__btn--submit');
     resultSpan = document.querySelector('.credit__result');
+    phoneNav = document.querySelector('.nav_phone')
+    hamburger = document.querySelector('.fa-bars')
+    
     creditInfoText = document.querySelector('.credit__info')
+}
+
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
+
 }
 
 const calculateHandle = (incomeInput, monthlyExpensesInput, monthlyLiabilitiesInput, dependentsInput, periodInput, latePaymentsInput, creditInfoText) => {
@@ -67,6 +76,7 @@ const clearInputs = () => {
 }
 
 const prepareDomEvents = () => {
+    hamburger.addEventListener('click', showNav)
     submitBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const result = calculateHandle(incomeInput, monthlyExpensesInput, monthlyLiabilitiesInput, dependentsInput, periodInput, latePaymentsInput, creditInfoText);

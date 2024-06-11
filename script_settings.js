@@ -1,6 +1,6 @@
 let personalBtn, passwordBtn, emailBtn, deleteAccountBtn, closePanelBtns, acceptBtns, declineBtn;
 let personalPanel, passwordPanel, emailPanel, deletePanel;
-
+let phoneNav, hamburger
 let passwordAlert, emailAlert, personalAlert
 
 let personalNameInput, personalSurnameInput, emailInput, password1Input, password2Input
@@ -37,10 +37,20 @@ const prepareDomElements = () => {
     emailChangeBtn = document.querySelector('.email__btn--add')
     passwordChangeBtn = document.querySelector('.password__btn--add')
     accountDeleteBtn = document.querySelector('.delete__panel__btn--add')
+
+    phoneNav = document.querySelector('.nav_phone')
+    hamburger = document.querySelector('.fa-bars')
+}
+
+const showNav = () => {
+    console.log("object");
+    phoneNav.classList.toggle('show')
+
 }
 
 //nasluchiwanie
 const prepareDomEvents = () => {
+    hamburger.addEventListener('click', showNav)
     personalBtn.addEventListener("click", () => {
         openPanel(personalPanel)
     });
