@@ -95,12 +95,11 @@ const showPassword = () => {
 const checkPasswords = (pass1, pass2, msg) => {
     if (pass1.value !== pass2.value) {
         msg.textContent = "Podane hasła nie są identyczne"
-
+        return false;
     } else {
         console.log("ok");
-    
+        return true;
     }
-
 }
 
 
@@ -108,18 +107,18 @@ const passwordValidation = (pass, msg) => {
     const specialCharacters = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
     const uppercaseLetters = /[A-Z]/;
 
-    if(pass.value.length < 8 ){
-        msg.textContent = "Haslo jest za krótkie. Minimum 8 znaków"
-    } else if(!specialCharacters.test(pass.value)){
+    if (pass.value.length < 8) {
+        msg.textContent = "Hasło jest za krótkie. Minimum 8 znaków"
+        return false;
+    } else if (!specialCharacters.test(pass.value)) {
         msg.textContent = "Hasło musi zawierać znak specjalny"
-    } else if(!uppercaseLetters.test(pass.value)){
-        msg.textContent = "hasło musi zawierać minimum jedną wielka litere"
-    } else{
-       
-        checkPasswords(password,passwordRepeat, signUpAlert)
-        
+        return false;
+    } else if (!uppercaseLetters.test(pass.value)) {
+        msg.textContent = "Hasło musi zawierać minimum jedną wielką literę"
+        return false;
+    } else {
+        return checkPasswords(password, passwordRepeat, signUpAlert);
     }
-    
 }
 
 
@@ -127,30 +126,31 @@ const passwordValidation = (pass, msg) => {
 
 
 
+
 // Funkcja obsługująca rejestrację
+
 const handleSignup = (e) => {
     e.preventDefault();
-    passwordValidation(password, signUpAlert);
+    if (passwordValidation(password, signUpAlert)) {
+        const formData = new FormData();
+        formData.append('email', email.value);
+        formData.append('name', userName.value);
+        formData.append('surname', userSurname.value);
+        formData.append('password', password.value);
 
-    const formData = new FormData();
-    formData.append('email', email.value);
-    formData.append('name', userName.value);
-    formData.append('surname', userSurname.value);
-    formData.append('password', password.value);
-
-    fetch('http://localhost/Aplikacja%20Webowa/register.php', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data);
-            signUpAlert.textContent = "Konto Utworzone, aby przejść dalej zaloguj się";
-            signUpAlert.style.color = "white";
+        fetch('register.php', {
+            method: 'POST',
+            body: formData
         })
-        .catch(error => console.error('Error:', error));
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                signUpAlert.textContent = "Konto Utworzone, aby przejść dalej zaloguj się";
+                signUpAlert.style.color = "white";
+            })
+            .catch(error => console.error('Error:', error));
+    }
 };
-
 // Funkcja obsługująca logowanie
 const handleSignin = (e) => {
     e.preventDefault();
@@ -159,7 +159,7 @@ const handleSignin = (e) => {
     formData.append('email', loginName.value);
     formData.append('password', loginPassword.value);
 
-    fetch('http://localhost/Aplikacja%20Webowa/login.php', {
+    fetch('login.php', {
         method: 'POST',
         body: formData
     })
@@ -177,13 +177,11 @@ const handleSignin = (e) => {
 
 // Funkcja przygotowująca nasłuchiwacze zdarzeń
 const prepareDomEvents = () => {
+
     signupSubmitBtn.addEventListener('click', handleSignup);
     signinSubmitBtn.addEventListener('click', handleSignin);
 
-
-
-
-    showPassBtn.addEventListener('click', showPassword)
+     showPassBtn.addEventListener('click', showPassword)
 
     closeBtns.forEach(btn => {
         btn.addEventListener('click', closeHandle)

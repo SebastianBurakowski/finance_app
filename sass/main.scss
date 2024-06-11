@@ -815,17 +815,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 10px 0;
 
     &__name {
-        &--category {
-            font-size: 14px;
-        }
-
         font-size: 20px;
         padding: 10px 0;
 
+        &--category {
+            font-size: 14px;
+        }
     }
 
     &__amount {
@@ -952,7 +950,6 @@ body {
 
 .add-panel {
 
-
     position: absolute;
     top: 0;
     left: 0;
@@ -963,6 +960,8 @@ body {
     align-items: center;
     flex-direction: column;
     background-image: $panel_background;
+
+
 
     &__title {
         color: $white_color;
@@ -1746,7 +1745,7 @@ body {
 .password,
 .personal,
 .email {
-    &__alert{
+    &__alert {
         color: red;
         font-size: 18px;
         padding: 10px;

@@ -21,7 +21,8 @@ const calculateHandle = (incomeInput, monthlyExpensesInput, monthlyLiabilitiesIn
     const latePayment = latePaymentsInput.value;
 
 
-    if (!incomeInput.value || !monthlyExpensesInput.value || !monthlyLiabilitiesInput.value || !dependentsInput.value || !periodInput.value || latePaymentsInput.value === 'none') {
+    if (!incomeInput.value || !monthlyExpensesInput.value || !monthlyLiabilitiesInput.value || !dependentsInput.value 
+        || !periodInput.value || latePaymentsInput.value === 'none') {
         creditInfoText.innerText = "Wprowadź poprawne dane we wszystkich polach.";
         creditInfoText.style.color = 'red'
         

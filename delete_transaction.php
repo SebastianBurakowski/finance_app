@@ -13,6 +13,7 @@ $user_id = $_SESSION['user_id'];
 $response = array();
 
 // Sprawdzania czy transkacja istnieje
+
 $check_query = "SELECT amount FROM transactions WHERE id = ? AND user_id = ?";
 $check_stmt = $conn->prepare($check_query);
 if (!$check_stmt) {

@@ -700,9 +700,10 @@ const addDepositToGoal = () => {
                 countMoney(totalMoney);
 
                 // Dodawanie transakcji do sekcji wydatków
+
                 const newTransaction = document.createElement('div');
                 newTransaction.classList.add('transaction');
-                newTransaction.setAttribute('id', `transaction_${data.id}`);h
+                newTransaction.setAttribute('id', `transaction_${data.id}`);
                 newTransaction.setAttribute('data-goal-id', goalId); 
                 console.log('New Transaction ID:', data.id); 
 
@@ -879,6 +880,7 @@ const loadCategories = () => {
 
 
 const addnewTransaction = () => {
+    
     if (!addNameInput.value) {
         addAlertText.textContent = "Proszę podać nazwę transakcji.";
         return;
@@ -944,12 +946,14 @@ const addnewTransaction = () => {
                 }
 
                 // Aktualizacja dostępnych środków
-                availableMoney.textContent = `${data.availableMoney} zł`;
 
+
+                availableMoney.textContent = `${data.availableMoney} zł`;
                 totalMoney.push(transactionAmount);
                 countMoney(totalMoney);
                 togglePanel(addTransactionPanel);
                 clearInputs();
+
             } else {
                 addAlertText.textContent = "Błąd: " + data.error;
             }
@@ -994,7 +998,7 @@ const loadTransactions = () => {
                         </button>
                     </p>
                 `;
-
+                
                 if (transaction.category === 'income') {
                     incomeTransactions.appendChild(newTransaction);
                     transactionsIncomeArr.push(newTransaction);
